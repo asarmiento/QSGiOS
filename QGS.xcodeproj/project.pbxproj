@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		EB4B26B12C5936460083397F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = EB4B26B02C5936460083397F /* Alamofire */; };
+		EB4B26B32C5974A60083397F /* CeaturesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B26B22C5974A60083397F /* CeaturesViewModel.swift */; };
+		EB4B26B62C5999150083397F /* LoginHttpPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B26B52C5999150083397F /* LoginHttpPost.swift */; };
+		EB4B26BB2C5AB1230083397F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B26BA2C5AB1230083397F /* UserModel.swift */; };
+		EB4B26BD2C5AB23A0083397F /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B26BC2C5AB23A0083397F /* RecordModel.swift */; };
 		EBBC930F2C512EBB00F3C8CD /* QGSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */; };
 		EBBC93112C512EBB00F3C8CD /* screenSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC93102C512EBB00F3C8CD /* screenSaver.swift */; };
 		EBBC93132C512EBC00F3C8CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBBC93122C512EBC00F3C8CD /* Assets.xcassets */; };
@@ -19,6 +23,9 @@
 		EBBC933C2C515E9400F3C8CD /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC933B2C515E9400F3C8CD /* Login.swift */; };
 		EBBC933F2C515FC100F3C8CD /* View+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC933E2C515FC100F3C8CD /* View+extensions.swift */; };
 		EBBC93412C5161CD00F3C8CD /* CustomTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC93402C5161CD00F3C8CD /* CustomTF.swift */; };
+		EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE614972C5AE4FA00197660 /* HomeRecord.swift */; };
+		EBE6149A2C5AFA5D00197660 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE614992C5AFA5D00197660 /* LocationViewController.swift */; };
+		EBE6149F2C5B9E9200197660 /* RecordHttpPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +46,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB4B26B22C5974A60083397F /* CeaturesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CeaturesViewModel.swift; sourceTree = "<group>"; };
+		EB4B26B52C5999150083397F /* LoginHttpPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHttpPost.swift; sourceTree = "<group>"; };
+		EB4B26BA2C5AB1230083397F /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		EB4B26BC2C5AB23A0083397F /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
 		EBBC930B2C512EBB00F3C8CD /* QGS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QGS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QGSApp.swift; sourceTree = "<group>"; };
 		EBBC93102C512EBB00F3C8CD /* screenSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = screenSaver.swift; sourceTree = "<group>"; };
@@ -53,6 +64,10 @@
 		EBBC933B2C515E9400F3C8CD /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		EBBC933E2C515FC100F3C8CD /* View+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
 		EBBC93402C5161CD00F3C8CD /* CustomTF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTF.swift; sourceTree = "<group>"; };
+		EBE614972C5AE4FA00197660 /* HomeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecord.swift; sourceTree = "<group>"; };
+		EBE614992C5AFA5D00197660 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		EBE6149B2C5AFC8300197660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordHttpPost.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +96,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB4B26B42C5998F80083397F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				EB4B26B52C5999150083397F /* LoginHttpPost.swift */,
+				EBE614992C5AFA5D00197660 /* LocationViewController.swift */,
+				EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		EB4B26B92C5AB10B0083397F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EB4B26BA2C5AB1230083397F /* UserModel.swift */,
+				EB4B26BC2C5AB23A0083397F /* RecordModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		EBBC93022C512EBB00F3C8CD = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +138,9 @@
 		EBBC930D2C512EBB00F3C8CD /* QGS */ = {
 			isa = PBXGroup;
 			children = (
+				EBE6149B2C5AFC8300197660 /* Info.plist */,
+				EB4B26B92C5AB10B0083397F /* Model */,
+				EB4B26B42C5998F80083397F /* Network */,
 				EBBC933D2C515F9E00F3C8CD /* Helpers */,
 				EBBC933A2C515E7E00F3C8CD /* View */,
 				EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */,
@@ -111,6 +148,7 @@
 				EBBC93122C512EBC00F3C8CD /* Assets.xcassets */,
 				EBBC93142C512EBC00F3C8CD /* Preview Content */,
 				EBBC93382C51336400F3C8CD /* Colors.swift */,
+				EB4B26B22C5974A60083397F /* CeaturesViewModel.swift */,
 			);
 			path = QGS;
 			sourceTree = "<group>";
@@ -145,6 +183,7 @@
 			children = (
 				EBBC933B2C515E9400F3C8CD /* Login.swift */,
 				EBBC93402C5161CD00F3C8CD /* CustomTF.swift */,
+				EBE614972C5AE4FA00197660 /* HomeRecord.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -295,10 +334,17 @@
 			files = (
 				EBBC93112C512EBB00F3C8CD /* screenSaver.swift in Sources */,
 				EBBC93392C51336400F3C8CD /* Colors.swift in Sources */,
+				EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */,
+				EBE6149A2C5AFA5D00197660 /* LocationViewController.swift in Sources */,
 				EBBC93412C5161CD00F3C8CD /* CustomTF.swift in Sources */,
+				EB4B26B32C5974A60083397F /* CeaturesViewModel.swift in Sources */,
 				EBBC930F2C512EBB00F3C8CD /* QGSApp.swift in Sources */,
+				EB4B26B62C5999150083397F /* LoginHttpPost.swift in Sources */,
 				EBBC933C2C515E9400F3C8CD /* Login.swift in Sources */,
+				EB4B26BB2C5AB1230083397F /* UserModel.swift in Sources */,
+				EB4B26BD2C5AB23A0083397F /* RecordModel.swift in Sources */,
 				EBBC933F2C515FC100F3C8CD /* View+extensions.swift in Sources */,
+				EBE6149F2C5B9E9200197660 /* RecordHttpPost.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,6 +494,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
@@ -464,7 +511,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QGS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Quiero acceder a tu ubicacion para registro ingreso y salida del trabajo";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -493,7 +543,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QGS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Quiero acceder a tu ubicacion para registro ingreso y salida del trabajo";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

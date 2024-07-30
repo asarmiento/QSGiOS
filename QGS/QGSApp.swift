@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct QGSApp: App {
+    
+    @State private var locationH = LocationViewController()
     var body: some Scene {
         WindowGroup {
             Login()
-        }
+            
+        }.modelContainer(for: [UserModel.self,RecordModel.self])
     }
 }

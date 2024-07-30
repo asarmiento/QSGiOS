@@ -4,16 +4,19 @@
 //
 //  Created by Edin Martinez on 7/24/24.
 //
-
+import UIKit
 import SwiftUI
+import SwiftData
 
 struct Login: View {
-    @State private var email = ""
-    @State private var password = ""
+    @Environment(\.modelContext) var modelContext
+    @State private var email = "asarmiento@sistemasamigableslatam.com"
+    @State private var password = "secret"
     @State private var wrongEmail = 0
     @State private var wrongPassword = 0
     @State private var showingLoginScreen = false
-    
+    @StateObject var creaturesVM = LoginHttpPost()
+    @State var homeRecord = HomeRecord()
     
     var body: some View {
         NavigationView{
@@ -43,29 +46,31 @@ struct Login: View {
                         .background(Color.black.opacity(0.05))
                         .cornerRadius( 10)
                     
+                   
+                    Button("Login"){
+                        creaturesVM.executeAPI(email: email, password: password)
+                      
+                        }.frame(width: 300,height: 50)
+                            .background(.red)
+                            .buttonStyle(.bordered)
+                            .tint(.black)
+                            .border(Color.black, width: 0.02)
+                        Text("Registra tu ingreso y Salida")
+                            .font(.footnote)
+                            .underline( )
+                            .foregroundStyle(.tertiary)
+                            .padding()
                     
-              
-                    
+             
                 }
             }
         }
-        .navigationBarHidden(true)
+        .navigationBarHidden(false)
     }
-    func authenticateUser(email:String,password:String){
-        if email.lowercased() == "anwarsarmiento@gmail.com"{
-            wrongEmail = 0
-            if password.lowercased() == "123"{
-                wrongPassword = 0
-                showingLoginScreen = true
-            }else{
-                wrongPassword = 2
-            }
-        }else{
-            wrongEmail=2
-        }
-        
-    }
+
+
 }
+
     
     #Preview {
         Login()

@@ -2,7 +2,7 @@
 //  Colors.swift
 //  QGS
 //
-//  Created by Edin Martinez on 7/24/24.
+//  Created by Anwar Sarmiento on 7/24/24.
 //
 
 import SwiftUI

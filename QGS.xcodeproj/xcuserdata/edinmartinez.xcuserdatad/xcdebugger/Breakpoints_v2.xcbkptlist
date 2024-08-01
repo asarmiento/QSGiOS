@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "9C56C328-86AA-4B05-B82D-902987CEF4BC"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "77DD8717-EAD0-42BC-9C43-4708B86D081F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QGS/Model/UserModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "UserModel"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "77DD8717-EAD0-42BC-9C43-4708B86D081F - 999cbac4cd3ebe6e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "QGS.UserModel.deinit"
+                  moduleName = "QGS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/edinmartinez/Documents/Projects/QGS2.0/QGS/Model/UserModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "77DD8717-EAD0-42BC-9C43-4708B86D081F - 7c0838a0fdefca55"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "QGS.UserModel.__deallocating_deinit"
+                  moduleName = "QGS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/edinmartinez/Documents/Projects/QGS2.0/QGS/Model/UserModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

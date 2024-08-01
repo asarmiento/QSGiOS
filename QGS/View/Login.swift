@@ -50,6 +50,9 @@ struct Login: View {
                     Button("Login"){
                         creaturesVM.executeAPI(email: email, password: password)
                       
+                       
+                      
+                        
                         }.frame(width: 300,height: 50)
                             .background(.red)
                             .buttonStyle(.bordered)
@@ -77,3 +80,9 @@ struct Login: View {
     }
     
 
+
+struct Previews_Login_LibraryContent: LibraryContentProvider {
+    var views: [LibraryItem] {
+        LibraryItem(/*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/)
+    }
+}

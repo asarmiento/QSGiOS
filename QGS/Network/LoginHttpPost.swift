@@ -7,9 +7,14 @@
 import SwiftUI
 import Foundation
 import UIKit
+import SwiftData
 
- class LoginHttpPost:ObservableObject {
-  
+ class LoginHttpPost: NSObject, ObservableObject {
+     
+     @Environment(\.modelContext) var context
+     @Environment(\.dismiss) private var dismiss
+     @State var modelUserData: UserModel?
+     
     
     func executeAPI(email:String, password:String){
         let url = URL(
@@ -41,7 +46,23 @@ import UIKit
             
             let task = URLSession.shared
             task.dataTask(with: request) { data, response, error in
-                self.showResponse(data)
+              
+                guard let data = data else {
+                    return
+                }           
+             
+                do{
+                    guard  let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else{return}
+                    
+                    let loginJson = dataLogin(json: json)
+                    let dataToSave = UserModel(name: loginJson.name, email: loginJson.email, sysconf:  loginJson.sysconf,token: loginJson.token)
+                    
+             
+                } catch let error{
+                    print(error)
+                }
+                
+                //  self.showResponse(data)
                
                 if let response = response {
                     let httpResponse = response as! HTTPURLResponse
@@ -69,39 +90,43 @@ import UIKit
         
     }
     
-    func showResponse(_ data: Data?) {
-           if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers), let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) {
-               print("\n---> response: " + String(decoding: jsonData, as: UTF8.self))
-                   
-           }else{
-               print("No esta registrando el login")
-           }
-        
-       }
+  
 }
 
 
-struct dataLogin:  Decodable {
-    let status: Bool?
-    let message: String?
-    let user: [Users]?
-    let sysconfs: [Sysconfs]?
-    let tokenL: String?
+struct dataLogin {
+    let name: String
+    let email: String
+    let token: String
+    let sysconf: Int
+    
+    init(json: [String: Any]){
+        name = json["name"] as? String ?? ""
+        email = json["email"] as? String ?? ""
+        sysconf = json["sysconf"] as? Int ?? -1
+        token = json["token"] as? String ?? ""
+    }
 }
 
-struct Users: Decodable {
+struct Users {
     let name: String
     let email: String
     let sysconfId: Int
-    let employees:[Employees]
-    
+    init(json: [String: Any]){
+        name = json["name"] as? String ?? ""
+        email = json["email"] as? String ?? ""
+        sysconfId = json["sysconfId"] as? Int ?? -1
+       // employees = json["name"] as? String ?? ""
+    }
 }
-struct Employees: Decodable{
+struct Employees{
     let name: String
     let email: String
+    
+   
 }
 
-struct Sysconfs: Decodable{
+struct Sysconfs{
     let name: String
     let card: String
     let url: String

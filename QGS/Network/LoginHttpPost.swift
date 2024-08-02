@@ -4,23 +4,34 @@
 //
 //  Created by Edin Martinez on 7/30/24.
 //
-
-
-
-
 import SwiftUI
 import Foundation
 import UIKit
+import SwiftData
 
-class LoginHttpPost: ObservableObject {
-    @Published var loginSuccess: Bool = false
+ class LoginHttpPost: NSObject, ObservableObject {
+     
+     @Environment(\.modelContext) var context
+     @Environment(\.dismiss) private var dismiss
+     @State var modelUserData: UserModel?
+     
     
-    func executeAPI(email: String, password: String) {
-        let url = URL(string: "https://api.friendlypayroll.net/api/login")!
-        var request = URLRequest(url: url)
+    func executeAPI(email:String, password:String){
+        let url = URL(
+            string: "https://api.friendlypayroll.net/api/login"
+        )!
+        var request = URLRequest(
+            url: url
+        )
         request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(
+            "application/json",
+            forHTTPHeaderField: "Content-Type"
+        )
+        request.addValue(
+            "application/json",
+            forHTTPHeaderField: "Accept"
+        )
         
         let params: [String: Any] = [
             "email": email,
@@ -28,69 +39,95 @@ class LoginHttpPost: ObservableObject {
         ]
         
         do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
+            request.httpBody = try JSONSerialization.data(
+                withJSONObject: params,
+                options: []
+            )
             
-            let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-                if let data = data,
-                   let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any],
-                   let status = json["status"] as? Bool {
+            let task = URLSession.shared
+            task.dataTask(with: request) { data, response, error in
+              
+                guard let data = data else {
+                    return
+                }           
+             
+                do{
+                    guard  let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else{return}
                     
-                    DispatchQueue.main.async {
-                        self?.loginSuccess = status
-                    }
+                    let loginJson = dataLogin(json: json)
+                    let dataToSave = UserModel(name: loginJson.name, email: loginJson.email, sysconf:  loginJson.sysconf,token: loginJson.token)
                     
-                    self?.showResponse(data: data)
-                } else {
-                    DispatchQueue.main.async {
-                        self?.loginSuccess = false
-                    }
-                    print("No esta registrando el login")
+             
+                } catch let error{
+                    print(error)
+                }
+                
+                //  self.showResponse(data)
+               
+                if let response = response {
+                    let httpResponse = response as! HTTPURLResponse
+                    print(
+                        httpResponse.allHeaderFields
+                    )
                 }
                 
                 if let error = error {
-                    print(error.localizedDescription)
+                    print(
+                        error.localizedDescription
+                    )
                 }
-            }
-            task.resume()
+                
+            }.resume()
+               
+       
+
         } catch {
-            print("Error creating JSON body: \(error)")
-        }
-    }
- 
-    func showResponse(data: Data?) {
-        guard let data = data else {
-            print("No data received")
-            return
+            print(
+                "Error creating JSON body: \(error)"
+            )
+            
         }
         
-        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-            print("Failed to parse JSON")
-            return
-        }
-    
-        print("\n---> response: \(json)")
-        guard let token = json["token"] as? String,
-              let user = json["user"] as? [String: Any],
-              let employee = user["employee"] as? [String: Any],
-              let employeeId = employee["id"] as? Int else {
-            print("No está registrando el login")
-            return
-        }
-        
-        // Store the token and employee ID securely
-        storeAccessToken(token)
-        storeEmployeeId(employeeId)
-    }
-
-    func storeAccessToken(_ token: String) {
-        UserDefaults.standard.set(token, forKey: "accessToken")
-    }
-
-    func storeEmployeeId(_ employeeId: Int) {
-        UserDefaults.standard.set(employeeId, forKey: "employeeId")
     }
     
-    
-    
+  
 }
 
+
+struct dataLogin {
+    let name: String
+    let email: String
+    let token: String
+    let sysconf: Int
+    
+    init(json: [String: Any]){
+        name = json["name"] as? String ?? ""
+        email = json["email"] as? String ?? ""
+        sysconf = json["sysconf"] as? Int ?? -1
+        token = json["token"] as? String ?? ""
+    }
+}
+
+struct Users {
+    let name: String
+    let email: String
+    let sysconfId: Int
+    init(json: [String: Any]){
+        name = json["name"] as? String ?? ""
+        email = json["email"] as? String ?? ""
+        sysconfId = json["sysconfId"] as? Int ?? -1
+       // employees = json["name"] as? String ?? ""
+    }
+}
+struct Employees{
+    let name: String
+    let email: String
+    
+   
+}
+
+struct Sysconfs{
+    let name: String
+    let card: String
+    let url: String
+}

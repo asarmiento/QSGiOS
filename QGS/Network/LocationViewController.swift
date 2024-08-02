@@ -9,32 +9,28 @@ import Foundation
 import CoreLocation
 import MapKit
 
-
-
-import Foundation
-import CoreLocation
-
-class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    private var locationManager = CLLocationManager()
+final class LocationViewController: NSObject, ObservableObject{
+    private struct Span {
+        static let delta = 0.1
+    }
+    @Published var userLocation: MKCoordinateRegion = .init()
     
-    @Published var latitude: String?
-    @Published var longitude: String?
+    private let locationManager: CLLocationManager = .init()
     
     override init() {
         super.init()
-        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        locationManager.delegate = self
     }
-    
+}
+
+extension LocationViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
-            latitude = String(format: "%.6f", location.coordinate.latitude)
-            longitude = String(format: "%.6f", location.coordinate.longitude)
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Failed to find user's location: \(error.localizedDescription)")
+        guard let location = locations.last else { return}        
+        
+        print("Location \(location.coordinate.latitude) Longitude \(location.coordinate.longitude)")
+        userLocation = .init(center: location.coordinate, span: .init(latitudeDelta: Span.delta, longitudeDelta: Span.delta))
     }
 }

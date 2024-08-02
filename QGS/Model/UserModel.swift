@@ -9,16 +9,18 @@ import Foundation
 import SwiftData
 
 @Model
-class UserModel: Identifiable {
+class UserModel {
+    @Attribute(.unique) var id: UUID
     var name: String
     var email: String
-    var sysconf: Int
+    var sysconfId: Int
     var token: String
     
-    init( name: String, email: String, sysconf: Int, token: String) {
+    init(id: UUID, name: String, email: String, sysconfId: Int, token: String) {
+        self.id = id
         self.name = name
         self.email = email
-        self.sysconf = sysconf
+        self.sysconfId = sysconfId
         self.token = token
     }
 }

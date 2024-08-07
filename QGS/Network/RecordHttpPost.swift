@@ -14,7 +14,9 @@ class RecordHttpPost: ObservableObject {
     
     func sendPostJsonAPI(params: [String: Any], completion: @escaping (Bool, String?) -> Void) {
         guard let accessToken = retrieveAccessToken(),
-              let employeeId = retrieveEmployeeId() else {
+              let employeeId = retrieveEmployeeId()
+              
+        else {
             print("No access token or employee ID found")
             completion(false, nil) // Indicate failure
             return
@@ -80,6 +82,10 @@ class RecordHttpPost: ObservableObject {
     
     private func retrieveEmployeeId() -> Int? {
         return UserDefaults.standard.integer(forKey: "employeeId")
+    }
+    
+    private func retrieveUsercreatedAt() -> Int? {
+        return UserDefaults.standard.integer(forKey: "createdAt")
     }
     
     private func showResponse(_ data: Data?) {

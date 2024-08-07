@@ -14,12 +14,36 @@ import CoreLocationUI
 
 struct HomeRecord: View {
     @StateObject private var locationManager = LocationManager()
+    @StateObject private var loginHttpPost = LoginHttpPost()
     @StateObject private var creaturesVM = RecordHttpPost()
-    
-    @State private var isEntradaButtonHidden = false // State variable to track Entrada button visibility
-    @State private var isSalidaButtonHidden = true // State variable to track Salida button visibility (initially hidden)
-    @State private var salidaMessage: String? = nil // State variable to hold the message
 
+    @State private var isEntradaButtonHidden = false
+    @State private var isSalidaButtonHidden = true
+    @State private var salidaMessage: String? = nil
+
+    private var currentDateString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: Date())
+    }
+
+    private func updateSalidaButtonVisibility() {
+        isSalidaButtonHidden = false
+        guard let createdAt = loginHttpPost.createdAt else {
+            print("createdAt is nil")
+           
+            isEntradaButtonHidden = true
+            return
+        }
+        
+//        let isVisible = createdAt == currentDateString
+//        print("CreatedAt: \(createdAt)")
+//        print("Current Date: \(currentDateString)")
+//        print("Is Salida Button Visible: \(isVisible)")
+//        
+//        isSalidaButtonHidden = !isVisible
+    }
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -30,10 +54,10 @@ struct HomeRecord: View {
                 Circle().scale(1.6)
                     .foregroundColor(.white.opacity(0.15))
                 Circle().scale(1.4).foregroundColor(.white)
-                
+
                 VStack {
                     Group {
-                        Text(" Longitude: \(locationManager.longitude ?? "N/A")")
+                        Text(" Longitude: \(locationManager.longitude ?? "N/A") \(loginHttpPost.dataReturnLogin)")
                         Text(" Latitude: \(locationManager.latitude ?? "N/A")")
                     }
                     .frame(width: 350, height: 50, alignment: .leading)
@@ -41,44 +65,42 @@ struct HomeRecord: View {
                     .border(Color.black)
                     .padding()
                     .padding(.leading, 2)
-                    
+
                     if !isEntradaButtonHidden {
                         Button("Entrada") {
                             let params: [String: Any] = [
-                                "type": "e", // e for entry
+                                "type": "e",
                                 "time": getCurrentTime(),
                                 "date": getCurrentDate(),
                                 "latitude": locationManager.latitude ?? "",
                                 "longitude": locationManager.longitude ?? "",
                             ]
-                            
+
                             creaturesVM.sendPostJsonAPI(params: params) { success, _ in
                                 if success {
-                                    isEntradaButtonHidden = true
-                                    isSalidaButtonHidden = false
+                                     isEntradaButtonHidden = true
+                        
+                                    updateSalidaButtonVisibility()
                                 }
                             }
                         }
-                       
-                        
                         .padding()
                         .frame(width: 300, height: 50, alignment: .center)
                         .background(Color.red)
                         .cornerRadius(10)
                         .foregroundColor(.white)
-                        
                     }
-                    
+
                     if !isSalidaButtonHidden {
                         Button("Salida") {
                             let params: [String: Any] = [
-                                "type": "s", // s for exit
+                                "type": "s",
                                 "time": getCurrentTime(),
                                 "date": getCurrentDate(),
                                 "latitude": locationManager.latitude ?? "",
                                 "longitude": locationManager.longitude ?? "",
                             ]
-                            
+
                             creaturesVM.sendPostJsonAPI(params: params) { success, message in
                                 if success {
                                     salidaMessage = message
@@ -94,7 +116,7 @@ struct HomeRecord: View {
                         .cornerRadius(10)
                         .foregroundColor(.white)
                     }
-                    
+
                     if let message = salidaMessage {
                         Text(message)
                             .font(.title2)
@@ -105,18 +127,29 @@ struct HomeRecord: View {
             }
             .frame(alignment: .center)
         }
+        .onAppear {
+           // loginHttpPost.executeAPI(email: "asarmiento@sistemasamigableslatam.com", password: "secret") // Example email and password
+        }
+//        .onChange(of: loginHttpPost.createdAt) { _ in
+//           
+//            updateSalidaButtonVisibility()
+//        }
     }
-    
+
     private func getCurrentTime() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "HHmmss" // Example format: "123456"
+        formatter.dateFormat = "HHmmss"
         return formatter.string(from: Date())
     }
-    
+
     private func getCurrentDate() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd" // Example format: "2024-08-02"
+        formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: Date())
     }
 }
+
+
+
+
 

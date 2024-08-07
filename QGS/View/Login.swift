@@ -64,6 +64,8 @@ struct Login: View {
                         .padding()
                 }
                 
+//                let dataUser = UserModel()
+//                self.modelContext.insert()
                 NavigationLink(
                     destination: HomeRecord(),
                     isActive: $creaturesVM.loginSuccess

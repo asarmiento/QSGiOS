@@ -6,6 +6,7 @@
 //  
 
 import SwiftUI
+import SwiftData
 
 @main
 struct QGSApp: App {
@@ -13,11 +14,11 @@ struct QGSApp: App {
     @State private var locationH = LocationManager()
     var body: some Scene {
         WindowGroup {
-            if accessToken != nil {
-                HomeRecord()
-            }else{
+//            if accessToken != nil {
+//                HomeRecord()
+//            }else{
                 Login()
-            }
+          //  }
             
         }.modelContainer(for: [UserModel.self,RecordModel.self])
     }

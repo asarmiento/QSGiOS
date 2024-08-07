@@ -16,8 +16,8 @@ class UserModel {
     var sysconfId: Int
     var token: String
     
-    init(id: UUID, name: String, email: String, sysconfId: Int, token: String) {
-        self.id = id
+    init( name: String = "", email: String = "", sysconfId: Int = -1, token: String = "") {
+        self.id = UUID()
         self.name = name
         self.email = email
         self.sysconfId = sysconfId

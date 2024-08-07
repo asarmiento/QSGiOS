@@ -28,18 +28,20 @@ struct HomeRecord: View {
     }
 
     private func updateSalidaButtonVisibility() {
+        isSalidaButtonHidden = false
         guard let createdAt = loginHttpPost.createdAt else {
             print("createdAt is nil")
-            isSalidaButtonHidden = true
+           
+            isEntradaButtonHidden = true
             return
         }
         
-        let isVisible = createdAt == currentDateString
-        print("CreatedAt: \(createdAt)")
-        print("Current Date: \(currentDateString)")
-        print("Is Salida Button Visible: \(isVisible)")
-        
-        isSalidaButtonHidden = !isVisible
+//        let isVisible = createdAt == currentDateString
+//        print("CreatedAt: \(createdAt)")
+//        print("Current Date: \(currentDateString)")
+//        print("Is Salida Button Visible: \(isVisible)")
+//        
+//        isSalidaButtonHidden = !isVisible
     }
     
     var body: some View {
@@ -76,7 +78,7 @@ struct HomeRecord: View {
 
                             creaturesVM.sendPostJsonAPI(params: params) { success, _ in
                                 if success {
-                                     isEntradaButtonHidden = false
+                                     isEntradaButtonHidden = true
                         
                                     updateSalidaButtonVisibility()
                                 }
@@ -126,12 +128,12 @@ struct HomeRecord: View {
             .frame(alignment: .center)
         }
         .onAppear {
-            loginHttpPost.executeAPI(email: "asarmiento@sistemasamigableslatam.com", password: "secret") // Example email and password
+           // loginHttpPost.executeAPI(email: "asarmiento@sistemasamigableslatam.com", password: "secret") // Example email and password
         }
-        .onChange(of: loginHttpPost.createdAt) { _ in
-           
-            updateSalidaButtonVisibility()
-        }
+//        .onChange(of: loginHttpPost.createdAt) { _ in
+//           
+//            updateSalidaButtonVisibility()
+//        }
     }
 
     private func getCurrentTime() -> String {

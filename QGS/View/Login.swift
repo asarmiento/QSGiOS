@@ -13,8 +13,8 @@ import SwiftData
 
 struct Login: View {
     @Environment(\.modelContext) var modelContext
-    @State private var email = "asarmiento@sistemasamigableslatam.com"
-    @State private var password = "secret"
+    @State private var email = ""
+    @State private var password = ""
     @State private var wrongEmail = 0
     @State private var wrongPassword = 0
     @State private var showingLoginScreen = false
@@ -44,7 +44,7 @@ struct Login: View {
                             .padding(.top, 5)
                         
                     }.padding(12)
-                        .frame(width: 300, height: 50)
+                        .frame(width: 300, height: 60)
                         .background(Color.black.opacity(0.05))
                         .cornerRadius(10)
                     
@@ -54,7 +54,7 @@ struct Login: View {
                     .frame(width: 300, height: 50)
                     .background(.red)
                     .buttonStyle(.bordered)
-                    .tint(.black)
+                    .tint(.white)
                     .border(Color.black, width: 0.02)
                     
                     Text("Registra tu ingreso y Salida")
@@ -63,15 +63,13 @@ struct Login: View {
                         .foregroundStyle(.tertiary)
                         .padding()
                 }
-                
-//                let dataUser = UserModel()
-//                self.modelContext.insert()
+        
                 NavigationLink(
                     destination: HomeRecord(),
                     isActive: $creaturesVM.loginSuccess
-                ) {
+                , label: {
                     EmptyView()
-                }
+                }).isDetailLink(false)
             }
             .navigationBarHidden(false)
             

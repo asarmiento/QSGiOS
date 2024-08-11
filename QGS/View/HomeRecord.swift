@@ -29,12 +29,17 @@ struct HomeRecord: View {
 
     private func updateSalidaButtonVisibility() {
         isSalidaButtonHidden = false
-        guard let createdAt = loginHttpPost.createdAt else {
-            print("createdAt is nil")
-           
+        if loginHttpPost.createdAt != nil {
+            
             isEntradaButtonHidden = true
             return
         }
+//        guard let createdAt = loginHttpPost.createdAt else {
+//            print("createdAt is nil")
+//           
+//            isEntradaButtonHidden = true
+//            return
+//        }
         
 //        let isVisible = createdAt == currentDateString
 //        print("CreatedAt: \(createdAt)")
@@ -57,7 +62,7 @@ struct HomeRecord: View {
 
                 VStack {
                     Group {
-                        Text(" Longitude: \(locationManager.longitude ?? "N/A") \(loginHttpPost.dataReturnLogin)")
+                        Text(" Longitude: \(locationManager.longitude ?? "N/A")")
                         Text(" Latitude: \(locationManager.latitude ?? "N/A")")
                     }
                     .frame(width: 350, height: 50, alignment: .leading)

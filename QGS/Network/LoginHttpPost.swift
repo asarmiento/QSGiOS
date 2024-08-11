@@ -15,8 +15,8 @@ import SwiftData
 
 class LoginHttpPost: ObservableObject {
     @Environment(\.modelContext) var modelContext
-    @Query var userModel: UserModel
-    @State private var path = UserModel()
+//    @Query var userModel: UserModel
+  //  @State private var path = UserModel()
     @Published var loginSuccess: Bool = false
     @Published var createdAt: String? // Property to store createdAt date
     @Published var dataReturnLogin: [String: Any]?
@@ -27,7 +27,7 @@ class LoginHttpPost: ObservableObject {
     }
 
     func executeAPI(email: String, password: String) {
-        let url = URL(string: "https://api.friendlypayroll.net/api/login")!
+        let url =   URL(string:   "https://api.friendlypayroll.net/api/login")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -80,11 +80,11 @@ class LoginHttpPost: ObservableObject {
         }
 
        // I need save this information help me
-        guard   let dataUserModel = userModel(name: json["name"]  , email: json["email"] , sysconf: json["sysconf"] , token: json["token"]) else {
-            return
-        }
-        modelContext.insert(dataUserModel)
-        
+//        guard   let dataUserModel = userModel(name: json["name"]  , email: json["email"] , sysconf: json["sysconf"] , token: json["token"]) else {
+//            return
+//        }
+//        modelContext.insert(dataUserModel)
+//        
         guard let token = json["token"] as? String,
               let user = json["user"] as? [String: Any],
               let employee = user["employee"] as? [String: Any],

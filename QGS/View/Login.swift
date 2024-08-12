@@ -31,9 +31,10 @@ struct Login: View {
                     .foregroundColor(.white.opacity(0.15))
                 
                 Circle().scale(1.2).foregroundColor(.white)
-                
+                VStack() {
+                    Image("QGS-Branding-01").resizable().scaledToFit().frame(width: 180)
                 VStack(spacing: 15) {
-                    Text("Login QGS").font(.largeTitle)
+                    Text("Login").font(.title2)
                         .bold()
                         .padding().foregroundColor(.myPrimary)
                     
@@ -73,6 +74,7 @@ struct Login: View {
             }
             .navigationBarHidden(false)
             
+        }
         }
     }
 }

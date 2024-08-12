@@ -7,30 +7,22 @@
 
 import SwiftUI
 import SwiftData
+import CoreLocation
+import CoreLocationUI
 
 @main
 struct QGSApp: App {
     
-     let accessToken = UserDefaults.standard.string(forKey: "accessToken")
-     let datecreatAt = UserDefaults.standard.string(forKey: "createdAt")
     @State private var locationH = LocationManager()
   
     var body: some Scene {
         WindowGroup {
             
-           if accessToken != nil && datecreatAt == currentDateString {
-               HomeRecord()
-            }else{
-                Login()
-            }
+            SplashView()
             
-        }.modelContainer(for: [UserModel.self,RecordModel.self])
+        }
     }
-    private var currentDateString: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.string(from: Date())
-    }
+
 
  
 }

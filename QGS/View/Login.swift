@@ -8,11 +8,10 @@
 
 
 import SwiftUI
-import SwiftData
+import CoreData
 
 
 struct Login: View {
-    @Environment(\.modelContext) var modelContext
     @State private var email = ""
     @State private var password = ""
     @State private var wrongEmail = 0
@@ -70,7 +69,7 @@ struct Login: View {
                     isActive: $creaturesVM.loginSuccess
                 , label: {
                     EmptyView()
-                }).isDetailLink(false)
+                }).isDetailLink(false).navigationBarBackButtonHidden(true)
             }
             .navigationBarHidden(false)
             

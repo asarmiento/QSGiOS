@@ -11,7 +11,7 @@
 import SwiftUI
 import Foundation
 import UIKit
-import SwiftData
+import CoreData
 
 class LoginHttpPost: ObservableObject {
     @Environment(\.modelContext) var modelContext

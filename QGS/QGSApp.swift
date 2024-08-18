@@ -8,7 +8,6 @@
 import SwiftUI
 import SwiftData
 import CoreLocation
-import CoreLocationUI
 
 @main
 struct QGSApp: App {

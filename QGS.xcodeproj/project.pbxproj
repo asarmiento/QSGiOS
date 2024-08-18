@@ -7,14 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EB4B26B32C5974A60083397F /* CeaturesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B26B22C5974A60083397F /* CeaturesViewModel.swift */; };
 		EB4B26B62C5999150083397F /* LoginHttpPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B26B52C5999150083397F /* LoginHttpPost.swift */; };
-		EB4B26BB2C5AB1230083397F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B26BA2C5AB1230083397F /* UserModel.swift */; };
-		EB4B26BD2C5AB23A0083397F /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B26BC2C5AB23A0083397F /* RecordModel.swift */; };
 		EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1532C6A6A3300E7D361 /* SplashView.swift */; };
 		EB83A1562C6A6BC800E7D361 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1552C6A6BC800E7D361 /* PersistenceController.swift */; };
+		EB83A1582C6ACE0200E7D361 /* ListDataRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1572C6ACE0200E7D361 /* ListDataRecords.swift */; };
+		EB83A15B2C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1592C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld */; };
+		EB83A1722C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1702C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift */; };
+		EB83A1732C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1712C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift */; };
+		EB83A1762C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1742C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift */; };
+		EB83A1772C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1752C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift */; };
+		EB83A1B42C6BA23500E7D361 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */; };
+		EB83A1B62C6BA87E00E7D361 /* PersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1B52C6BA87E00E7D361 /* PersistentStorage.swift */; };
+		EB83A1B82C6BA98700E7D361 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1B72C6BA98700E7D361 /* SceneDelegate.swift */; };
 		EBBC930F2C512EBB00F3C8CD /* QGSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */; };
-		EBBC93112C512EBB00F3C8CD /* screenSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC93102C512EBB00F3C8CD /* screenSaver.swift */; };
 		EBBC93132C512EBC00F3C8CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBBC93122C512EBC00F3C8CD /* Assets.xcassets */; };
 		EBBC93162C512EBC00F3C8CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBBC93152C512EBC00F3C8CD /* Preview Assets.xcassets */; };
 		EBBC93202C512EBC00F3C8CD /* QGSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC931F2C512EBC00F3C8CD /* QGSTests.swift */; };
@@ -47,16 +52,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EB4B26B22C5974A60083397F /* CeaturesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CeaturesViewModel.swift; sourceTree = "<group>"; };
 		EB4B26B52C5999150083397F /* LoginHttpPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHttpPost.swift; sourceTree = "<group>"; };
-		EB4B26BA2C5AB1230083397F /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		EB4B26BC2C5AB23A0083397F /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
 		EB83A1532C6A6A3300E7D361 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		EB83A1552C6A6BC800E7D361 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		EB83A1572C6ACE0200E7D361 /* ListDataRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDataRecords.swift; sourceTree = "<group>"; };
+		EB83A15A2C6ACF2E00E7D361 /* QGSDataBase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QGSDataBase.xcdatamodel; sourceTree = "<group>"; };
+		EB83A1702C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		EB83A1712C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UserEntity+CoreDataProperties.swift"; path = "../../UserEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		EB83A1742C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		EB83A1752C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EB83A1B52C6BA87E00E7D361 /* PersistentStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentStorage.swift; sourceTree = "<group>"; };
+		EB83A1B72C6BA98700E7D361 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		EB86403C2C66400A0072534E /* QGS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QGS.entitlements; sourceTree = "<group>"; };
 		EBBC930B2C512EBB00F3C8CD /* QGS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QGS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QGSApp.swift; sourceTree = "<group>"; };
-		EBBC93102C512EBB00F3C8CD /* screenSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = screenSaver.swift; sourceTree = "<group>"; };
 		EBBC93122C512EBC00F3C8CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBBC93152C512EBC00F3C8CD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EBBC931B2C512EBC00F3C8CD /* QGSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QGSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,8 +122,10 @@
 		EB4B26B92C5AB10B0083397F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EB4B26BA2C5AB1230083397F /* UserModel.swift */,
-				EB4B26BC2C5AB23A0083397F /* RecordModel.swift */,
+				EB83A1742C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift */,
+				EB83A1752C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift */,
+				EB83A1702C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift */,
+				EB83A1712C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -148,11 +160,13 @@
 				EBBC933D2C515F9E00F3C8CD /* Helpers */,
 				EBBC933A2C515E7E00F3C8CD /* View */,
 				EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */,
-				EBBC93102C512EBB00F3C8CD /* screenSaver.swift */,
 				EBBC93122C512EBC00F3C8CD /* Assets.xcassets */,
 				EBBC93142C512EBC00F3C8CD /* Preview Content */,
 				EBBC93382C51336400F3C8CD /* Colors.swift */,
-				EB4B26B22C5974A60083397F /* CeaturesViewModel.swift */,
+				EB83A1592C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld */,
+				EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */,
+				EB83A1B52C6BA87E00E7D361 /* PersistentStorage.swift */,
+				EB83A1B72C6BA98700E7D361 /* SceneDelegate.swift */,
 			);
 			path = QGS;
 			sourceTree = "<group>";
@@ -188,6 +202,7 @@
 				EBBC933B2C515E9400F3C8CD /* Login.swift */,
 				EBBC93402C5161CD00F3C8CD /* CustomTF.swift */,
 				EBE614972C5AE4FA00197660 /* HomeRecord.swift */,
+				EB83A1572C6ACE0200E7D361 /* ListDataRecords.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -336,19 +351,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBBC93112C512EBB00F3C8CD /* screenSaver.swift in Sources */,
+				EB83A15B2C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld in Sources */,
 				EBBC93392C51336400F3C8CD /* Colors.swift in Sources */,
 				EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */,
+				EB83A1B62C6BA87E00E7D361 /* PersistentStorage.swift in Sources */,
 				EBE6149A2C5AFA5D00197660 /* LocationViewController.swift in Sources */,
 				EBBC93412C5161CD00F3C8CD /* CustomTF.swift in Sources */,
-				EB4B26B32C5974A60083397F /* CeaturesViewModel.swift in Sources */,
 				EBBC930F2C512EBB00F3C8CD /* QGSApp.swift in Sources */,
 				EB4B26B62C5999150083397F /* LoginHttpPost.swift in Sources */,
+				EB83A1582C6ACE0200E7D361 /* ListDataRecords.swift in Sources */,
 				EBBC933C2C515E9400F3C8CD /* Login.swift in Sources */,
+				EB83A1722C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift in Sources */,
+				EB83A1732C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift in Sources */,
 				EB83A1562C6A6BC800E7D361 /* PersistenceController.swift in Sources */,
-				EB4B26BB2C5AB1230083397F /* UserModel.swift in Sources */,
-				EB4B26BD2C5AB23A0083397F /* RecordModel.swift in Sources */,
+				EB83A1B42C6BA23500E7D361 /* AppDelegate.swift in Sources */,
 				EBBC933F2C515FC100F3C8CD /* View+extensions.swift in Sources */,
+				EB83A1B82C6BA98700E7D361 /* SceneDelegate.swift in Sources */,
+				EB83A1762C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift in Sources */,
+				EB83A1772C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift in Sources */,
 				EBE6149F2C5B9E9200197660 /* RecordHttpPost.swift in Sources */,
 				EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */,
 			);
@@ -529,8 +549,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -571,8 +592,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -713,6 +735,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		EB83A1592C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EB83A15A2C6ACF2E00E7D361 /* QGSDataBase.xcdatamodel */,
+			);
+			currentVersion = EB83A15A2C6ACF2E00E7D361 /* QGSDataBase.xcdatamodel */;
+			name = QGSDataBase.xcdatamodeld;
+			path = /Users/edinmartinez/Documents/Projects/QGS/QGS/QGSDataBase.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = EBBC93032C512EBB00F3C8CD /* Project object */;
 }

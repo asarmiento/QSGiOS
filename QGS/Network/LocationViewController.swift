@@ -7,12 +7,13 @@
 
 import Foundation
 import CoreLocation
+import CoreLocationUI
 import MapKit
 
 
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    private var locationManager = CLLocationManager()
+    private var locationManager: CLLocationManager = .init()
     
     @Published var latitude: String?
     @Published var longitude: String?
@@ -24,8 +25,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
         }else{
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.startUpdatingLocation()
+            
             print("no esta dando permiso")
         }
     }

@@ -19,15 +19,18 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     override init() {
         super.init()
-        if CLLocationManager.headingAvailable(){
-            locationManager.delegate = self
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.startUpdatingLocation()
-        }else{
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.startUpdatingLocation()
-            print("no esta dando permiso")
-        }
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+//        if CLLocationManager.headingAvailable(){
+//            locationManager.delegate = self
+//            locationManager.requestWhenInUseAuthorization()
+//            locationManager.startUpdatingLocation()
+//        }else{
+//            locationManager.requestWhenInUseAuthorization()
+//            locationManager.startUpdatingLocation()
+//            print("no esta dando permiso")
+//        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

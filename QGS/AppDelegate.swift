@@ -11,7 +11,9 @@ import CoreData
 
 class AppDelegate : UIResponder, UIApplicationDelegate{
     
-    func application(_ application: UIApplication, 
+    var window: UIWindow?
+    
+    func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions lauchOptions: [UIApplication.LaunchOptionsKey : Any]?)  -> Bool {
     return true
     }

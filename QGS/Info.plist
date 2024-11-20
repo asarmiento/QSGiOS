@@ -6,5 +6,9 @@
 	<array>
 		<string>en</string>
 	</array>
+	<key>NSLocationWheInUseUsageDescription</key>
+	<string>Usaremos tu ubicación para el regitro Entrada y Salida del trabajo!!</string>
+	<key>NSLocationAlwaysAndWheInUseUsageDescription</key>
+	<string>Usaremos tu ubicación para el regitro Entrada y Salida del trabajo!!</string>
 </dict>
 </plist>

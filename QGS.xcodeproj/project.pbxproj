@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB029BA02CEBE7DC00952235 /* TotalRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB029B9F2CEBE7DC00952235 /* TotalRecords.swift */; };
+		EB029BA22CEBF3B200952235 /* ListHttpGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB029BA12CEBF3B200952235 /* ListHttpGet.swift */; };
+		EB029BA42CEBF3C900952235 /* TotalHttpGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB029BA32CEBF3C900952235 /* TotalHttpGet.swift */; };
 		EB4B26B62C5999150083397F /* LoginHttpPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B26B52C5999150083397F /* LoginHttpPost.swift */; };
+		EB6D31C92CECCD17000E02E7 /* BoxGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6D31C82CECCD17000E02E7 /* BoxGPS.swift */; };
 		EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1532C6A6A3300E7D361 /* SplashView.swift */; };
 		EB83A1562C6A6BC800E7D361 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1552C6A6BC800E7D361 /* PersistenceController.swift */; };
 		EB83A1582C6ACE0200E7D361 /* ListDataRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1572C6ACE0200E7D361 /* ListDataRecords.swift */; };
@@ -18,7 +22,6 @@
 		EB83A1772C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1752C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift */; };
 		EB83A1B42C6BA23500E7D361 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */; };
 		EB83A1B62C6BA87E00E7D361 /* PersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1B52C6BA87E00E7D361 /* PersistentStorage.swift */; };
-		EB83A1B82C6BA98700E7D361 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1B72C6BA98700E7D361 /* SceneDelegate.swift */; };
 		EBBC930F2C512EBB00F3C8CD /* QGSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */; };
 		EBBC93132C512EBC00F3C8CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBBC93122C512EBC00F3C8CD /* Assets.xcassets */; };
 		EBBC93162C512EBC00F3C8CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBBC93152C512EBC00F3C8CD /* Preview Assets.xcassets */; };
@@ -32,6 +35,9 @@
 		EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE614972C5AE4FA00197660 /* HomeRecord.swift */; };
 		EBE6149A2C5AFA5D00197660 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE614992C5AFA5D00197660 /* LocationViewController.swift */; };
 		EBE6149F2C5B9E9200197660 /* RecordHttpPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */; };
+		EBF9DF9D2CED8E30002D7FA1 /* ListRecordDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9DF9C2CED8E1D002D7FA1 /* ListRecordDetails.swift */; };
+		EBF9DF9F2CED8E4C002D7FA1 /* ListRecordTotals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9DF9E2CED8E38002D7FA1 /* ListRecordTotals.swift */; };
+		EBF9DFA12CED8F2F002D7FA1 /* HeadSecondary.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9DFA02CED8F1C002D7FA1 /* HeadSecondary.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +58,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB029B9F2CEBE7DC00952235 /* TotalRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecords.swift; sourceTree = "<group>"; };
+		EB029BA12CEBF3B200952235 /* ListHttpGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHttpGet.swift; sourceTree = "<group>"; };
+		EB029BA32CEBF3C900952235 /* TotalHttpGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalHttpGet.swift; sourceTree = "<group>"; };
 		EB4B26B52C5999150083397F /* LoginHttpPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHttpPost.swift; sourceTree = "<group>"; };
+		EB6D31C82CECCD17000E02E7 /* BoxGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxGPS.swift; sourceTree = "<group>"; };
 		EB83A1532C6A6A3300E7D361 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		EB83A1552C6A6BC800E7D361 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		EB83A1572C6ACE0200E7D361 /* ListDataRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDataRecords.swift; sourceTree = "<group>"; };
@@ -63,7 +73,6 @@
 		EB83A1752C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB83A1B52C6BA87E00E7D361 /* PersistentStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentStorage.swift; sourceTree = "<group>"; };
-		EB83A1B72C6BA98700E7D361 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		EB86403C2C66400A0072534E /* QGS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QGS.entitlements; sourceTree = "<group>"; };
 		EBBC930B2C512EBB00F3C8CD /* QGS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QGS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QGSApp.swift; sourceTree = "<group>"; };
@@ -82,6 +91,9 @@
 		EBE614992C5AFA5D00197660 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		EBE6149B2C5AFC8300197660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordHttpPost.swift; sourceTree = "<group>"; };
+		EBF9DF9C2CED8E1D002D7FA1 /* ListRecordDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRecordDetails.swift; sourceTree = "<group>"; };
+		EBF9DF9E2CED8E38002D7FA1 /* ListRecordTotals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRecordTotals.swift; sourceTree = "<group>"; };
+		EBF9DFA02CED8F1C002D7FA1 /* HeadSecondary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadSecondary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +127,8 @@
 				EB4B26B52C5999150083397F /* LoginHttpPost.swift */,
 				EBE614992C5AFA5D00197660 /* LocationViewController.swift */,
 				EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */,
+				EB029BA12CEBF3B200952235 /* ListHttpGet.swift */,
+				EB029BA32CEBF3C900952235 /* TotalHttpGet.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -128,6 +142,15 @@
 				EB83A1712C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		EB6D31C72CECCCC7000E02E7 /* UtilitRecords */ = {
+			isa = PBXGroup;
+			children = (
+				EBF9DFA02CED8F1C002D7FA1 /* HeadSecondary.swift */,
+				EB6D31C82CECCD17000E02E7 /* BoxGPS.swift */,
+			);
+			path = UtilitRecords;
 			sourceTree = "<group>";
 		};
 		EBBC93022C512EBB00F3C8CD = {
@@ -166,7 +189,6 @@
 				EB83A1592C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld */,
 				EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */,
 				EB83A1B52C6BA87E00E7D361 /* PersistentStorage.swift */,
-				EB83A1B72C6BA98700E7D361 /* SceneDelegate.swift */,
 			);
 			path = QGS;
 			sourceTree = "<group>";
@@ -199,10 +221,14 @@
 		EBBC933A2C515E7E00F3C8CD /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EBF9DF9E2CED8E38002D7FA1 /* ListRecordTotals.swift */,
+				EBF9DF9C2CED8E1D002D7FA1 /* ListRecordDetails.swift */,
+				EB6D31C72CECCCC7000E02E7 /* UtilitRecords */,
 				EBBC933B2C515E9400F3C8CD /* Login.swift */,
 				EBBC93402C5161CD00F3C8CD /* CustomTF.swift */,
 				EBE614972C5AE4FA00197660 /* HomeRecord.swift */,
 				EB83A1572C6ACE0200E7D361 /* ListDataRecords.swift */,
+				EB029B9F2CEBE7DC00952235 /* TotalRecords.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -283,7 +309,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					EBBC930A2C512EBB00F3C8CD = {
 						CreatedOnToolsVersion = 15.4;
@@ -353,8 +379,11 @@
 			files = (
 				EB83A15B2C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld in Sources */,
 				EBBC93392C51336400F3C8CD /* Colors.swift in Sources */,
+				EB6D31C92CECCD17000E02E7 /* BoxGPS.swift in Sources */,
 				EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */,
 				EB83A1B62C6BA87E00E7D361 /* PersistentStorage.swift in Sources */,
+				EB029BA22CEBF3B200952235 /* ListHttpGet.swift in Sources */,
+				EBF9DFA12CED8F2F002D7FA1 /* HeadSecondary.swift in Sources */,
 				EBE6149A2C5AFA5D00197660 /* LocationViewController.swift in Sources */,
 				EBBC93412C5161CD00F3C8CD /* CustomTF.swift in Sources */,
 				EBBC930F2C512EBB00F3C8CD /* QGSApp.swift in Sources */,
@@ -362,11 +391,14 @@
 				EB83A1582C6ACE0200E7D361 /* ListDataRecords.swift in Sources */,
 				EBBC933C2C515E9400F3C8CD /* Login.swift in Sources */,
 				EB83A1722C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift in Sources */,
+				EB029BA02CEBE7DC00952235 /* TotalRecords.swift in Sources */,
 				EB83A1732C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift in Sources */,
+				EBF9DF9F2CED8E4C002D7FA1 /* ListRecordTotals.swift in Sources */,
 				EB83A1562C6A6BC800E7D361 /* PersistenceController.swift in Sources */,
+				EB029BA42CEBF3C900952235 /* TotalHttpGet.swift in Sources */,
 				EB83A1B42C6BA23500E7D361 /* AppDelegate.swift in Sources */,
 				EBBC933F2C515FC100F3C8CD /* View+extensions.swift in Sources */,
-				EB83A1B82C6BA98700E7D361 /* SceneDelegate.swift in Sources */,
+				EBF9DF9D2CED8E30002D7FA1 /* ListRecordDetails.swift in Sources */,
 				EB83A1762C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift in Sources */,
 				EB83A1772C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift in Sources */,
 				EBE6149F2C5B9E9200197660 /* RecordHttpPost.swift in Sources */,
@@ -536,7 +568,7 @@
 				CODE_SIGN_ENTITLEMENTS = QGS/QGS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
 				DEVELOPMENT_TEAM = 8GH8HVSH94;
 				ENABLE_PREVIEWS = YES;
@@ -551,12 +583,12 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.QGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -579,7 +611,7 @@
 				CODE_SIGN_ENTITLEMENTS = QGS/QGS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
 				DEVELOPMENT_TEAM = 8GH8HVSH94;
 				ENABLE_PREVIEWS = YES;
@@ -594,12 +626,12 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.QGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -616,7 +648,6 @@
 		EBBC93332C512EBC00F3C8CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -640,7 +671,6 @@
 		EBBC93342C512EBC00F3C8CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -664,7 +694,6 @@
 		EBBC93362C512EBC00F3C8CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -681,7 +710,6 @@
 		EBBC93372C512EBC00F3C8CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;

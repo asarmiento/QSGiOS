@@ -9,48 +9,56 @@ import Foundation
 import CoreLocation
 import CoreLocationUI
 import MapKit
+import SwiftUI
 
 
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    private var locationManager: CLLocationManager?
-    private var userLocation: CLLocation?
-     
+    static let shared = LocationManager()
+    private let locationManager: CLLocationManager = CLLocationManager()
+      
     @Published var latitude: Double = 0
     @Published var longitude: Double = 0
     
     override init() {
        super.init()
-        requestLocation()
+        do{
+          try  setupLocationManager()
+        }catch{
+            requestLocationPermission()
+            print("Error: prueba")
+        }
         
     }
-    private func requestLocation(){
-       
-            guard CLLocationManager.locationServicesEnabled() else {
-                return
-            }
+
+    private func setupLocationManager()throws{
+        
+        guard CLLocationManager.locationServicesEnabled() else {
             
-            locationManager = CLLocationManager()
-            locationManager?.delegate = self
-            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager?.requestAlwaysAuthorization()
-            locationManager?.startUpdatingLocation()
-        
-        switch self.locationManager?.authorizationStatus { // check authorizationStatus instead of locationServicesEnabled()
-                case .notDetermined, .authorizedWhenInUse:
-                    self.locationManager?.requestAlwaysAuthorization()
-                case .restricted, .denied:
-                    print("ALERT: no location services access")
-            case .authorizedAlways:
-                break
-            case .none, .some(_):
-                break
-            }
-        
+          
+            requestLocationPermission()
+            return
+        }
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.pausesLocationUpdatesAutomatically = false
+        locationManager.distanceFilter = kCLDistanceFilterNone
+  
+    }
+    func requestLocationPermission(){
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
+          }
+    
+    func startBackgroundLocationUpdates(){
+        locationManager.startUpdatingLocation()
     }
     
+   
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let bestLocation = locations.last else {
+            print("si tenemos la mejor localizacion")
             return
         }
         latitude = Double(bestLocation.coordinate.latitude)
@@ -60,6 +68,27 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to find user's location: \(error.localizedDescription)")
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        
+        switch manager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+           
+            print("Location authorization granted. ")
+        case .denied, .restricted:
+           
+            manager.requestWhenInUseAuthorization()
+            print("Location authorization denied. ")
+        case .notDetermined:
+           
+            print("Location authorization not determined.")
+        @unknown default:
+           
+            print("Estado en autorizacion deconocido ")
+        }
+        requestLocationPermission()
+        print("Location authorization status changed. ")
     }
 }
 ////MARK: - CLLocationManagerDelegate

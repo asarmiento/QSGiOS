@@ -13,17 +13,31 @@ import CoreData
 class TotalHttpGet:ObservableObject {
     
     @Environment(\.modelContext) var modelContext
-    
+    var idData:Int?
     @Published var dataReturnTotal: [String: Any]?
     
     func consultTotalResponse(idData:Int){
         
         
-        let url =   URL(string:   "https://api.friendlypayroll.net/api/projects/total-time-work-employees/"+String(idData))!
+        let url =   URL(string:   Endpoints.getListTotal+String(idData))!
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("Bearer ", forHTTPHeaderField: "Authorization")
+        
+        request.httpBody = nil
+        request.timeoutInterval = 10
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data else { return }
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: [])
+                self.dataReturnTotal = json as? [String: Any]
+               // print(self?.dataReturnTotal)
+            } catch {
+                print(error)
+            }
+        }
     }
 }

@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftData
-import CoreLocation
 
 @main
 struct QGSApp: App {
@@ -19,7 +18,7 @@ struct QGSApp: App {
             
             SplashView()
             
-        }
+        }.modelContainer(for: [RecordModel.self, UserModel.self])
     }
 
 

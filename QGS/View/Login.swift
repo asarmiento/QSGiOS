@@ -9,15 +9,18 @@
 
 import SwiftUI
 import CoreData
+import CoreLocation
 
 
 struct Login: View {
-    @State private var email = ""
-    @State private var password = ""
-    @State private var wrongEmail = 0
-    @State private var wrongPassword = 0
+    //Variables del Login
+    @State private var email: String = "asarmiento@sistemasamigableslatam.com"
+    @State private var password: String = "secret"
+    @State private var wrongEmail: Bool = false
+    @State private var wrongPassword: Bool = false
     @State private var showingLoginScreen = false
     @StateObject var creaturesVM = LoginHttpPost()
+    @State private var locationH = LocationManager()
     
     var body: some View {
         NavigationView {
@@ -48,20 +51,25 @@ struct Login: View {
                         .background(Color.black.opacity(0.05))
                         .cornerRadius(10)
                     
-                    Button("Login") {
-                        creaturesVM.executeAPI(email: email, password: password)
-                    }
-                    .frame(width: 300, height: 50)
-                    .background(.red)
-                    .buttonStyle(.bordered)
-                    .tint(.white)
-                    .border(Color.black, width: 0.02)
+                   
+                        
                     
-                    Text("Registra tu ingreso y Salida")
-                        .font(.footnote)
-                        .underline()
-                        .foregroundStyle(.tertiary)
-                        .padding()
+                        Button("Iniciar Sesión ") {
+                            locationH.requestLocationPermission()
+                            creaturesVM.executeAPI(email: email, password: password)
+                        }
+                        .frame(width: 300, height: 50)
+                        .background(.red)
+                        .buttonStyle(.bordered)
+                        .tint(.white)
+                        .border(Color.black, width: 0.02)
+                        Text("Registra tu ingreso y Salida")
+                            .font(.footnote)
+                            .underline()
+                            .foregroundStyle(.tertiary)
+                            .padding()
+              
+                    
                 }
         
                 NavigationLink(
@@ -76,6 +84,16 @@ struct Login: View {
         }
         }
     }
+    func validateEmail(_ email: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        return email.range(of: emailRegex, options: .regularExpression) != nil
+    }
+    
+    func validatePassword(_ password: String) -> Bool {
+        return password.count >= 8
+    }
+    
+
 }
 
 

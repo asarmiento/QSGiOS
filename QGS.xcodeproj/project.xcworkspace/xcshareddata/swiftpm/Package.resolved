@@ -1,0 +1,24 @@
+{
+  "originHash" : "d5111365f30bd63ee58abc0f9b7e38698b078a61cdab599e9a649dcbf74af209",
+  "pins" : [
+    {
+      "identity" : "restapi",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Gujci/RESTAPI.git",
+      "state" : {
+        "revision" : "bd70ae5f9c5b7b127457551c68e199a1bd2101cd",
+        "version" : "0.12.2"
+      }
+    },
+    {
+      "identity" : "swiftyjson",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftyJSON/SwiftyJSON.git",
+      "state" : {
+        "revision" : "af76cf3ef710b6ca5f8c05f3a31307d44a3c5828",
+        "version" : "5.0.2"
+      }
+    }
+  ],
+  "version" : 3
+}

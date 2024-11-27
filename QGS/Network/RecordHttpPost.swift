@@ -7,11 +7,12 @@
 import SwiftUI
 import Foundation
 import UIKit
-
+import SwiftData
 
 
 class RecordHttpPost: ObservableObject {
-    
+    @Environment(\.modelContext) private var modelContext
+     
     func sendPostJsonAPI(params: [String: Any], completion: @escaping (Bool, String?) -> Void) {
         guard let accessToken = retrieveAccessToken(),
               let employeeId = retrieveEmployeeId()
@@ -54,7 +55,11 @@ class RecordHttpPost: ObservableObject {
                         if let data = data,
                            let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                             message = json["message"] as? String
+                            let dataDetails = json["data"] as? [String: Any]
+                            print(" estadmos revisando data \(String(describing: dataDetails))")
+                          
                         }
+                        
                     }
                     
                     DispatchQueue.main.async {

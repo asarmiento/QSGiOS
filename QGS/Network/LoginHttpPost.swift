@@ -11,12 +11,12 @@
 import SwiftUI
 import Foundation
 import UIKit
-import CoreData
+import SwiftData
 
 class LoginHttpPost: ObservableObject {
-    @Environment(\.modelContext) var modelContext
-//    @Query var userModel: UserModel
-  //  @State private var path = UserModel()
+    @Environment(\.modelContext) private var modelContext
+   // @Query(sort:\RecordModel.id, order:.forward)  var records: RecordModel
+  //  @Query(sort:\RecordModel.id, order:.forward)  var users: UserModel
     @Published var loginSuccess: Bool = false
     @Published var createdAt: String? // Property to store createdAt date
     @Published var dataReturnLogin: [String: Any]?
@@ -25,14 +25,16 @@ class LoginHttpPost: ObservableObject {
         // Retrieve createdAt from UserDefaults if it exists
         self.createdAt = UserDefaults.standard.string(forKey: "createdAt")
     }
-
+ 
     func executeAPI(email: String, password: String) {
-        let url =   URL(string:   "https://api.friendlypayroll.net/api/login")!
+
+        let url =   URL(string:   Endpoints.login)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
 
+        
         let params: [String: Any] = [
             "email": email,
             "password": password
@@ -45,7 +47,9 @@ class LoginHttpPost: ObservableObject {
                 if let data = data,
                    let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any],
                    let status = json["status"] as? Bool {
-
+                    let dataUser = json["data"] as? [String: Any]
+                    print(" revisaremos resultado de login \(dataUser)")
+                    
                     DispatchQueue.main.async {
                         self?.loginSuccess = status
                     }

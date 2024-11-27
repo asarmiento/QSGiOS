@@ -3,15 +3,23 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		EB029BA02CEBE7DC00952235 /* TotalRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB029B9F2CEBE7DC00952235 /* TotalRecords.swift */; };
 		EB029BA22CEBF3B200952235 /* ListHttpGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB029BA12CEBF3B200952235 /* ListHttpGet.swift */; };
 		EB029BA42CEBF3C900952235 /* TotalHttpGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB029BA32CEBF3C900952235 /* TotalHttpGet.swift */; };
+		EB345D142CF4BC42001A62C8 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D132CF4BC42001A62C8 /* ModalView.swift */; };
+		EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D152CF6A47B001A62C8 /* RecordModel.swift */; };
+		EB345D182CF6DBB1001A62C8 /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D172CF6DB9F001A62C8 /* JsonServices.swift */; };
+		EB345D1A2CF74DA8001A62C8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D192CF74D9D001A62C8 /* Utils.swift */; };
+		EB345D1D2CF77CC0001A62C8 /* RESTAPI in Frameworks */ = {isa = PBXBuildFile; productRef = EB345D1C2CF77CC0001A62C8 /* RESTAPI */; };
+		EB345D1F2CF77CC0001A62C8 /* RESTAPIImage in Frameworks */ = {isa = PBXBuildFile; productRef = EB345D1E2CF77CC0001A62C8 /* RESTAPIImage */; };
+		EB345D212CF781ED001A62C8 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D202CF781E7001A62C8 /* UserModel.swift */; };
 		EB4B26B62C5999150083397F /* LoginHttpPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B26B52C5999150083397F /* LoginHttpPost.swift */; };
 		EB6D31C92CECCD17000E02E7 /* BoxGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6D31C82CECCD17000E02E7 /* BoxGPS.swift */; };
+		EB6F03A22CEE172500190C0E /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6F03A12CEE171300190C0E /* Endpoints.swift */; };
 		EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1532C6A6A3300E7D361 /* SplashView.swift */; };
 		EB83A1562C6A6BC800E7D361 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1552C6A6BC800E7D361 /* PersistenceController.swift */; };
 		EB83A1582C6ACE0200E7D361 /* ListDataRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1572C6ACE0200E7D361 /* ListDataRecords.swift */; };
@@ -61,8 +69,14 @@
 		EB029B9F2CEBE7DC00952235 /* TotalRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecords.swift; sourceTree = "<group>"; };
 		EB029BA12CEBF3B200952235 /* ListHttpGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHttpGet.swift; sourceTree = "<group>"; };
 		EB029BA32CEBF3C900952235 /* TotalHttpGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalHttpGet.swift; sourceTree = "<group>"; };
+		EB345D132CF4BC42001A62C8 /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
+		EB345D152CF6A47B001A62C8 /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
+		EB345D172CF6DB9F001A62C8 /* JsonServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonServices.swift; sourceTree = "<group>"; };
+		EB345D192CF74D9D001A62C8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		EB345D202CF781E7001A62C8 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		EB4B26B52C5999150083397F /* LoginHttpPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHttpPost.swift; sourceTree = "<group>"; };
 		EB6D31C82CECCD17000E02E7 /* BoxGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxGPS.swift; sourceTree = "<group>"; };
+		EB6F03A12CEE171300190C0E /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		EB83A1532C6A6A3300E7D361 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		EB83A1552C6A6BC800E7D361 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		EB83A1572C6ACE0200E7D361 /* ListDataRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDataRecords.swift; sourceTree = "<group>"; };
@@ -96,11 +110,18 @@
 		EBF9DFA02CED8F1C002D7FA1 /* HeadSecondary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadSecondary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		EB345D242CF79E07001A62C8 /* Buttons */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Buttons; sourceTree = "<group>"; };
+		EB345D282CF79E58001A62C8 /* Utils */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utils; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		EBBC93082C512EBB00F3C8CD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB345D1D2CF77CC0001A62C8 /* RESTAPI in Frameworks */,
+				EB345D1F2CF77CC0001A62C8 /* RESTAPIImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +145,8 @@
 		EB4B26B42C5998F80083397F /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				EB345D192CF74D9D001A62C8 /* Utils.swift */,
+				EB6F03A12CEE171300190C0E /* Endpoints.swift */,
 				EB4B26B52C5999150083397F /* LoginHttpPost.swift */,
 				EBE614992C5AFA5D00197660 /* LocationViewController.swift */,
 				EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */,
@@ -136,10 +159,13 @@
 		EB4B26B92C5AB10B0083397F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EB345D202CF781E7001A62C8 /* UserModel.swift */,
+				EB345D152CF6A47B001A62C8 /* RecordModel.swift */,
 				EB83A1742C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift */,
 				EB83A1752C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift */,
 				EB83A1702C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift */,
 				EB83A1712C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift */,
+				EB345D132CF4BC42001A62C8 /* ModalView.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -147,6 +173,7 @@
 		EB6D31C72CECCCC7000E02E7 /* UtilitRecords */ = {
 			isa = PBXGroup;
 			children = (
+				EB345D242CF79E07001A62C8 /* Buttons */,
 				EBF9DFA02CED8F1C002D7FA1 /* HeadSecondary.swift */,
 				EB6D31C82CECCD17000E02E7 /* BoxGPS.swift */,
 			);
@@ -176,6 +203,7 @@
 		EBBC930D2C512EBB00F3C8CD /* QGS */ = {
 			isa = PBXGroup;
 			children = (
+				EB345D282CF79E58001A62C8 /* Utils */,
 				EB86403C2C66400A0072534E /* QGS.entitlements */,
 				EBE6149B2C5AFC8300197660 /* Info.plist */,
 				EB4B26B92C5AB10B0083397F /* Model */,
@@ -236,6 +264,7 @@
 		EBBC933D2C515F9E00F3C8CD /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				EB345D172CF6DB9F001A62C8 /* JsonServices.swift */,
 				EBBC933E2C515FC100F3C8CD /* View+extensions.swift */,
 				EB83A1532C6A6A3300E7D361 /* SplashView.swift */,
 				EB83A1552C6A6BC800E7D361 /* PersistenceController.swift */,
@@ -258,8 +287,14 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				EB345D242CF79E07001A62C8 /* Buttons */,
+				EB345D282CF79E58001A62C8 /* Utils */,
+			);
 			name = QGS;
 			packageProductDependencies = (
+				EB345D1C2CF77CC0001A62C8 /* RESTAPI */,
+				EB345D1E2CF77CC0001A62C8 /* RESTAPIImage */,
 			);
 			productName = QGS;
 			productReference = EBBC930B2C512EBB00F3C8CD /* QGS.app */;
@@ -334,6 +369,7 @@
 			);
 			mainGroup = EBBC93022C512EBB00F3C8CD;
 			packageReferences = (
+				EB345D1B2CF77CC0001A62C8 /* XCRemoteSwiftPackageReference "RESTAPI" */,
 			);
 			productRefGroup = EBBC930C2C512EBB00F3C8CD /* Products */;
 			projectDirPath = "";
@@ -385,6 +421,8 @@
 				EB029BA22CEBF3B200952235 /* ListHttpGet.swift in Sources */,
 				EBF9DFA12CED8F2F002D7FA1 /* HeadSecondary.swift in Sources */,
 				EBE6149A2C5AFA5D00197660 /* LocationViewController.swift in Sources */,
+				EB345D182CF6DBB1001A62C8 /* JsonServices.swift in Sources */,
+				EB345D1A2CF74DA8001A62C8 /* Utils.swift in Sources */,
 				EBBC93412C5161CD00F3C8CD /* CustomTF.swift in Sources */,
 				EBBC930F2C512EBB00F3C8CD /* QGSApp.swift in Sources */,
 				EB4B26B62C5999150083397F /* LoginHttpPost.swift in Sources */,
@@ -393,13 +431,17 @@
 				EB83A1722C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift in Sources */,
 				EB029BA02CEBE7DC00952235 /* TotalRecords.swift in Sources */,
 				EB83A1732C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift in Sources */,
+				EB6F03A22CEE172500190C0E /* Endpoints.swift in Sources */,
 				EBF9DF9F2CED8E4C002D7FA1 /* ListRecordTotals.swift in Sources */,
 				EB83A1562C6A6BC800E7D361 /* PersistenceController.swift in Sources */,
+				EB345D142CF4BC42001A62C8 /* ModalView.swift in Sources */,
 				EB029BA42CEBF3C900952235 /* TotalHttpGet.swift in Sources */,
 				EB83A1B42C6BA23500E7D361 /* AppDelegate.swift in Sources */,
 				EBBC933F2C515FC100F3C8CD /* View+extensions.swift in Sources */,
 				EBF9DF9D2CED8E30002D7FA1 /* ListRecordDetails.swift in Sources */,
+				EB345D212CF781ED001A62C8 /* UserModel.swift in Sources */,
 				EB83A1762C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift in Sources */,
+				EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */,
 				EB83A1772C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift in Sources */,
 				EBE6149F2C5B9E9200197660 /* RecordHttpPost.swift in Sources */,
 				EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */,
@@ -568,28 +610,29 @@
 				CODE_SIGN_ENTITLEMENTS = QGS/QGS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
-				DEVELOPMENT_TEAM = 8GH8HVSH94;
+				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QGS/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "I want to access your location to register you entry in and out work, to payment you hours the work.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Usaremos tu ubicacion para el registro entrada y salida del trabajo";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Usaremos tu ubicacion para el registro entrada y salida del trabajo";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.QGS;
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -611,28 +654,29 @@
 				CODE_SIGN_ENTITLEMENTS = QGS/QGS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
-				DEVELOPMENT_TEAM = 8GH8HVSH94;
+				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QGS/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "I want to access your location to register you entry in and out work, to payment you hours the work.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Usaremos tu ubicacion para el registro entrada y salida del trabajo";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Usaremos tu ubicacion para el registro entrada y salida del trabajo";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.QGS;
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -649,16 +693,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YFW8984WKD;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y6VX3B6HKP;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = Y6VX3B6HKP;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.QGSTests1;
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = om.friendlysystemgroup.QGSTests1;
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = om.friendlysystemgroup.QGSTests1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.QGSCheckInTests1;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = om.friendlysystemgroup.QGSCheckInTests1;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = om.friendlysystemgroup.QGSCheckInTests1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -675,13 +722,14 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = YFW8984WKD;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8GH8HVSH94;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 8GH8HVSH94;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.QGSTests1;
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = om.friendlysystemgroup.QGSTests1;
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = om.friendlysystemgroup.QGSTests1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.QGSCheckInTests1;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = om.friendlysystemgroup.QGSCheckInTests1;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = om.friendlysystemgroup.QGSCheckInTests1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -694,11 +742,13 @@
 		EBBC93362C512EBC00F3C8CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y6VX3B6HKP;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.QGSUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.QGSCheckInUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -710,11 +760,13 @@
 		EBBC93372C512EBC00F3C8CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8GH8HVSH94;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.QGSUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.QGSCheckInUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -763,6 +815,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EB345D1B2CF77CC0001A62C8 /* XCRemoteSwiftPackageReference "RESTAPI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Gujci/RESTAPI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.12.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EB345D1C2CF77CC0001A62C8 /* RESTAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB345D1B2CF77CC0001A62C8 /* XCRemoteSwiftPackageReference "RESTAPI" */;
+			productName = RESTAPI;
+		};
+		EB345D1E2CF77CC0001A62C8 /* RESTAPIImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB345D1B2CF77CC0001A62C8 /* XCRemoteSwiftPackageReference "RESTAPI" */;
+			productName = RESTAPIImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		EB83A1592C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld */ = {

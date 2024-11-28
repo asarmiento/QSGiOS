@@ -20,7 +20,7 @@ struct QGSApp: App {
             
             SplashView()
             
-        }
+        }.modelContainer(for: UserModel.self)
     }
 
 

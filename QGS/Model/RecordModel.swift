@@ -10,18 +10,18 @@ import SwiftData
 @Model
 class RecordModel {
     @Attribute(.unique) var id: UUID
-    var ddate: String
+    var date: String
     var latitud: Double
     var longitud: Double
-    var dtime: String
+    var time: String
     var type: String
     
-    init(id: UUID, ddate: String, latitud: Double, longitud: Double, dtime: String, type: String) {
-        self.id = id
-        self.ddate = ddate
+    init( date: String, latitud: Double, longitud: Double, time: String, type: String) {
+        self.id = UUID()
+        self.date = date
         self.latitud = latitud
         self.longitud = longitud
-        self.dtime = dtime
+        self.time = time
         self.type = type
     }
 }

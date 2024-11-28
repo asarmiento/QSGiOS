@@ -5,18 +5,14 @@
 //  Created by Edin Martinez on 7/30/24.
 //
 
-
-
-
 import SwiftUI
 import Foundation
 import UIKit
 import SwiftData
-
 class LoginHttpPost: ObservableObject {
     @Environment(\.modelContext) var modelContext
-//    @Query var userModel: UserModel
-  //  @State private var path = UserModel()
+  
+    @Published var isLoading: Bool = false
     @Published var loginSuccess: Bool = false
     @Published var createdAt: String? // Property to store createdAt date
     @Published var dataReturnLogin: [String: Any]?
@@ -45,7 +41,8 @@ class LoginHttpPost: ObservableObject {
                 if let data = data,
                    let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any],
                    let status = json["status"] as? Bool {
-
+                    let dataJson = json["user"]
+                    print("Estamos probando en linea \(String(describing: (dataJson)))")
                     DispatchQueue.main.async {
                         self?.loginSuccess = status
                     }

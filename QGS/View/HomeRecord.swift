@@ -64,8 +64,8 @@ struct HomeRecord: View {
                     Text("Usted podra registrar su ingreso al trabajo y su salida para llegar control de sus horas de trabajo de cada dia").font(.system(size: 20)).font(.title3).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/).foregroundStyle(Color.black).padding(10).frame(width:370,height: 150,alignment: .center) .navigationTitle("Bienvenido(a)").font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).frame(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     VStack {
                         Group {
-                            Text(" Longitude: \(locationManager.longitude ?? "39.384974")")
-                            Text(" Latitude: \(locationManager.latitude ?? "-84.530861")")
+                            Text(" Longitude: \(String(locationManager.longitude) )")
+                            Text(" Latitude: \(String(locationManager.latitude) )")
                         }
                         .frame(width: 350, height: 50, alignment: .leading)
                         .font(.title)
@@ -79,8 +79,8 @@ struct HomeRecord: View {
                                     "type": "e",
                                     "time": getCurrentTime(),
                                     "date": getCurrentDate(),
-                                    "latitude": locationManager.latitude ?? "",
-                                    "longitude": locationManager.longitude ?? "",
+                                    "latitude": locationManager.latitude ,
+                                    "longitude": locationManager.longitude ,
                                 ]
                                 
                                 creaturesVM.sendPostJsonAPI(params: params) { success, _ in
@@ -104,8 +104,8 @@ struct HomeRecord: View {
                                     "type": "s",
                                     "time": getCurrentTime(),
                                     "date": getCurrentDate(),
-                                    "latitude": locationManager.latitude ?? "",
-                                    "longitude": locationManager.longitude ?? "",
+                                    "latitude": locationManager.latitude ,
+                                    "longitude": locationManager.longitude,
                                 ]
                                 
                                 creaturesVM.sendPostJsonAPI(params: params) { success, message in

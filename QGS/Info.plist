@@ -3,8 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleLocalizations</key>
-	<array>
-		<string>en</string>
-	</array>
+	<string></string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Es Obligatorio localizacion para registrar ingreso y salida del trabajo</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Es Obligatorio localizacion para registrar ingreso y salida del trabajo</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Es Obligatorio localizacion para registrar ingreso y salida del trabajo</string>
 </dict>
 </plist>

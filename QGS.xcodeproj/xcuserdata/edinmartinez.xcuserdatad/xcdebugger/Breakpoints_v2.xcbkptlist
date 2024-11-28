@@ -20,34 +20,6 @@
             landmarkType = "3">
             <Locations>
                <Location
-                  uuid = "77DD8717-EAD0-42BC-9C43-4708B86D081F - 95f942cf447f2633"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QGS.UserModel.deinit"
-                  moduleName = "QGS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/edinmartinez/Documents/Projects/QGS/QGS/Model/UserModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0">
-               </Location>
-               <Location
-                  uuid = "77DD8717-EAD0-42BC-9C43-4708B86D081F - 706dc0ab74ae5208"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "QGS.UserModel.__deallocating_deinit"
-                  moduleName = "QGS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/edinmartinez/Documents/Projects/QGS/QGS/Model/UserModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0">
-               </Location>
-               <Location
                   uuid = "77DD8717-EAD0-42BC-9C43-4708B86D081F - 1b226436cf983d1c"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
@@ -90,6 +62,52 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1"
             endingLineNumber = "1">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5E02B063-BDC7-451A-9EB7-5ABE9CA005F5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QGS/Network/LocationViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "setupLocationManager()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5E02B063-BDC7-451A-9EB7-5ABE9CA005F5 - d6d3d2ecc13bb047"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "QGS.LocationManager.setupLocationManager() throws -&gt; ()"
+                  moduleName = "QGS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/edinmartinez/Documents/Projects/QGS/QGS/Network/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40">
+               </Location>
+               <Location
+                  uuid = "5E02B063-BDC7-451A-9EB7-5ABE9CA005F5 - eeba3f72d65011d6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "QGS.LocationManager.locationManager(_: __C.CLLocationManager, didUpdateLocations: Swift.Array&lt;__C.CLLocation&gt;) -&gt; ()"
+                  moduleName = "QGS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/edinmartinez/Documents/Projects/QGS/QGS/Network/LocationViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

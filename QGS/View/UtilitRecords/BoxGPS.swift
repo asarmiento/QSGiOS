@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BoxGPS:View
 {
-    @StateObject var locationManager = LocationManager()
+    @StateObject var locationManager: LocationManager = LocationManager()
     
     var body: some View {
         HStack{

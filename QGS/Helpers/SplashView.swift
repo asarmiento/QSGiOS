@@ -22,8 +22,8 @@ struct SplashView: View {
         if isActive {
             
             if accessToken != nil && datecreatAt == currentDateString {
-                HomeRecord()
-                    .navigationBarBackButtonHidden(false)
+//                HomeRecord( users: nil)
+//                    .navigationBarBackButtonHidden(false)
                   
              }else{
                  Login()

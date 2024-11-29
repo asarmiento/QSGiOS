@@ -52,11 +52,20 @@ struct Login: View {
                         .cornerRadius(10)
                     
                    
-                        
+                    
                     
                         Button("Iniciar Sesión ") {
-                            locationH.requestLocationPermission()
-                            creaturesVM.executeAPI(email: email, password: password)
+                            Task{
+                                locationH.requestLocationPermission()
+                                var loginUser =  await creaturesVM.executeAPI(email: email, password: password)
+                                NavigationLink(
+                                    destination: HomeRecord(users : creaturesVM.loginUser!),
+                                    isActive: $creaturesVM.loginSuccess
+                                    
+                                , label: {
+                                    EmptyView()
+                                }).isDetailLink(false).navigationBarBackButtonHidden(true)                            }
+                            
                         }
                         .frame(width: 300, height: 50)
                         .background(.red)
@@ -72,12 +81,7 @@ struct Login: View {
                     
                 }
         
-                NavigationLink(
-                    destination: HomeRecord(),
-                    isActive: $creaturesVM.loginSuccess
-                , label: {
-                    EmptyView()
-                }).isDetailLink(false).navigationBarBackButtonHidden(true)
+                
             }
             .navigationBarHidden(false)
             

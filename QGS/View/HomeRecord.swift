@@ -152,9 +152,9 @@ struct HomeRecord: View {
 }
 
 
-#Preview {
-    HomeRecord()
-}
+//#Preview {
+//    HomeRecord()
+//}
 
 
 

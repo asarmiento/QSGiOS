@@ -9,8 +9,8 @@ import Foundation
 import SwiftData
 
 @Model
-class RecordModel {
-     var id: UUID = UUID()
+final class RecordModel {
+    @Attribute(.unique) var id: UUID = UUID()
      var latitude: Double
      var longitude: Double
      var type: String

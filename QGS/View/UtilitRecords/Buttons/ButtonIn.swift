@@ -10,65 +10,64 @@ import SwiftUI
 struct ButtonIn: View {
     @StateObject private var locationManager = LocationManager()
     @StateObject private var creaturesVM = RecordHttpPost()
-    @StateObject private var loginHttpPost = LoginHttpPost()
-    @State private var isEntradaButtonHidden = false
-    @State private var isSalidaButtonHidden = true
+    @State private var isEntradaButtonHidden = true
+    @State private var isSalidaButtonHidden = false
     @State private var activeIs = false
-    
+    @State private var latitude: String?
+    @State private var longitude: String?
+    let date: Date = Date()
     @State private var salidaMessage: String? = nil
     var body: some View {
-        if !isEntradaButtonHidden {
+        VStack {
+        HStack{
             Button("Entrada") {
                 let params: [String: Any] = [
                     "type": "e" ,
-                    "time": getCurrentTime() ,
-                    "date": getCurrentDate() ,
+                    "time": currentTimeString ,
+                    "date": currentDateString ,
                     "latitude": (locationManager.longitude ) ,
                     "longitude": (locationManager.latitude )  ,
                 ]
-                let latitude = locationManager.latitude
-                let longitude = locationManager.longitude
                 
-                createRecord(type: "e",
-                             time: getCurrentTime(),
-                             date: getCurrentDate(),
-                             latitude:(latitude),
-                             longitude:(longitude))
-                creaturesVM.sendPostJsonAPI(params: params) { success, _ in
+                latitude = (locationManager.latitude )
+                longitude = (locationManager.longitude )
+                creaturesVM.sendPostJsonAPI(params: params) { success, message in
                     if success {
-                        isEntradaButtonHidden = true
-                        updateSalidaButtonVisibility()
+                        salidaMessage = "La entrada fue registrada con exito."
+                        isEntradaButtonHidden = false
+                        isSalidaButtonHidden = true
+                    } else{
+                        salidaMessage = "Genero un error al guardar la entrada favor de intentarlo de nuevo oh reporte lo."
                     }
                 }
             }
             .padding()
             .frame(width: 150, height: 50, alignment: .center)
-            .background(Color.red)
+            .background(Color.myPrimary)
             .cornerRadius(10)
             .foregroundColor(.white)
-        }
-        
-        if !isSalidaButtonHidden {
+            .disabled(isSalidaButtonHidden)
+            
+            
+            
             Button("Salida") {
                 let params: [String: Any] = [
                     "type": "s" ,
-                    "time": getCurrentTime() ,
-                    "date": getCurrentDate() ,
+                    "time": currentTimeString ,
+                    "date": currentDateString ,
                     "latitude": locationManager.latitude  ,
                     "longitude":locationManager.latitude  ,
                 ]
-                let latitude = (locationManager.latitude )
-                let longitude = (locationManager.longitude )
+                latitude = (locationManager.latitude )
+                longitude = (locationManager.longitude )
                 
-                createRecord(type: "s",
-                             time: getCurrentTime(),
-                             date: getCurrentDate(),
-                             latitude:(latitude),
-                             longitude:(longitude))
+                
                 creaturesVM.sendPostJsonAPI(params: params) { success, message in
                     if success {
-                        salidaMessage = message
-                        isSalidaButtonHidden = true
+                        salidaMessage = "La Salida fue registrada con exito."
+                        isSalidaButtonHidden = false
+                        isEntradaButtonHidden = false
+                        
                     } else {
                         salidaMessage = "Failed to record exit."
                     }
@@ -76,24 +75,34 @@ struct ButtonIn: View {
             }
             .padding()
             .frame(width: 150, height: 50, alignment: .center)
-            .background(Color.red)
+            .background(Color.myPrimary)
             .cornerRadius(10)
             .foregroundColor(.white)
-        }
+            .disabled(isEntradaButtonHidden)
+            
+           }
         
-        if let message = salidaMessage {
-            Text(message)
-                .font(.title2)
-                .foregroundColor(.red)
-                .padding()
+            if salidaMessage != nil {
+                let message:String = salidaMessage!
+       
+                Text(message)
+                    .font(.title2)
+                    .foregroundColor(.red)
+                    .padding()
+              //  salidaMessage = nil
+            }
         }
     }
     
-    func updateSalidaButtonVisibility() {
-       isSalidaButtonHidden = false
-       if loginHttpPost.createdAt != nil {
-           isEntradaButtonHidden = true
-           return
-       }
+ 
+    private  var currentDateString: String {
+       let formatter = DateFormatter()
+       formatter.dateFormat = "yyyy-MM-dd"
+       return formatter.string(from: date)
+   }
+    private  var currentTimeString: String {
+       let formatter = DateFormatter()
+       formatter.dateFormat = "HH:mm:ss"
+        return formatter.string(from: date )
    }
 }

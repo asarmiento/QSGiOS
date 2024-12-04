@@ -7,29 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EB029BA02CEBE7DC00952235 /* TotalRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB029B9F2CEBE7DC00952235 /* TotalRecords.swift */; };
 		EB029BA22CEBF3B200952235 /* ListHttpGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB029BA12CEBF3B200952235 /* ListHttpGet.swift */; };
 		EB029BA42CEBF3C900952235 /* TotalHttpGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB029BA32CEBF3C900952235 /* TotalHttpGet.swift */; };
 		EB345D142CF4BC42001A62C8 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D132CF4BC42001A62C8 /* ModalView.swift */; };
 		EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D152CF6A47B001A62C8 /* RecordModel.swift */; };
 		EB345D182CF6DBB1001A62C8 /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D172CF6DB9F001A62C8 /* JsonServices.swift */; };
 		EB345D1A2CF74DA8001A62C8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D192CF74D9D001A62C8 /* Utils.swift */; };
-		EB345D1D2CF77CC0001A62C8 /* RESTAPI in Frameworks */ = {isa = PBXBuildFile; productRef = EB345D1C2CF77CC0001A62C8 /* RESTAPI */; };
-		EB345D1F2CF77CC0001A62C8 /* RESTAPIImage in Frameworks */ = {isa = PBXBuildFile; productRef = EB345D1E2CF77CC0001A62C8 /* RESTAPIImage */; };
 		EB345D212CF781ED001A62C8 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D202CF781E7001A62C8 /* UserModel.swift */; };
-		EB4B26B62C5999150083397F /* LoginHttpPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4B26B52C5999150083397F /* LoginHttpPost.swift */; };
+		EB44DB2E2CFA63940070B827 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB2D2CFA62D70070B827 /* Users.swift */; };
+		EB44DB302CFE00410070B827 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB2F2CFE00340070B827 /* NetworkManager.swift */; };
+		EB44DB392CFE4D800070B827 /* NetworkListDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB382CFE4D680070B827 /* NetworkListDetails.swift */; };
+		EB44DB5B2CFECF170070B827 /* DeviceLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB5A2CFECF090070B827 /* DeviceLocations.swift */; };
+		EB44DB5D2CFF3F3D0070B827 /* WorkEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB5C2CFF3F290070B827 /* WorkEntry.swift */; };
+		EB44DB612CFF40730070B827 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB602CFF406C0070B827 /* Employee.swift */; };
+		EB44DB632CFF40C20070B827 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB622CFF40BD0070B827 /* Project.swift */; };
+		EB44DB652CFF427F0070B827 /* Sysconf.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB642CFF42780070B827 /* Sysconf.swift */; };
+		EB44DB672CFF6D680070B827 /* NetworkListTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB662CFF6D680070B827 /* NetworkListTotal.swift */; };
+		EB44DB692CFF6F080070B827 /* TotalWorkEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB682CFF6EF80070B827 /* TotalWorkEntry.swift */; };
 		EB6D31C92CECCD17000E02E7 /* BoxGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6D31C82CECCD17000E02E7 /* BoxGPS.swift */; };
 		EB6F03A22CEE172500190C0E /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6F03A12CEE171300190C0E /* Endpoints.swift */; };
 		EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1532C6A6A3300E7D361 /* SplashView.swift */; };
-		EB83A1562C6A6BC800E7D361 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1552C6A6BC800E7D361 /* PersistenceController.swift */; };
-		EB83A1582C6ACE0200E7D361 /* ListDataRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1572C6ACE0200E7D361 /* ListDataRecords.swift */; };
-		EB83A15B2C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1592C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld */; };
-		EB83A1722C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1702C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift */; };
-		EB83A1732C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1712C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift */; };
-		EB83A1762C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1742C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift */; };
-		EB83A1772C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1752C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift */; };
 		EB83A1B42C6BA23500E7D361 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */; };
-		EB83A1B62C6BA87E00E7D361 /* PersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1B52C6BA87E00E7D361 /* PersistentStorage.swift */; };
 		EBBC930F2C512EBB00F3C8CD /* QGSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */; };
 		EBBC93132C512EBC00F3C8CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBBC93122C512EBC00F3C8CD /* Assets.xcassets */; };
 		EBBC93162C512EBC00F3C8CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBBC93152C512EBC00F3C8CD /* Preview Assets.xcassets */; };
@@ -66,7 +64,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EB029B9F2CEBE7DC00952235 /* TotalRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecords.swift; sourceTree = "<group>"; };
 		EB029BA12CEBF3B200952235 /* ListHttpGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHttpGet.swift; sourceTree = "<group>"; };
 		EB029BA32CEBF3C900952235 /* TotalHttpGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalHttpGet.swift; sourceTree = "<group>"; };
 		EB345D132CF4BC42001A62C8 /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
@@ -74,19 +71,20 @@
 		EB345D172CF6DB9F001A62C8 /* JsonServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonServices.swift; sourceTree = "<group>"; };
 		EB345D192CF74D9D001A62C8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EB345D202CF781E7001A62C8 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		EB4B26B52C5999150083397F /* LoginHttpPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHttpPost.swift; sourceTree = "<group>"; };
+		EB44DB2D2CFA62D70070B827 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		EB44DB2F2CFE00340070B827 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		EB44DB382CFE4D680070B827 /* NetworkListDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkListDetails.swift; sourceTree = "<group>"; };
+		EB44DB5A2CFECF090070B827 /* DeviceLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLocations.swift; sourceTree = "<group>"; };
+		EB44DB5C2CFF3F290070B827 /* WorkEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkEntry.swift; sourceTree = "<group>"; };
+		EB44DB602CFF406C0070B827 /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
+		EB44DB622CFF40BD0070B827 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		EB44DB642CFF42780070B827 /* Sysconf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sysconf.swift; sourceTree = "<group>"; };
+		EB44DB662CFF6D680070B827 /* NetworkListTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkListTotal.swift; sourceTree = "<group>"; };
+		EB44DB682CFF6EF80070B827 /* TotalWorkEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalWorkEntry.swift; sourceTree = "<group>"; };
 		EB6D31C82CECCD17000E02E7 /* BoxGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxGPS.swift; sourceTree = "<group>"; };
 		EB6F03A12CEE171300190C0E /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		EB83A1532C6A6A3300E7D361 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
-		EB83A1552C6A6BC800E7D361 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
-		EB83A1572C6ACE0200E7D361 /* ListDataRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDataRecords.swift; sourceTree = "<group>"; };
-		EB83A15A2C6ACF2E00E7D361 /* QGSDataBase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QGSDataBase.xcdatamodel; sourceTree = "<group>"; };
-		EB83A1702C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		EB83A1712C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UserEntity+CoreDataProperties.swift"; path = "../../UserEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		EB83A1742C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		EB83A1752C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EB83A1B52C6BA87E00E7D361 /* PersistentStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentStorage.swift; sourceTree = "<group>"; };
 		EB86403C2C66400A0072534E /* QGS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QGS.entitlements; sourceTree = "<group>"; };
 		EBBC930B2C512EBB00F3C8CD /* QGS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QGS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QGSApp.swift; sourceTree = "<group>"; };
@@ -107,12 +105,13 @@
 		EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordHttpPost.swift; sourceTree = "<group>"; };
 		EBF9DF9C2CED8E1D002D7FA1 /* ListRecordDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRecordDetails.swift; sourceTree = "<group>"; };
 		EBF9DF9E2CED8E38002D7FA1 /* ListRecordTotals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRecordTotals.swift; sourceTree = "<group>"; };
-		EBF9DFA02CED8F1C002D7FA1 /* HeadSecondary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadSecondary.swift; sourceTree = "<group>"; };
+		EBF9DFA02CED8F1C002D7FA1 /* HeadSecondary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadSecondary.swift; sourceTree = "<group>"; wrapsLines = 1; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EB345D242CF79E07001A62C8 /* Buttons */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Buttons; sourceTree = "<group>"; };
-		EB345D282CF79E58001A62C8 /* Utils */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utils; sourceTree = "<group>"; };
+		EB345D922CFA11A4001A62C8 /* Interactor */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Interactor; sourceTree = "<group>"; };
+		EB44DB342CFE0F420070B827 /* UtilsLogin */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UtilsLogin; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,8 +119,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB345D1D2CF77CC0001A62C8 /* RESTAPI in Frameworks */,
-				EB345D1F2CF77CC0001A62C8 /* RESTAPIImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,9 +142,12 @@
 		EB4B26B42C5998F80083397F /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				EB44DB662CFF6D680070B827 /* NetworkListTotal.swift */,
+				EB44DB5A2CFECF090070B827 /* DeviceLocations.swift */,
+				EB44DB382CFE4D680070B827 /* NetworkListDetails.swift */,
+				EB44DB2F2CFE00340070B827 /* NetworkManager.swift */,
 				EB345D192CF74D9D001A62C8 /* Utils.swift */,
 				EB6F03A12CEE171300190C0E /* Endpoints.swift */,
-				EB4B26B52C5999150083397F /* LoginHttpPost.swift */,
 				EBE614992C5AFA5D00197660 /* LocationViewController.swift */,
 				EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */,
 				EB029BA12CEBF3B200952235 /* ListHttpGet.swift */,
@@ -159,12 +159,14 @@
 		EB4B26B92C5AB10B0083397F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EB44DB682CFF6EF80070B827 /* TotalWorkEntry.swift */,
+				EB44DB642CFF42780070B827 /* Sysconf.swift */,
+				EB44DB622CFF40BD0070B827 /* Project.swift */,
+				EB44DB602CFF406C0070B827 /* Employee.swift */,
+				EB44DB5C2CFF3F290070B827 /* WorkEntry.swift */,
+				EB44DB2D2CFA62D70070B827 /* Users.swift */,
 				EB345D202CF781E7001A62C8 /* UserModel.swift */,
 				EB345D152CF6A47B001A62C8 /* RecordModel.swift */,
-				EB83A1742C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift */,
-				EB83A1752C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift */,
-				EB83A1702C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift */,
-				EB83A1712C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift */,
 				EB345D132CF4BC42001A62C8 /* ModalView.swift */,
 			);
 			path = Model;
@@ -203,10 +205,10 @@
 		EBBC930D2C512EBB00F3C8CD /* QGS */ = {
 			isa = PBXGroup;
 			children = (
-				EB345D282CF79E58001A62C8 /* Utils */,
+				EB345D922CFA11A4001A62C8 /* Interactor */,
+				EB4B26B92C5AB10B0083397F /* Model */,
 				EB86403C2C66400A0072534E /* QGS.entitlements */,
 				EBE6149B2C5AFC8300197660 /* Info.plist */,
-				EB4B26B92C5AB10B0083397F /* Model */,
 				EB4B26B42C5998F80083397F /* Network */,
 				EBBC933D2C515F9E00F3C8CD /* Helpers */,
 				EBBC933A2C515E7E00F3C8CD /* View */,
@@ -214,9 +216,7 @@
 				EBBC93122C512EBC00F3C8CD /* Assets.xcassets */,
 				EBBC93142C512EBC00F3C8CD /* Preview Content */,
 				EBBC93382C51336400F3C8CD /* Colors.swift */,
-				EB83A1592C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld */,
 				EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */,
-				EB83A1B52C6BA87E00E7D361 /* PersistentStorage.swift */,
 			);
 			path = QGS;
 			sourceTree = "<group>";
@@ -249,14 +249,12 @@
 		EBBC933A2C515E7E00F3C8CD /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EB44DB342CFE0F420070B827 /* UtilsLogin */,
 				EBF9DF9E2CED8E38002D7FA1 /* ListRecordTotals.swift */,
 				EBF9DF9C2CED8E1D002D7FA1 /* ListRecordDetails.swift */,
 				EB6D31C72CECCCC7000E02E7 /* UtilitRecords */,
 				EBBC933B2C515E9400F3C8CD /* Login.swift */,
-				EBBC93402C5161CD00F3C8CD /* CustomTF.swift */,
 				EBE614972C5AE4FA00197660 /* HomeRecord.swift */,
-				EB83A1572C6ACE0200E7D361 /* ListDataRecords.swift */,
-				EB029B9F2CEBE7DC00952235 /* TotalRecords.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -265,9 +263,9 @@
 			isa = PBXGroup;
 			children = (
 				EB345D172CF6DB9F001A62C8 /* JsonServices.swift */,
+				EBBC93402C5161CD00F3C8CD /* CustomTF.swift */,
 				EBBC933E2C515FC100F3C8CD /* View+extensions.swift */,
 				EB83A1532C6A6A3300E7D361 /* SplashView.swift */,
-				EB83A1552C6A6BC800E7D361 /* PersistenceController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -289,12 +287,11 @@
 			);
 			fileSystemSynchronizedGroups = (
 				EB345D242CF79E07001A62C8 /* Buttons */,
-				EB345D282CF79E58001A62C8 /* Utils */,
+				EB345D922CFA11A4001A62C8 /* Interactor */,
+				EB44DB342CFE0F420070B827 /* UtilsLogin */,
 			);
 			name = QGS;
 			packageProductDependencies = (
-				EB345D1C2CF77CC0001A62C8 /* RESTAPI */,
-				EB345D1E2CF77CC0001A62C8 /* RESTAPIImage */,
 			);
 			productName = QGS;
 			productReference = EBBC930B2C512EBB00F3C8CD /* QGS.app */;
@@ -369,7 +366,6 @@
 			);
 			mainGroup = EBBC93022C512EBB00F3C8CD;
 			packageReferences = (
-				EB345D1B2CF77CC0001A62C8 /* XCRemoteSwiftPackageReference "RESTAPI" */,
 			);
 			productRefGroup = EBBC930C2C512EBB00F3C8CD /* Products */;
 			projectDirPath = "";
@@ -413,38 +409,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB83A15B2C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld in Sources */,
+				EB44DB302CFE00410070B827 /* NetworkManager.swift in Sources */,
 				EBBC93392C51336400F3C8CD /* Colors.swift in Sources */,
+				EB44DB392CFE4D800070B827 /* NetworkListDetails.swift in Sources */,
 				EB6D31C92CECCD17000E02E7 /* BoxGPS.swift in Sources */,
 				EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */,
-				EB83A1B62C6BA87E00E7D361 /* PersistentStorage.swift in Sources */,
 				EB029BA22CEBF3B200952235 /* ListHttpGet.swift in Sources */,
+				EB44DB612CFF40730070B827 /* Employee.swift in Sources */,
 				EBF9DFA12CED8F2F002D7FA1 /* HeadSecondary.swift in Sources */,
 				EBE6149A2C5AFA5D00197660 /* LocationViewController.swift in Sources */,
 				EB345D182CF6DBB1001A62C8 /* JsonServices.swift in Sources */,
 				EB345D1A2CF74DA8001A62C8 /* Utils.swift in Sources */,
 				EBBC93412C5161CD00F3C8CD /* CustomTF.swift in Sources */,
 				EBBC930F2C512EBB00F3C8CD /* QGSApp.swift in Sources */,
-				EB4B26B62C5999150083397F /* LoginHttpPost.swift in Sources */,
-				EB83A1582C6ACE0200E7D361 /* ListDataRecords.swift in Sources */,
+				EB44DB5B2CFECF170070B827 /* DeviceLocations.swift in Sources */,
+				EB44DB652CFF427F0070B827 /* Sysconf.swift in Sources */,
 				EBBC933C2C515E9400F3C8CD /* Login.swift in Sources */,
-				EB83A1722C6ADE7800E7D361 /* UserEntity+CoreDataClass.swift in Sources */,
-				EB029BA02CEBE7DC00952235 /* TotalRecords.swift in Sources */,
-				EB83A1732C6ADE7800E7D361 /* UserEntity+CoreDataProperties.swift in Sources */,
+				EB44DB692CFF6F080070B827 /* TotalWorkEntry.swift in Sources */,
 				EB6F03A22CEE172500190C0E /* Endpoints.swift in Sources */,
 				EBF9DF9F2CED8E4C002D7FA1 /* ListRecordTotals.swift in Sources */,
-				EB83A1562C6A6BC800E7D361 /* PersistenceController.swift in Sources */,
 				EB345D142CF4BC42001A62C8 /* ModalView.swift in Sources */,
 				EB029BA42CEBF3C900952235 /* TotalHttpGet.swift in Sources */,
 				EB83A1B42C6BA23500E7D361 /* AppDelegate.swift in Sources */,
 				EBBC933F2C515FC100F3C8CD /* View+extensions.swift in Sources */,
 				EBF9DF9D2CED8E30002D7FA1 /* ListRecordDetails.swift in Sources */,
 				EB345D212CF781ED001A62C8 /* UserModel.swift in Sources */,
-				EB83A1762C6ADE9300E7D361 /* RecordEntity+CoreDataClass.swift in Sources */,
+				EB44DB5D2CFF3F3D0070B827 /* WorkEntry.swift in Sources */,
+				EB44DB2E2CFA63940070B827 /* Users.swift in Sources */,
 				EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */,
-				EB83A1772C6ADE9300E7D361 /* RecordEntity+CoreDataProperties.swift in Sources */,
+				EB44DB672CFF6D680070B827 /* NetworkListTotal.swift in Sources */,
 				EBE6149F2C5B9E9200197660 /* RecordHttpPost.swift in Sources */,
 				EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */,
+				EB44DB632CFF40C20070B827 /* Project.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,7 +627,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -675,7 +671,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -815,44 +811,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		EB345D1B2CF77CC0001A62C8 /* XCRemoteSwiftPackageReference "RESTAPI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Gujci/RESTAPI.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.12.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		EB345D1C2CF77CC0001A62C8 /* RESTAPI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EB345D1B2CF77CC0001A62C8 /* XCRemoteSwiftPackageReference "RESTAPI" */;
-			productName = RESTAPI;
-		};
-		EB345D1E2CF77CC0001A62C8 /* RESTAPIImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EB345D1B2CF77CC0001A62C8 /* XCRemoteSwiftPackageReference "RESTAPI" */;
-			productName = RESTAPIImage;
-		};
-/* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		EB83A1592C6ACF2E00E7D361 /* QGSDataBase.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				EB83A15A2C6ACF2E00E7D361 /* QGSDataBase.xcdatamodel */,
-			);
-			currentVersion = EB83A15A2C6ACF2E00E7D361 /* QGSDataBase.xcdatamodel */;
-			name = QGSDataBase.xcdatamodeld;
-			path = /Users/edinmartinez/Documents/Projects/QGS/QGS/QGSDataBase.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = EBBC93032C512EBB00F3C8CD /* Project object */;
 }

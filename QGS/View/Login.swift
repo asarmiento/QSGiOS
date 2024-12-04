@@ -1,103 +1,157 @@
-//
-//  ContentView.swift
-//  QGS
-//
-//  Created by Edin Martinez on 7/24/24.
-//
-
-
-
 import SwiftUI
+import UIKit
 import CoreData
 import CoreLocation
 
-
 struct Login: View {
-    //Variables del Login
+    @Environment(\.modelContext) private var context  // Inyección del contexto
+    @Environment(\.dismiss) var dismiss
+    
+    @State private var isLoginSuccessful = false
+    // Variables for Login
     @State private var email: String = "asarmiento@sistemasamigableslatam.com"
     @State private var password: String = "secret"
-    @State private var wrongEmail: Bool = false
-    @State private var wrongPassword: Bool = false
-    @State private var showingLoginScreen = false
-    @StateObject var creaturesVM = LoginHttpPost()
-    @State private var locationH = LocationManager()
+    @State private var errorMessage: String? = nil
+    
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
+                
                 Color.myPrimary.ignoresSafeArea()
                 
-                Circle().scale(1.6)
-                    .foregroundColor(.white.opacity(0.15))
-                Circle().scale(1.4)
-                    .foregroundColor(.white.opacity(0.15))
+                Image("QGS-Branding-02")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 370)
+                    .offset(y:-300)
                 
-                Circle().scale(1.2).foregroundColor(.white)
-                VStack() {
-                    Image("QGS-Branding-01").resizable().scaledToFit().frame(width: 180)
-                VStack(spacing: 15) {
-                    Text("Login").font(.title2)
-                        .bold()
-                        .padding().foregroundColor(.myPrimary)
+                ZStack{
+                    Color.white.frame( height: 760)
+                        .shadow(radius: 40)
+                        .clipShape(RoundedRectangle(cornerRadius: 70).offset(y: 80))
+                        .frame(width: 400, height: 660)
+                        .offset(y:140)
+                        .edgesIgnoringSafeArea(.horizontal)
                     
-                    Group {
-                        CustomTF(sfIcon: "at", hint: "Email", value: $email)
+                    
+                    VStack(alignment: .center, spacing:40) {
                         
-                        CustomTF(sfIcon: "lock", hint: "Password", isPassword: true, value: $password)
-                            .padding(.top, 5)
-                        
-                    }.padding(12)
-                        .frame(width: 300, height: 60)
-                        .background(Color.black.opacity(0.05))
-                        .cornerRadius(10)
-                    
-                   
-                    
-                    
-                        Button("Iniciar Sesión ") {
-                            Task{
-                                locationH.requestLocationPermission()
-                                var loginUser =  await creaturesVM.executeAPI(email: email, password: password)
-                                NavigationLink(
-                                    destination: HomeRecord(users : creaturesVM.loginUser!),
-                                    isActive: $creaturesVM.loginSuccess
-                                    
-                                , label: {
-                                    EmptyView()
-                                }).isDetailLink(false).navigationBarBackButtonHidden(true)                            }
+                        VStack(spacing: 25) {
                             
-                        }
-                        .frame(width: 300, height: 50)
-                        .background(.red)
-                        .buttonStyle(.bordered)
-                        .tint(.white)
-                        .border(Color.black, width: 0.02)
-                        Text("Registra tu ingreso y Salida")
-                            .font(.footnote)
-                            .underline()
-                            .foregroundStyle(.tertiary)
-                            .padding()
-              
-                    
-                }
-        
+                            Group{
+                                // Email and Password fields
+                                CustomTF(sfIcon: "at", hint: "Email", value: $email)
+                                
+                                CustomTF(sfIcon: "lock", hint: "Password", isPassword: true, value: $password)
+                                    .padding(.top, 5)
+                                
+                            }
+                            .padding(12)
+                            .frame(width: 350, height: 60)
+                            .background(Color.black.opacity(0.05))
+                            .cornerRadius(10)
+                            
+                            Button(action: {
+                                login()
+                            },label  : {
+                                
+                                //        })
+                                Text("Iniciar Sesión").foregroundStyle(.white)
+                                
+                            })
+                            .frame(width: 250, height: 60)
+                            .background(Color.myPrimary).border(Color.myPrimary, width:1 )
+                            .cornerRadius(10)
+                            .fullScreenCover(isPresented: $isLoginSuccessful){
+                                // dismiss()
+                                HomeRecord()
+                            }
+                            
+                            if let errorMessage = errorMessage {
+                                Text(errorMessage)
+                                    .foregroundStyle(.red)
+                            }
+                            
+                        }.offset(y:100).ignoresSafeArea()
+                        VStack {
+                            Text("Quality Group Services")
+                            
+                        }.offset(y:230).foregroundStyle(Color.gray)
+                    }
+                }.shadow(radius: 20)
+                    .clipShape(RoundedRectangle(cornerRadius: 20).offset(y: 80))
+                    .frame(width: 400, height: 600)
                 
             }
             .navigationBarHidden(false)
+        }
+    }
+    
+    func login() {
+        APIService.shared.login(email: email, password: password) { result in
             
+            switch result {
+            case .success(let response):
+                if response.status {
+                    // Guardar los datos
+                    saveUserData(from: response)
+                    
+                    // Redirigir a la pantalla de bienvenida
+                    DispatchQueue.main.async {
+                        isLoginSuccessful = true
+                        // Usar el NavigationLink para navegar
+                        // HomeRecord.init()
+                        navigateToWelcomeScreen()
+                        print("Login successful")
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        errorMessage = response.message
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    errorMessage = error.localizedDescription
+                }
+            }
         }
-        }
-    }
-    func validateEmail(_ email: String) -> Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        return email.range(of: emailRegex, options: .regularExpression) != nil
     }
     
-    func validatePassword(_ password: String) -> Bool {
-        return password.count >= 8
+    func navigateToWelcomeScreen() {
+        // Navegar a la pantalla de bienvenida
+        isLoginSuccessful = true
+        //
+        print("NavigationDestination isPresented: \(isLoginSuccessful)")
+        dismiss()
     }
     
-
+    func saveUserData(from response: LoginResponse) {
+        // Crear una nueva instancia del modelo User
+        let user = UserModel(
+            name: response.user.name,
+            email: response.user.email,
+            token: response.token,
+            employeeId: response.user.employee.id,
+            sysconf: response.sysconf
+        )
+        
+        do {
+            // Insertar el usuario en el contexto (context es inyectado automáticamente por SwiftUI)
+            try context.insert(user)
+            
+            // Guardar los cambios
+            try context.save()
+        } catch {
+            print("Error saving user data: \(error)")
+        }
+    }
+    
+    
+    
+    
 }
 
-
+#Preview {
+    Login()
+}

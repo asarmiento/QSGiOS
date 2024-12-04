@@ -11,18 +11,12 @@ import SwiftData
 @main
 struct QGSApp: App {
     
-    @State private var locationH = LocationManager()
-    let container: ModelContainer = {
-        let schema = Schema([RecordModel.self, UserModel.self])
-        let container = try! ModelContainer(for: schema,configurations: [])
-        return container
-    }()
+    @State private var locationH:LocationManager = LocationManager()
+ 
     var body: some Scene {
         WindowGroup {
-            
             SplashView()
-            
-        }.modelContainer(container)
+        }.modelContainer(for:[RecordModel.self, UserModel.self])
     }
 
 

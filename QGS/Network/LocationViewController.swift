@@ -12,16 +12,18 @@ import MapKit
 import SwiftUI
 
 
-
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     static let shared = LocationManager()
     private let locationManager: CLLocationManager = CLLocationManager()
     
-    @Published var latitude: Double = 0
-    @Published var longitude: Double = 0
+    @Published var latitude: String = ""
+    @Published var longitude: String = ""
     
     override init() {
         super.init()
+        locationManager.delegate = self
+                locationManager.requestWhenInUseAuthorization()
+                locationManager.startUpdatingLocation()
         do{
             try  requestLocation()
         }catch{
@@ -38,10 +40,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             
             return
         }
-        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         requestLocationPermission()
-        locationManager.startUpdatingLocation()
         
     }
     
@@ -60,8 +60,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             print("si tenemos la mejor localizacion")
             return
         }
-        latitude = Double((bestLocation.coordinate.latitude))
-        longitude = Double((bestLocation.coordinate.longitude))
+        latitude = String((bestLocation.coordinate.latitude))
+        longitude = String((bestLocation.coordinate.longitude))
         manager.stopUpdatingLocation()
         print("Location updated.latitude: \(latitude) longitude: \(longitude)")
     }
@@ -74,21 +74,20 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
-            
+            manager.startUpdatingLocation()
             print("Location authorization granted. ")
         case .denied, .restricted:
             
             manager.requestWhenInUseAuthorization()
             print("Location authorization denied. ")
         case .notDetermined:
-            
+            manager.requestWhenInUseAuthorization()
             print("Location authorization not determined.")
         @unknown default:
             
             print("Estado en autorizacion deconocido ")
         }
-        requestLocationPermission()
+      //  requestLocationPermission()
         print("Location authorization status changed. ")
     }
 }
-

@@ -16,7 +16,7 @@ struct CustomTF : View {
     @Binding var value: String
     @State private var shoePassword = false 
     var body: some View {
-        HStack(alignment: .top, spacing: 8, content: {
+        HStack(alignment: .top, spacing: 2, content: {
             Image(systemName: sfIcon)
                 .foregroundStyle(iconTint)
                 .frame(width: 30)

@@ -6,28 +6,24 @@
 //
 import Foundation
 import SwiftData
-import SwiftUI
 
 @Model
-final class UserModel {
-    @Attribute(.unique)  var id: UUID
-    var name: String
-    var email: String
-    @Attribute(originalName: "emporyee_id") var employeeId: String
-    @Attribute(originalName: "system_id") var systemId: String
-    var token: String
+class UserModel: Identifiable {
+    @Attribute(.unique) var id: UUID
+     var name: String
+     var email: String
+     var token: String
+     var employeeId: Int
+    var sysconf: Int
     
-    
-    init( name: String, email: String, employeeId: String, systemId: String, token: String) {
+    init(id: UUID = UUID(), name: String, email: String, token: String, employeeId: Int, sysconf: Int) {
+        self.id = id
         self.name = name
         self.email = email
-        self.employeeId = employeeId
-        self.systemId = systemId
         self.token = token
-        self.id = UUID()
+        self.employeeId = employeeId
+        self.sysconf = sysconf
     }
-    
-    
 }
 
 

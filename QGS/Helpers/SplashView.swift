@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import CoreData
+import SwiftData
 
 struct SplashView: View {
     @State private var isActive = false
@@ -22,7 +22,7 @@ struct SplashView: View {
         if isActive {
             
             if accessToken != nil && datecreatAt == currentDateString {
-//                HomeRecord( users: nil)
+//                HomeRecord()
 //                    .navigationBarBackButtonHidden(false)
                   
              }else{

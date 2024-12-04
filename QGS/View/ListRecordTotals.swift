@@ -8,23 +8,34 @@
 import SwiftUI
 
 struct ListRecordTotals: View {
+    @StateObject private var networkListTotal = NetworkListTotal() // Crea una instancia del ViewModel
+    
     var body: some View {
-        NavigationView {
-            ZStack {
-                HeadSecondary(title: "Totales por Semana")
-                
-               VStack{
-                   Spacer(minLength:250)
-                  
-                    List {
-                        Group{
-                            Text("A List Item")
-                            Text("A Second List Item")
-                            Text("A Third List Item")
+        NavigationStack {
+            HeadSecondary(title: "Total de Horas Semanal")
+            VStack {
+                if networkListTotal.isLoading {
+                    ProgressView("Cargando...") // Muestra un loading mientras se obtienen los datos
+                        .progressViewStyle(CircularProgressViewStyle())
+                } else if let errorMessage = networkListTotal.errorMessage {
+                    Text(errorMessage) // Muestra un error si algo falla
+                        .foregroundColor(.red)
+                } else {
+                    List(networkListTotal.totalHours) { totalHour in
+                        VStack(alignment: .leading) {
+                            
+                            Text("Fecha Inicio: \(totalHour.weekI)")
+                            Text("Fecha Fin: \(totalHour.weekF)")
+                            Text("Total Horas: \(totalHour.hours)")
                         }
-                    }.padding(-1).background(Color.myPrimary)
+                        .padding()
+                    }
                 }
-                
+            }
+            .offset(y: -60)
+            .frame(height: 510)
+            .onAppear {
+                networkListTotal.fetchWorkEntries()
             }
         }
     }

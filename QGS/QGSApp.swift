@@ -7,20 +7,16 @@
 
 import SwiftUI
 import SwiftData
-import CoreLocation
-import CoreLocationUI
 
 @main
 struct QGSApp: App {
     
-    @State private var locationH = LocationManager()
-  
+    @State private var locationH:LocationManager = LocationManager()
+ 
     var body: some Scene {
         WindowGroup {
-            
             SplashView()
-            
-        }
+        }.modelContainer(for:[RecordModel.self, UserModel.self])
     }
 
 

@@ -6,24 +6,28 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SplashView: View {
     @State private var isActive = false
     @State private var size = 0.5
     @State private var opacity = 0.5
-    
+   
     let accessToken = UserDefaults.standard.string(forKey: "accessToken")
     let datecreatAt = UserDefaults.standard.string(forKey: "createdAt")
    @State private var locationH = LocationManager()
-     
+ //  let persistenceController = PersistenceController.shared
+    
     var body: some View {
         if isActive {
             
             if accessToken != nil && datecreatAt == currentDateString {
-                HomeRecord()
-                 
+//                HomeRecord()
+//                    .navigationBarBackButtonHidden(false)
+                  
              }else{
                  Login()
+                     
                    
              }
                  

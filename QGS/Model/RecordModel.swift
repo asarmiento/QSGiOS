@@ -1,27 +1,31 @@
 //
-//  RecordModel.swift
+//  ModelRecord.swift
 //  QGS
 //
-//  Created by Edin Martinez on 7/31/24.
+//  Created by Anwar Sarmiento on 11/26/24.
 //
+
 import Foundation
 import SwiftData
 
 @Model
-class RecordModel {
-    @Attribute(.unique) var id: UUID
-    var ddate: String
-    var latitud: Double
-    var longitud: Double
-    var dtime: String
-    var type: String
+final class RecordModel {
+    @Attribute(.unique) var id: UUID = UUID()
+     var latitude: Double
+     var longitude: Double
+     var type: String
+     var date: Date
+     var times: String
+    var employeeId: String
     
-    init(id: UUID, ddate: String, latitud: Double, longitud: Double, dtime: String, type: String) {
-        self.id = id
-        self.ddate = ddate
-        self.latitud = latitud
-        self.longitud = longitud
-        self.dtime = dtime
+    init(latitude: Double, longitude: Double, type: String, date: Date, times: String, employeeId: String) {
+        self.latitude = latitude
+        self.longitude = longitude
         self.type = type
-    }
+        self.date = date
+        self.times = times
+        self.employeeId = employeeId
+        }
+  
+    
 }

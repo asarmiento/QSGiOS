@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import QGS
+//@testable import QGS
 
 final class QGSTests: XCTestCase {
 

@@ -10,10 +10,10 @@ import SwiftData
 @Model
 class UserModel: Identifiable {
     @Attribute(.unique) var id: UUID
-     var name: String
-     var email: String
-     var token: String
-     var employeeId: Int
+    var name: String
+    var email: String
+    var token: String
+    var employeeId: Int
     var sysconf: Int
     
     init(id: UUID = UUID(), name: String, email: String, token: String, employeeId: Int, sysconf: Int) {
@@ -23,6 +23,10 @@ class UserModel: Identifiable {
         self.token = token
         self.employeeId = employeeId
         self.sysconf = sysconf
+    }
+    
+    var isValid: Bool {
+        !name.isEmpty && !email.isEmpty && !token.isEmpty
     }
 }
 

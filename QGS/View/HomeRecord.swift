@@ -2,25 +2,24 @@
 //  HomeRecord.swift
 //  QGS
 //
-//  Created by Edin Martinez on 7/31/24.
+//  Created by Anwar Sarmiento on 7/31/24.
 //
 
 
-
+import Foundation
 import SwiftUI
-import CoreLocation
-import CoreLocationUI
 import SwiftData
 
 
 struct HomeRecord: View {
+    @Environment(\.modelContext) private var context: ModelContext
     
-    @Query private var userModel: [UserModel]
-    @State private var user: UserModel?
-    @State private var isLoading = true  // Indicador de carga
+     // Indicador de carga
     @State private var errorMessage: String?  // Para manejar errores
     // Variables de pantalla
     @StateObject private var creaturesVM = RecordHttpPost()
+    
+    @State private var isButtonDisabled = false
     
     var body: some View {
         NavigationStack {
@@ -28,27 +27,28 @@ struct HomeRecord: View {
                 // Fondo y diseño general
                 Color(.systemBackground).edgesIgnoringSafeArea(.all)
                 // Encabezado
-                if let user = user {
-                    //  print(" prueba user \(user.email)")
+              //  Text(\(getUser))
+                    
+                if let user = getUser {
+                    
                     HeadSecondary(title: "Bienvenido(a): \(user.name) ")
-                    // .padding(.top, 40)
+                   
                 } else {
-                    HeadSecondary(title: "Entrada o Salida ")
-                    //    .padding(.top, 40)
+                    HeadSecondary(title: "Entrada o Salida \(getUser?.name) ")
+                    
                 }
                 
                 VStack {
-                    
-                    
                     // Mensaje informativo
-                    Text("Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo")
-                        .font(.system(size: 20))
+                    Text(NSLocalizedString("Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo",
+                                           comment: "Mensaje para indicar al usuario qué hacer"))
+                        .font(.system(size: 18))
                         .font(.title3)
                         .foregroundColor(Color.myPrimary)
                         .padding()
                         .multilineTextAlignment(.center)
-                        .frame(width: 370, height: 150, alignment: .center)
-                   
+                        .frame(width: 370, height: 200, alignment: .center)
+                    
                     // Contenido principal
                     VStack {
                         BoxGPS()
@@ -58,6 +58,7 @@ struct HomeRecord: View {
                             ButtonIn()
                                 .frame(maxWidth: .infinity)
                                 .padding()
+                                .environment(\.modelContext, context)
                         }
                         // Botones adicionales (Detalles y Totales)
                         HStack {
@@ -66,7 +67,7 @@ struct HomeRecord: View {
                                     ListRecordDetails()
                                 }
                                 .frame(width: 150, height: 50)
-                                .background(Color.myPrimary)
+                                .background(Color.init(red: 0.333, green: 0.333, blue: 0.333))
                                 .cornerRadius(12)
                                 .foregroundColor(.white)
                                 
@@ -75,7 +76,7 @@ struct HomeRecord: View {
                                     ListRecordTotals()
                                 }
                                 .frame(width: 150, height: 50)
-                                .background(Color.myPrimary)
+                                .background(Color.init(red: 0.333, green: 0.333, blue: 0.333))
                                 .cornerRadius(12)
                                 .foregroundColor(.white)
                             }
@@ -94,7 +95,7 @@ struct HomeRecord: View {
                     }
                     
                     // Mostrar indicador de carga si estamos esperando datos
-                    if isLoading {
+                    if creaturesVM.isLoading {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle())
                             .scaleEffect(2)
@@ -104,51 +105,31 @@ struct HomeRecord: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center).offset(y:90)
             }
             .onAppear {
-                loadUserData()
+                //  loadUserData()
             }
         }
     }
+
     
     private var currentDateString: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: Date())
     }
+    private var authToken: String? {
+      return  UserManager.shared.authToken
+    }
+    private var getUser: UserModel? {
+        return  UserManager.shared.getUser()
+    }
     
-    // Función para cargar los datos del usuario
-    func loadUserData() {
-        isLoading = true
-        errorMessage = nil
+    private var employeeId: String? {
         
-        Task {
-            do {
-                if let firstUser = try await fetchFirstUser() {
-                    self.user = firstUser
-                } else {
-                    self.errorMessage = "No se encontró ningún usuario."
-                }
-            } catch {
-                self.errorMessage = "Error al cargar los datos del usuario: \(error.localizedDescription)"
-            }
-            isLoading = false
-        }
+        return UserManager.shared.employeeId
     }
     
-    // Función asincrónica para obtener el primer usuario
-    func fetchFirstUser() async throws -> UserModel? {
-        if let firstUser = userModel.first {
-            return firstUser
-        }
-        return nil
-    }
     
-    func storeAccessToken() {
-        UserDefaults.standard.set(user?.token, forKey: "accessToken")
-    }
-    func storeAccessEmployeeId() {
-        UserDefaults.standard.set(user?.employeeId, forKey: "employeeId")
-    }
- 
+    
 }
 
 

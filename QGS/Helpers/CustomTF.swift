@@ -44,7 +44,7 @@ struct CustomTF : View {
                     }, label: {
                         Image(systemName: shoePassword ? "eye.slash" : "eye")
                             .foregroundStyle(.gray)
-                            .padding(10)
+                            .padding(5)
                             .contentShape(.rect)
                     })
                 }

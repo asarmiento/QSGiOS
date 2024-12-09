@@ -8,7 +8,6 @@
 import Foundation
 
 
-
 // Modelo para la respuesta completa
 struct LoginResponse: Decodable {
     let status: Bool
@@ -75,23 +74,27 @@ class APIService {
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: body, options: .prettyPrinted)
         } catch {
+            print("linea 78 estamos revisando APIService")
             completion(.failure(error))
             return
         }
-       
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
+                print("linea 85 estamos revisando APIService")
                 completion(.failure(error))
                 return
             }
             
             guard let data = data else {
+                print("linea 91 estamos revisando APIService")
                 completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
                 return
             }
             
             do {
                 let decodedResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
+                print("probando \(decodedResponse)")
                 completion(.success(decodedResponse))
             } catch {
                 completion(.failure(error))
@@ -101,3 +104,6 @@ class APIService {
         task.resume()
     }
 }
+
+
+

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BoxGPS:View
 {
-    @StateObject var locationManager: LocationManager = LocationManager()
+    @StateObject var locationManager: LocationViewController = LocationViewController()
     
     var body: some View {
         HStack{
@@ -26,7 +26,7 @@ struct BoxGPS:View
                     ).contentMargins(5).padding(5)
                         Text(
                             String(locationManager.latitude)
-                        ).font(
+                        ).foregroundStyle(Color.gray).font(
                             .system(
                                 size: 16
                             )
@@ -49,7 +49,7 @@ struct BoxGPS:View
                             String(
                                 locationManager.longitude
                             )
-                        ).font(
+                        ).foregroundStyle(Color.gray).font(
                             .system(
                                 size: 16
                             )

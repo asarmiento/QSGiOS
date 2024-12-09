@@ -10,4 +10,5 @@ struct Endpoints{
     static let login = Endpoints.baseURL+"login"
     static let getListTotal = Endpoints.baseURL+"projects/total-time-work-employees/"
     static let getListDetail = Endpoints.baseURL+"projects/detail-time-work-employees/"
+    static let postRecord = Endpoints.baseURL+"projects/store-data-time-work"
 }

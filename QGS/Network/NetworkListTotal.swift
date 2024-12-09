@@ -10,8 +10,8 @@
  */
 import Foundation
 import Combine
-
-
+import SwiftData
+import SwiftUI
 
 class NetworkListTotal: ObservableObject {
     @Published var totalHours = [TotalWorkEntry]()
@@ -19,28 +19,23 @@ class NetworkListTotal: ObservableObject {
     @Published var errorMessage: String? = nil
     private var cancellables = Set<AnyCancellable>()
    
+     var context: ModelContext?
+     init() { }
+    
+    
     func fetchWorkEntries() {
-        let id: String = {
-               if let storedId = UserDefaults.standard.string(forKey: "employeeId") {
-                   print("id de usuario \(storedId)")
-                   return storedId
-               } else {
-                   return "" // O maneja un valor por defecto
-               }
-           }()
-        let token: String = {
-               if let storedToken = UserDefaults.standard.string(forKey: "accessToken") {
-                   print("Lista de token \(storedToken)")
-                   return storedToken
-               } else {
-                   return "" // O maneja un valor por defecto
-               }
-           }()
+        // Optenemos el id de empleado y el token
+        guard let id = employeeId, let token = authToken else {
+               print("No se pudo obtener el usuario o el token.")
+               return
+           }
+        
+   
         guard let url = URL(string: "\(Endpoints.getListTotal)\(id)") else {
             self.errorMessage = "URL no válida"
             return
         }
-        print("Paso la url ")
+        print("Paso la url \(id) el token \(token)")
         var request = URLRequest(url: url)
         
         request.httpMethod = "GET"
@@ -98,6 +93,14 @@ class NetworkListTotal: ObservableObject {
                        print("Error al decodificar el JSON: \(error)")
                    }
                }.resume()
+    }
+    
+    private var authToken: String? {
+        UserManager.shared.authToken
+    }
+
+    private var employeeId: String? {
+        UserManager.shared.employeeId
     }
 }
 

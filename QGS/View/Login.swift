@@ -1,13 +1,16 @@
+/*
+ *
+ */
+
 import SwiftUI
 import UIKit
 import CoreData
 import CoreLocation
 
 struct Login: View {
-    @Environment(\.modelContext) private var context  // Inyección del contexto
-    @Environment(\.dismiss) var dismiss
-    
+     
     @State private var isLoginSuccessful = false
+    @State private var isLoading = false  // Indicador de carga
     // Variables for Login
     @State private var email: String = "asarmiento@sistemasamigableslatam.com"
     @State private var password: String = "secret"
@@ -53,13 +56,14 @@ struct Login: View {
                             .cornerRadius(10)
                             
                             Button(action: {
+                                isLoading.toggle()
                                 login()
                             },label  : {
                                 
                                 //        })
                                 Text("Iniciar Sesión").foregroundStyle(.white)
                                 
-                            })
+                            }).disabled(isLoading)
                             .frame(width: 250, height: 60)
                             .background(Color.myPrimary).border(Color.myPrimary, width:1 )
                             .cornerRadius(10)
@@ -69,13 +73,19 @@ struct Login: View {
                             }
                             
                             if let errorMessage = errorMessage {
+                              //  print(" linea 72 errorMessage")
                                 Text(errorMessage)
                                     .foregroundStyle(.red)
                             }
-                            
+                            if isLoading {
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle())
+                                    .scaleEffect(2)
+                                    .padding(.top, 50)
+                            }
                         }.offset(y:100).ignoresSafeArea()
                         VStack {
-                            Text("Quality Group Services")
+                            Text("Quality Group Services").font(.system(size: 9))
                             
                         }.offset(y:230).foregroundStyle(Color.gray)
                     }
@@ -95,8 +105,10 @@ struct Login: View {
             case .success(let response):
                 if response.status {
                     // Guardar los datos
-                    saveUserData(from: response)
+                   // saveUserData(from: response)
                     
+                    print("==Guardando los datos== \(response)")
+                    UserManager.shared.saveUser(from: response)
                     // Redirigir a la pantalla de bienvenida
                     DispatchQueue.main.async {
                         isLoginSuccessful = true
@@ -107,11 +119,13 @@ struct Login: View {
                     }
                 } else {
                     DispatchQueue.main.async {
+                        print("Error esta llegando a seccion case: ")
                         errorMessage = response.message
                     }
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
+                    print("Error esta llegando a seccion case: \(error)")
                     errorMessage = error.localizedDescription
                 }
             }
@@ -123,35 +137,31 @@ struct Login: View {
         isLoginSuccessful = true
         //
         print("NavigationDestination isPresented: \(isLoginSuccessful)")
-        dismiss()
+      //  dismiss()
     }
     
-    func saveUserData(from response: LoginResponse) {
-        // Crear una nueva instancia del modelo User
-        let user = UserModel(
-            name: response.user.name,
-            email: response.user.email,
-            token: response.token,
-            employeeId: response.user.employee.id,
-            sysconf: response.sysconf
-        )
-        
-        do {
-            // Insertar el usuario en el contexto (context es inyectado automáticamente por SwiftUI)
-            try context.insert(user)
-            
-            // Guardar los cambios
-            try context.save()
-        } catch {
-            print("Error saving user data: \(error)")
-        }
-    }
-    
-    
-    
-    
+//    func saveUserData(from response: LoginResponse) {
+//        // Crear una nueva instancia del modelo User
+//        let user = UserModel(
+//            name: response.user.name,
+//            email: response.user.email,
+//            token: response.token,
+//            employeeId: response.user.employee.id,
+//            sysconf: response.sysconf
+//        )
+//        
+//        do {
+//            // Insertar el usuario en el contexto (context es inyectado automáticamente por SwiftUI)
+//            try context.insert(user)
+//            
+//            // Guardar los cambios
+//            try context.save()
+//        } catch {
+//            print("Error saving user data: \(error)")
+//        }
+//    }
 }
 
-#Preview {
-    Login()
-}
+//#Preview {
+//    Login()
+//}

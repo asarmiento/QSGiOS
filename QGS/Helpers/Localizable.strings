@@ -1,0 +1,15 @@
+//
+//  Localizable.strings
+//  QGS
+//
+//  Created by Edin Martinez on 12/8/24.
+//
+
+"Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo" = "Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo";
+"LATITUDE" = "LATITUD";
+"Entrada" = "Entrada";
+"Salida" = "Salida";
+"Ver Detalles" = "Ver Detalles";
+"Ver Totales" = "Ver Totales";
+"Iniciar Sesión" = "Iniciar Sesión";
+"Quality Group Services" = "Quality Group Services";

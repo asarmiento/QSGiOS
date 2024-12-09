@@ -7,14 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EB029BA22CEBF3B200952235 /* ListHttpGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB029BA12CEBF3B200952235 /* ListHttpGet.swift */; };
-		EB029BA42CEBF3C900952235 /* TotalHttpGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB029BA32CEBF3C900952235 /* TotalHttpGet.swift */; };
 		EB345D142CF4BC42001A62C8 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D132CF4BC42001A62C8 /* ModalView.swift */; };
 		EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D152CF6A47B001A62C8 /* RecordModel.swift */; };
 		EB345D182CF6DBB1001A62C8 /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D172CF6DB9F001A62C8 /* JsonServices.swift */; };
 		EB345D1A2CF74DA8001A62C8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D192CF74D9D001A62C8 /* Utils.swift */; };
 		EB345D212CF781ED001A62C8 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D202CF781E7001A62C8 /* UserModel.swift */; };
-		EB44DB2E2CFA63940070B827 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB2D2CFA62D70070B827 /* Users.swift */; };
+		EB3665F12D066DCE00810713 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB3665F02D066DB600810713 /* Localizable.strings */; };
 		EB44DB302CFE00410070B827 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB2F2CFE00340070B827 /* NetworkManager.swift */; };
 		EB44DB392CFE4D800070B827 /* NetworkListDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB382CFE4D680070B827 /* NetworkListDetails.swift */; };
 		EB44DB5B2CFECF170070B827 /* DeviceLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB5A2CFECF090070B827 /* DeviceLocations.swift */; };
@@ -24,6 +22,7 @@
 		EB44DB652CFF427F0070B827 /* Sysconf.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB642CFF42780070B827 /* Sysconf.swift */; };
 		EB44DB672CFF6D680070B827 /* NetworkListTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB662CFF6D680070B827 /* NetworkListTotal.swift */; };
 		EB44DB692CFF6F080070B827 /* TotalWorkEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB682CFF6EF80070B827 /* TotalWorkEntry.swift */; };
+		EB44DBA12D0309C50070B827 /* APIServiceRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DBA02D0309C20070B827 /* APIServiceRecord.swift */; };
 		EB6D31C92CECCD17000E02E7 /* BoxGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6D31C82CECCD17000E02E7 /* BoxGPS.swift */; };
 		EB6F03A22CEE172500190C0E /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6F03A12CEE171300190C0E /* Endpoints.swift */; };
 		EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1532C6A6A3300E7D361 /* SplashView.swift */; };
@@ -64,14 +63,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EB029BA12CEBF3B200952235 /* ListHttpGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHttpGet.swift; sourceTree = "<group>"; };
-		EB029BA32CEBF3C900952235 /* TotalHttpGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalHttpGet.swift; sourceTree = "<group>"; };
 		EB345D132CF4BC42001A62C8 /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
 		EB345D152CF6A47B001A62C8 /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
 		EB345D172CF6DB9F001A62C8 /* JsonServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonServices.swift; sourceTree = "<group>"; };
 		EB345D192CF74D9D001A62C8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EB345D202CF781E7001A62C8 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		EB44DB2D2CFA62D70070B827 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		EB3665F02D066DB600810713 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		EB44DB2F2CFE00340070B827 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		EB44DB382CFE4D680070B827 /* NetworkListDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkListDetails.swift; sourceTree = "<group>"; };
 		EB44DB5A2CFECF090070B827 /* DeviceLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLocations.swift; sourceTree = "<group>"; };
@@ -81,6 +78,7 @@
 		EB44DB642CFF42780070B827 /* Sysconf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sysconf.swift; sourceTree = "<group>"; };
 		EB44DB662CFF6D680070B827 /* NetworkListTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkListTotal.swift; sourceTree = "<group>"; };
 		EB44DB682CFF6EF80070B827 /* TotalWorkEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalWorkEntry.swift; sourceTree = "<group>"; };
+		EB44DBA02D0309C20070B827 /* APIServiceRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceRecord.swift; sourceTree = "<group>"; };
 		EB6D31C82CECCD17000E02E7 /* BoxGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxGPS.swift; sourceTree = "<group>"; };
 		EB6F03A12CEE171300190C0E /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		EB83A1532C6A6A3300E7D361 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -111,6 +109,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EB345D242CF79E07001A62C8 /* Buttons */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Buttons; sourceTree = "<group>"; };
 		EB345D922CFA11A4001A62C8 /* Interactor */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Interactor; sourceTree = "<group>"; };
+		EB3665EC2D05F6B000810713 /* Manager */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Manager; sourceTree = "<group>"; };
 		EB44DB342CFE0F420070B827 /* UtilsLogin */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UtilsLogin; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -142,6 +141,7 @@
 		EB4B26B42C5998F80083397F /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				EB44DBA02D0309C20070B827 /* APIServiceRecord.swift */,
 				EB44DB662CFF6D680070B827 /* NetworkListTotal.swift */,
 				EB44DB5A2CFECF090070B827 /* DeviceLocations.swift */,
 				EB44DB382CFE4D680070B827 /* NetworkListDetails.swift */,
@@ -150,8 +150,6 @@
 				EB6F03A12CEE171300190C0E /* Endpoints.swift */,
 				EBE614992C5AFA5D00197660 /* LocationViewController.swift */,
 				EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */,
-				EB029BA12CEBF3B200952235 /* ListHttpGet.swift */,
-				EB029BA32CEBF3C900952235 /* TotalHttpGet.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -159,12 +157,12 @@
 		EB4B26B92C5AB10B0083397F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EB3665EC2D05F6B000810713 /* Manager */,
 				EB44DB682CFF6EF80070B827 /* TotalWorkEntry.swift */,
 				EB44DB642CFF42780070B827 /* Sysconf.swift */,
 				EB44DB622CFF40BD0070B827 /* Project.swift */,
 				EB44DB602CFF406C0070B827 /* Employee.swift */,
 				EB44DB5C2CFF3F290070B827 /* WorkEntry.swift */,
-				EB44DB2D2CFA62D70070B827 /* Users.swift */,
 				EB345D202CF781E7001A62C8 /* UserModel.swift */,
 				EB345D152CF6A47B001A62C8 /* RecordModel.swift */,
 				EB345D132CF4BC42001A62C8 /* ModalView.swift */,
@@ -262,6 +260,7 @@
 		EBBC933D2C515F9E00F3C8CD /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				EB3665F02D066DB600810713 /* Localizable.strings */,
 				EB345D172CF6DB9F001A62C8 /* JsonServices.swift */,
 				EBBC93402C5161CD00F3C8CD /* CustomTF.swift */,
 				EBBC933E2C515FC100F3C8CD /* View+extensions.swift */,
@@ -288,6 +287,7 @@
 			fileSystemSynchronizedGroups = (
 				EB345D242CF79E07001A62C8 /* Buttons */,
 				EB345D922CFA11A4001A62C8 /* Interactor */,
+				EB3665EC2D05F6B000810713 /* Manager */,
 				EB44DB342CFE0F420070B827 /* UtilsLogin */,
 			);
 			name = QGS;
@@ -384,6 +384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBBC93162C512EBC00F3C8CD /* Preview Assets.xcassets in Resources */,
+				EB3665F12D066DCE00810713 /* Localizable.strings in Resources */,
 				EBBC93132C512EBC00F3C8CD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -414,8 +415,8 @@
 				EB44DB392CFE4D800070B827 /* NetworkListDetails.swift in Sources */,
 				EB6D31C92CECCD17000E02E7 /* BoxGPS.swift in Sources */,
 				EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */,
-				EB029BA22CEBF3B200952235 /* ListHttpGet.swift in Sources */,
 				EB44DB612CFF40730070B827 /* Employee.swift in Sources */,
+				EB44DBA12D0309C50070B827 /* APIServiceRecord.swift in Sources */,
 				EBF9DFA12CED8F2F002D7FA1 /* HeadSecondary.swift in Sources */,
 				EBE6149A2C5AFA5D00197660 /* LocationViewController.swift in Sources */,
 				EB345D182CF6DBB1001A62C8 /* JsonServices.swift in Sources */,
@@ -429,13 +430,11 @@
 				EB6F03A22CEE172500190C0E /* Endpoints.swift in Sources */,
 				EBF9DF9F2CED8E4C002D7FA1 /* ListRecordTotals.swift in Sources */,
 				EB345D142CF4BC42001A62C8 /* ModalView.swift in Sources */,
-				EB029BA42CEBF3C900952235 /* TotalHttpGet.swift in Sources */,
 				EB83A1B42C6BA23500E7D361 /* AppDelegate.swift in Sources */,
 				EBBC933F2C515FC100F3C8CD /* View+extensions.swift in Sources */,
 				EBF9DF9D2CED8E30002D7FA1 /* ListRecordDetails.swift in Sources */,
 				EB345D212CF781ED001A62C8 /* UserModel.swift in Sources */,
 				EB44DB5D2CFF3F3D0070B827 /* WorkEntry.swift in Sources */,
-				EB44DB2E2CFA63940070B827 /* Users.swift in Sources */,
 				EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */,
 				EB44DB672CFF6D680070B827 /* NetworkListTotal.swift in Sources */,
 				EBE6149F2C5B9E9200197660 /* RecordHttpPost.swift in Sources */,
@@ -606,7 +605,7 @@
 				CODE_SIGN_ENTITLEMENTS = QGS/QGS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
 				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
@@ -620,18 +619,13 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-
-				MARKETING_VERSION = 1.1.0;
-
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -654,7 +648,7 @@
 				CODE_SIGN_ENTITLEMENTS = QGS/QGS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
 				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
@@ -668,18 +662,13 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-
-				MARKETING_VERSION = 1.1.0;
-
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -10,7 +10,9 @@ import SwiftData
 
 struct ButtonIn: View {
     //  @Environment(\.modelContext) private var modelContext
-    @StateObject private var locationManager = LocationViewController()
+   // @StateObject private var locationManager = LocationViewController()
+    @StateObject private var locationManager = LocationViewController.shared
+       @State private var showLocationAlert = false
     @StateObject private var creaturesVM = RecordHttpPost()
     @State private var isTwoButtonHidden = false
     @State private var activeIs = false
@@ -29,10 +31,12 @@ struct ButtonIn: View {
                 if RecordManager.shared.getRecordExists(for: typeToCheck) == 0 {
                    
                         Button("Entrada") {
-                            isRecordSuccessful = true
-                             record(type: "e")
-                            isRecordSuccessful = false
-                            
+                           // if handleLocationCheck  {
+                                isRecordSuccessful = true
+                                record(type: "e")
+                                
+                                isRecordSuccessful = false
+                           // }
                         }
                         .padding()
                         .frame(width: 150, height: 50, alignment: .center)
@@ -58,19 +62,22 @@ struct ButtonIn: View {
                     let typeToCheckS = "Salida"
                 if RecordManager.shared.getRecordExists(for: typeToCheckS) == 0 {
                     Button("Salida") {
+                    //    if handleLocationCheck {
                             isRecordSuccessful = true
-                        salidaMessage = ""
-                       
-                        
-                        record(type:"s")
-                        isRecordSuccessful = false
-                        
+                            salidaMessage = ""
+                            
+                            
+                            record(type:"s")
+                            isRecordSuccessful = false
+                       // }
                     }
                     .padding()
                     .frame(width: 150, height: 50, alignment: .center)
                     .background(Color.init(red: 0.918, green: 0.0405, blue: 0.0405))
                     .cornerRadius(10)
-                    .foregroundColor(.white)
+                    .foregroundColor(.white).onAppear() {
+                        RecordManager.shared.refreshRecord()
+                    }
                 }
                 else{
                     
@@ -97,6 +104,9 @@ struct ButtonIn: View {
                         .scaleEffect(2)
                         .padding(.top, 50)
                 }
+            }.onAppear {
+                locationManager.requestLocationPermission()
+                RecordManager.shared.refreshRecord()
             }
         }
     }
@@ -107,7 +117,13 @@ struct ButtonIn: View {
     private var isSalidaButtonHidden: Int {
         return  RecordManager.shared.getRecordExists(for: "Salida")
     }
-    
+    private func handleLocationCheck(action: @escaping () -> Void) {
+//         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways {
+//             action()
+//         } else {
+//             showLocationAlert = true
+//         }
+     }
     
     private  var currentDateString: String {
         let formatter = DateFormatter()
@@ -149,6 +165,8 @@ struct ButtonIn: View {
                     let recordData = response.data
                     print("Entrada registrada correctamente: \(recordData)")
                     RecordManager.shared.saveRecord(from: recordData)
+                    
+                        RecordManager.shared.refreshRecord()
                     DispatchQueue.main.async {
                         isRecordSuccessful = false
                     }

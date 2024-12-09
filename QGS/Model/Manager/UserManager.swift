@@ -62,6 +62,7 @@ class UserManager {
                 name: response.user.name,
                 email: response.user.email,
                 token: response.token,
+                type: response.user.type,
                 employeeId: response.user.employee.id,
                 sysconf: response.sysconf
                 

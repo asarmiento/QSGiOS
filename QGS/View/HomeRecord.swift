@@ -9,11 +9,14 @@
 import Foundation
 import SwiftUI
 import SwiftData
+import CoreLocation
 
 
 struct HomeRecord: View {
     @Environment(\.modelContext) private var context: ModelContext
-    
+    @StateObject private var locationManager = LocationViewController.shared
+       @State private var showLocationAlert = false
+
      // Indicador de carga
     @State private var errorMessage: String?  // Para manejar errores
     // Variables de pantalla
@@ -103,10 +106,24 @@ struct HomeRecord: View {
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center).offset(y:90)
+                .alert(isPresented: $showLocationAlert) {
+                                        Alert(
+                                            title: Text("Permiso de Localización"),
+                                            message: Text("La aplicación necesita acceso a tu ubicación para realizar esta acción. Ve a Configuración para otorgar permisos."),
+                                            primaryButton: .default(Text("Abrir Configuración")) {
+                                                if let url = URL(string: UIApplication.openSettingsURLString) {
+                                                    UIApplication.shared.open(url)
+                                                }
+                                            },
+                                            secondaryButton: .destructive(Text("Cancelar")) {
+                                                        exit(0) // Cierra la aplicación
+                                                    }
+                                        )
+                                    }
+            }.onAppear {
+                checkLocationAuthorization()
             }
-            .onAppear {
-                //  loadUserData()
-            }
+           
         }
     }
 
@@ -128,7 +145,14 @@ struct HomeRecord: View {
         return UserManager.shared.employeeId
     }
     
-    
+    private func checkLocationAuthorization() {
+           let status = CLLocationManager.authorizationStatus()
+           if status == .denied || status == .restricted || status == .notDetermined {
+               showLocationAlert = true
+           } else {
+               locationManager.requestLocationPermission()
+           }
+       }
     
 }
 

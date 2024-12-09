@@ -140,26 +140,7 @@ struct Login: View {
       //  dismiss()
     }
     
-//    func saveUserData(from response: LoginResponse) {
-//        // Crear una nueva instancia del modelo User
-//        let user = UserModel(
-//            name: response.user.name,
-//            email: response.user.email,
-//            token: response.token,
-//            employeeId: response.user.employee.id,
-//            sysconf: response.sysconf
-//        )
-//        
-//        do {
-//            // Insertar el usuario en el contexto (context es inyectado automáticamente por SwiftUI)
-//            try context.insert(user)
-//            
-//            // Guardar los cambios
-//            try context.save()
-//        } catch {
-//            print("Error saving user data: \(error)")
-//        }
-//    }
+
 }
 
 //#Preview {

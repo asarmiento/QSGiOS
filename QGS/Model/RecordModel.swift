@@ -19,7 +19,7 @@ class RecordModel {
     var employeeId: String
     var address: String
     
-    init(latitude: Double, longitude: Double, type: String, date: Date, times: String, employeeId: String, address: String) {
+    init(latitude: Double, longitude: Double, type: String , date: Date, times: String, employeeId: String, address: String) {
         self.latitude = latitude
         self.longitude = longitude
         self.type = type
@@ -29,6 +29,7 @@ class RecordModel {
         self.address = address
         }
   
+    
     
 }
 

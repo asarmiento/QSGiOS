@@ -8,12 +8,12 @@ import CoreData
 import CoreLocation
 
 struct Login: View {
-     
+    
     @State private var isLoginSuccessful = false
     @State private var isLoading = false  // Indicador de carga
     // Variables for Login
-    @State private var email: String = "asarmiento@sistemasamigableslatam.com"
-    @State private var password: String = "secret"
+    @State private var email: String = ""
+    @State private var password: String = ""
     @State private var errorMessage: String? = nil
     
     
@@ -56,24 +56,23 @@ struct Login: View {
                             .cornerRadius(10)
                             
                             Button(action: {
+                                errorMessage = ""
                                 isLoading.toggle()
                                 login()
                             },label  : {
-                                
-                                //        })
                                 Text("Iniciar Sesión").foregroundStyle(.white)
                                 
                             }).disabled(isLoading)
-                            .frame(width: 250, height: 60)
-                            .background(Color.myPrimary).border(Color.myPrimary, width:1 )
-                            .cornerRadius(10)
-                            .fullScreenCover(isPresented: $isLoginSuccessful){
-                                // dismiss()
-                                HomeRecord()
-                            }
+                                .frame(width: 250, height: 60)
+                                .background(Color.myPrimary).border(Color.myPrimary, width:1 )
+                                .cornerRadius(10)
+                                .fullScreenCover(isPresented: $isLoginSuccessful){
+                                    // dismiss()
+                                    HomeRecord()
+                                }
                             
                             if let errorMessage = errorMessage {
-                              //  print(" linea 72 errorMessage")
+                                //  print(" linea 72 errorMessage")
                                 Text(errorMessage)
                                     .foregroundStyle(.red)
                             }
@@ -85,7 +84,8 @@ struct Login: View {
                             }
                         }.offset(y:100).ignoresSafeArea()
                         VStack {
-                            Text("Quality Group Services").font(.system(size: 9))
+                           
+                            Text("Quality Group Services v\(version())").font(.system(size: 12))
                             
                         }.offset(y:230).foregroundStyle(Color.gray)
                     }
@@ -97,36 +97,42 @@ struct Login: View {
             .navigationBarHidden(false)
         }
     }
-    
+    func version() -> String {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "N/A"
+        let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "N/A"
+        return "\(version) (\(build))"
+    }
     func login() {
         APIService.shared.login(email: email, password: password) { result in
             
             switch result {
             case .success(let response):
-                if response.status {
-                    // Guardar los datos
-                   // saveUserData(from: response)
+                if response.status  {
                     
-                    print("==Guardando los datos== \(response)")
                     UserManager.shared.saveUser(from: response)
                     // Redirigir a la pantalla de bienvenida
                     DispatchQueue.main.async {
                         isLoginSuccessful = true
                         // Usar el NavigationLink para navegar
-                        // HomeRecord.init()
                         navigateToWelcomeScreen()
                         print("Login successful")
+                        
+                            isLoading = false
                     }
                 } else {
                     DispatchQueue.main.async {
-                        print("Error esta llegando a seccion case: ")
+                        print("Error esta llegando a seccion case0: ")
                         errorMessage = response.message
                     }
                 }
+            
             case .failure(let error):
+                
                 DispatchQueue.main.async {
-                    print("Error esta llegando a seccion case: \(error)")
-                    errorMessage = error.localizedDescription
+                    print("Error esta llegando a seccion case1: \(error.localizedDescription)")
+                    errorMessage = "Usuario o contraseña incorrectos"
+                    
+                        isLoading = false
                 }
             }
         }
@@ -135,12 +141,9 @@ struct Login: View {
     func navigateToWelcomeScreen() {
         // Navegar a la pantalla de bienvenida
         isLoginSuccessful = true
-        //
-        print("NavigationDestination isPresented: \(isLoginSuccessful)")
-      //  dismiss()
     }
     
-
+    
 }
 
 //#Preview {

@@ -111,7 +111,8 @@ class RecordManager {
             print("Error: ModelContext no está configurado.")
             return
         }
-        DispatchQueue.main.async {
+        
+        Task { @MainActor in
             // Depuración de los datos
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -132,9 +133,9 @@ class RecordManager {
             
             print("Modelo creado: \(newRecord)")
             do {
-                context.insert(newRecord)
+                 context.insert(newRecord)
                 try context.save()
-                // Imprime todos los registros guardados
+                await refreshRecord()
             } catch {
                 print("Error al guardar el modelo en SwiftData: \(error.localizedDescription)")
             }

@@ -16,11 +16,12 @@ struct HomeRecord: View {
     @Environment(\.modelContext) private var context: ModelContext
     @StateObject private var locationManager = LocationViewController.shared
        @State private var showLocationAlert = false
+    @State private var isLoading: Bool = false
 
      // Indicador de carga
     @State private var errorMessage: String?  // Para manejar errores
     // Variables de pantalla
-    @StateObject private var creaturesVM = RecordHttpPost()
+   // @StateObject private var creaturesVM = RecordHttpPost()
     
     @State private var isButtonDisabled = false
     
@@ -37,7 +38,7 @@ struct HomeRecord: View {
                     HeadSecondary(title: "Bienvenido(a): \(user.name) ")
                    
                 } else {
-                    HeadSecondary(title: "Entrada o Salida \(getUser?.name) ")
+                    HeadSecondary(title: "Entrada o Salida ")
                     
                 }
                 
@@ -58,7 +59,7 @@ struct HomeRecord: View {
                         
                         // Botones de acción
                         HStack {
-                            ButtonIn()
+                            ButtonIn(isLoading: $isLoading)
                                 .frame(maxWidth: .infinity)
                                 .padding()
                                 .environment(\.modelContext, context)
@@ -66,7 +67,7 @@ struct HomeRecord: View {
                         // Botones adicionales (Detalles y Totales)
                         HStack {
                             Group {
-                                NavigationLink("Ver Detalles") {
+                                NavigationLink("Horas Diarias") {
                                     ListRecordDetails()
                                 }
                                 .frame(width: 150, height: 50)
@@ -74,7 +75,7 @@ struct HomeRecord: View {
                                 .cornerRadius(12)
                                 .foregroundColor(.white)
                                 
-                                NavigationLink("Ver Totales") {
+                                NavigationLink("Horas Semanales") {
                                     // Acción para ver totales
                                     ListRecordTotals()
                                 }
@@ -98,12 +99,14 @@ struct HomeRecord: View {
                     }
                     
                     // Mostrar indicador de carga si estamos esperando datos
-                    if creaturesVM.isLoading {
+                    if isLoading {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle())
                             .scaleEffect(2)
                             .padding(.top, 50)
                     }
+                    
+                   
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center).offset(y:90)
                 .alert(isPresented: $showLocationAlert) {
@@ -120,14 +123,27 @@ struct HomeRecord: View {
                                                     }
                                         )
                                     }
+                VStack {
+                   
+                    Text(String(format: NSLocalizedString("Quality Group Services v%@", comment: ""), version()))
+                        .font(.system(size: 12))
+
+                    
+                }.foregroundStyle(Color.gray).offset(y:400)
             }.onAppear {
                 checkLocationAuthorization()
             }
            
         }
+       
     }
 
     
+    func version() -> String {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "N/A"
+     //   let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "N/A"
+        return "\(version) "//(\(build))
+    }
     private var currentDateString: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -146,8 +162,8 @@ struct HomeRecord: View {
     }
     
     private func checkLocationAuthorization() {
-           let status = CLLocationManager.authorizationStatus()
-           if status == .denied || status == .restricted || status == .notDetermined {
+        let status = locationManager.isAuthorized
+           if status  {
                showLocationAlert = true
            } else {
                locationManager.requestLocationPermission()
@@ -157,9 +173,10 @@ struct HomeRecord: View {
 }
 
 
-//#Preview {
-//    HomeRecord()
-//}
+
+#Preview {
+    HomeRecord()
+}
 
 
 

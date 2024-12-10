@@ -6,13 +6,16 @@
 //
 
 "Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo" = "Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo";
-"LATITUDE" = "LATITUD";
+"LATITUDE" = "Latitude";
+"LONGITUDE" = "Longitude";
 "Entrada" = "Entrada";
 "Salida" = "Salida";
-"Ver Detalles" = "Ver Detalles";
-"Ver Totales" = "Ver Totales";
+"Horas Diarias" = "Horas Diarias";
+"Horas Semanales" = "Horas Semanales";
 "Iniciar Sesión" = "Iniciar Sesión";
 "Quality Group Services" = "Quality Group Services";
 "La aplicación necesita acceso a tu ubicación para realizar esta acción. Ve a Configuración para otorgar permisos." = "La aplicación necesita acceso a tu ubicación para realizar esta acción. Ve a Configuración para otorgar permisos.";
 "Permiso de Localización" = "Permiso de Localización";
 "Abrir Configuración" = "Abrir Configuración";
+"Usuario o contraseña incorrectos" = "Usuario o contraseña incorrectos";
+"Quality Group Services v%@" = "Quality Group Services v%@";

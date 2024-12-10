@@ -15,7 +15,6 @@ struct SplashView: View {
    
     let accessToken = UserManager.shared.authToken
     let datecreatAt = UserDefaults.standard.string(forKey: "createdAt")
-   @State private var locationH = LocationViewController()
  //  let persistenceController = PersistenceController.shared
     
     var body: some View {

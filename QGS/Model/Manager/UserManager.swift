@@ -18,6 +18,8 @@ class UserManager {
     func configure(with context: ModelContext) {
         self.context = context
         loadUser()
+       // performMigration(context: modelContainer.mainContext)
+
         print("UserManager configurado con el contexto correctamente.")
     }
     
@@ -55,16 +57,16 @@ class UserManager {
             print("Error: ModelContext no está configurado.")
             return
         }
-        print("guardando usuario \(response.user.name)")
+        print("guardando usuario \(response)")
         do {
             // Crear un nuevo modelo UserModel desde el JSON
             let newUser = UserModel(
                 name: response.user.name,
                 email: response.user.email,
                 token: response.token,
-                type: response.user.type,
                 employeeId: response.user.employee.id,
-                sysconf: response.sysconf
+                sysconf: response.sysconf,
+                type: response.user.type
                 
             )
             
@@ -82,4 +84,26 @@ class UserManager {
             print("Error al guardar el usuario: \(error)")
         }
     }
+    
+    func performMigration(context: ModelContext) {
+        do {
+            // Busca los registros antiguos
+            let fetchDescriptor = FetchDescriptor<UserModel>()
+            let oldRecords = try context.fetch(fetchDescriptor)
+
+            // Migra cada registro al nuevo modelo
+            for record in oldRecords {
+                if record.type == nil {
+                    record.type = "employee"
+                }
+            }
+
+            // Guarda los cambios
+            try context.save()
+            print("Migración completada exitosamente.")
+        } catch {
+            print("Error al realizar la migración: \(error.localizedDescription)")
+        }
+    }
+
 }

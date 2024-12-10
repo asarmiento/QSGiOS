@@ -39,7 +39,6 @@
 		EBBC93412C5161CD00F3C8CD /* CustomTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC93402C5161CD00F3C8CD /* CustomTF.swift */; };
 		EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE614972C5AE4FA00197660 /* HomeRecord.swift */; };
 		EBE6149A2C5AFA5D00197660 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE614992C5AFA5D00197660 /* LocationViewController.swift */; };
-		EBE6149F2C5B9E9200197660 /* RecordHttpPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */; };
 		EBF9DF9D2CED8E30002D7FA1 /* ListRecordDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9DF9C2CED8E1D002D7FA1 /* ListRecordDetails.swift */; };
 		EBF9DF9F2CED8E4C002D7FA1 /* ListRecordTotals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9DF9E2CED8E38002D7FA1 /* ListRecordTotals.swift */; };
 		EBF9DFA12CED8F2F002D7FA1 /* HeadSecondary.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9DFA02CED8F1C002D7FA1 /* HeadSecondary.swift */; };
@@ -100,7 +99,6 @@
 		EBE614972C5AE4FA00197660 /* HomeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecord.swift; sourceTree = "<group>"; };
 		EBE614992C5AFA5D00197660 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		EBE6149B2C5AFC8300197660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordHttpPost.swift; sourceTree = "<group>"; };
 		EBF9DF9C2CED8E1D002D7FA1 /* ListRecordDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRecordDetails.swift; sourceTree = "<group>"; };
 		EBF9DF9E2CED8E38002D7FA1 /* ListRecordTotals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRecordTotals.swift; sourceTree = "<group>"; };
 		EBF9DFA02CED8F1C002D7FA1 /* HeadSecondary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadSecondary.swift; sourceTree = "<group>"; wrapsLines = 1; };
@@ -110,6 +108,7 @@
 		EB345D242CF79E07001A62C8 /* Buttons */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Buttons; sourceTree = "<group>"; };
 		EB345D922CFA11A4001A62C8 /* Interactor */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Interactor; sourceTree = "<group>"; };
 		EB3665EC2D05F6B000810713 /* Manager */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Manager; sourceTree = "<group>"; };
+		EB3665F52D07D7A200810713 /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
 		EB44DB342CFE0F420070B827 /* UtilsLogin */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UtilsLogin; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -149,7 +148,6 @@
 				EB345D192CF74D9D001A62C8 /* Utils.swift */,
 				EB6F03A12CEE171300190C0E /* Endpoints.swift */,
 				EBE614992C5AFA5D00197660 /* LocationViewController.swift */,
-				EBE6149E2C5B9E9200197660 /* RecordHttpPost.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -157,6 +155,7 @@
 		EB4B26B92C5AB10B0083397F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EB3665F52D07D7A200810713 /* ViewModel */,
 				EB3665EC2D05F6B000810713 /* Manager */,
 				EB44DB682CFF6EF80070B827 /* TotalWorkEntry.swift */,
 				EB44DB642CFF42780070B827 /* Sysconf.swift */,
@@ -288,6 +287,7 @@
 				EB345D242CF79E07001A62C8 /* Buttons */,
 				EB345D922CFA11A4001A62C8 /* Interactor */,
 				EB3665EC2D05F6B000810713 /* Manager */,
+				EB3665F52D07D7A200810713 /* ViewModel */,
 				EB44DB342CFE0F420070B827 /* UtilsLogin */,
 			);
 			name = QGS;
@@ -437,7 +437,6 @@
 				EB44DB5D2CFF3F3D0070B827 /* WorkEntry.swift in Sources */,
 				EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */,
 				EB44DB672CFF6D680070B827 /* NetworkListTotal.swift in Sources */,
-				EBE6149F2C5B9E9200197660 /* RecordHttpPost.swift in Sources */,
 				EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */,
 				EB44DB632CFF40C20070B827 /* Project.swift in Sources */,
 			);
@@ -605,7 +604,7 @@
 				CODE_SIGN_ENTITLEMENTS = QGS/QGS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
 				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
@@ -625,7 +624,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -648,7 +647,7 @@
 				CODE_SIGN_ENTITLEMENTS = QGS/QGS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
 				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
@@ -668,7 +667,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

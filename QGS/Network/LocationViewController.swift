@@ -39,7 +39,7 @@ class LocationViewController: NSObject, ObservableObject, CLLocationManagerDeleg
                 self.startUpdatingLocation()
             case .denied, .restricted:
                 self.isAuthorized = true
-                print("Permiso denegado o restringido.")
+                print("Permiso denegado o restringido.1")
             @unknown default:
                 self.isAuthorized = true
                 print("Estado de autorización desconocido.")
@@ -76,8 +76,8 @@ class LocationViewController: NSObject, ObservableObject, CLLocationManagerDeleg
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard !isProcessingRequest, let bestLocation = locations.last else { return }
 
-        latitude = String(bestLocation.coordinate.latitude)
-        longitude = String(bestLocation.coordinate.longitude)
+        latitude = String(format: "%.6f", bestLocation.coordinate.latitude)
+        longitude = String(format: "%.6f", bestLocation.coordinate.longitude)
 
         isProcessingRequest = true
         let geocoder = CLGeocoder()

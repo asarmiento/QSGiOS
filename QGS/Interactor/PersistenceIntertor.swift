@@ -25,5 +25,5 @@ protocol PersistenceIntertor {
 }
 
 protocol ListRecordDetailsProtocol{
-    func getLoadRecordDetails(id: Int) async throws -> [WorkEntry]
+    func getLoadRecordDetails(id: Int) async throws -> [WorkEntryDetails]
 }

@@ -13,10 +13,11 @@
 		EB345D1A2CF74DA8001A62C8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D192CF74D9D001A62C8 /* Utils.swift */; };
 		EB345D212CF781ED001A62C8 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D202CF781E7001A62C8 /* UserModel.swift */; };
 		EB3665F12D066DCE00810713 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB3665F02D066DB600810713 /* Localizable.strings */; };
+		EB3665FF2D08000600810713 /* EmployeeCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3665FE2D08000600810713 /* EmployeeCodable.swift */; };
 		EB44DB302CFE00410070B827 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB2F2CFE00340070B827 /* NetworkManager.swift */; };
 		EB44DB392CFE4D800070B827 /* NetworkListDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB382CFE4D680070B827 /* NetworkListDetails.swift */; };
 		EB44DB5B2CFECF170070B827 /* DeviceLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB5A2CFECF090070B827 /* DeviceLocations.swift */; };
-		EB44DB5D2CFF3F3D0070B827 /* WorkEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB5C2CFF3F290070B827 /* WorkEntry.swift */; };
+		EB44DB5D2CFF3F3D0070B827 /* WorkEntryDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB5C2CFF3F290070B827 /* WorkEntryDetails.swift */; };
 		EB44DB612CFF40730070B827 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB602CFF406C0070B827 /* Employee.swift */; };
 		EB44DB632CFF40C20070B827 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB622CFF40BD0070B827 /* Project.swift */; };
 		EB44DB652CFF427F0070B827 /* Sysconf.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB642CFF42780070B827 /* Sysconf.swift */; };
@@ -68,10 +69,11 @@
 		EB345D192CF74D9D001A62C8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EB345D202CF781E7001A62C8 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		EB3665F02D066DB600810713 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		EB3665FE2D08000600810713 /* EmployeeCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeCodable.swift; sourceTree = "<group>"; };
 		EB44DB2F2CFE00340070B827 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		EB44DB382CFE4D680070B827 /* NetworkListDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkListDetails.swift; sourceTree = "<group>"; };
 		EB44DB5A2CFECF090070B827 /* DeviceLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLocations.swift; sourceTree = "<group>"; };
-		EB44DB5C2CFF3F290070B827 /* WorkEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkEntry.swift; sourceTree = "<group>"; };
+		EB44DB5C2CFF3F290070B827 /* WorkEntryDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkEntryDetails.swift; sourceTree = "<group>"; };
 		EB44DB602CFF406C0070B827 /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
 		EB44DB622CFF40BD0070B827 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		EB44DB642CFF42780070B827 /* Sysconf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sysconf.swift; sourceTree = "<group>"; };
@@ -161,7 +163,8 @@
 				EB44DB642CFF42780070B827 /* Sysconf.swift */,
 				EB44DB622CFF40BD0070B827 /* Project.swift */,
 				EB44DB602CFF406C0070B827 /* Employee.swift */,
-				EB44DB5C2CFF3F290070B827 /* WorkEntry.swift */,
+				EB3665FE2D08000600810713 /* EmployeeCodable.swift */,
+				EB44DB5C2CFF3F290070B827 /* WorkEntryDetails.swift */,
 				EB345D202CF781E7001A62C8 /* UserModel.swift */,
 				EB345D152CF6A47B001A62C8 /* RecordModel.swift */,
 				EB345D132CF4BC42001A62C8 /* ModalView.swift */,
@@ -434,10 +437,11 @@
 				EBBC933F2C515FC100F3C8CD /* View+extensions.swift in Sources */,
 				EBF9DF9D2CED8E30002D7FA1 /* ListRecordDetails.swift in Sources */,
 				EB345D212CF781ED001A62C8 /* UserModel.swift in Sources */,
-				EB44DB5D2CFF3F3D0070B827 /* WorkEntry.swift in Sources */,
+				EB44DB5D2CFF3F3D0070B827 /* WorkEntryDetails.swift in Sources */,
 				EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */,
 				EB44DB672CFF6D680070B827 /* NetworkListTotal.swift in Sources */,
 				EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */,
+				EB3665FF2D08000600810713 /* EmployeeCodable.swift in Sources */,
 				EB44DB632CFF40C20070B827 /* Project.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -28,25 +28,21 @@ struct ListRecordTotals: View {
                         Text("No hay registros para mostrar.")
                             .foregroundColor(.gray).bold().font(.title)
                     }
-                        List(networkListTotal.totalHours) { totalHour in
-                            if totalHour.hours > 0 {
-                                VStack(alignment: .leading) {
-                                    
-                                    Text("Fecha Inicio: \(totalHour.weekI)")
-                                    Text("Fecha Fin: \(totalHour.weekF)")
-                                    Text("Total Horas: \(totalHour.hours)")
-                                }
-                                .padding()
-                            }
-                            
+                    List(networkListTotal.totalHours) { totalHour in
+                        VStack(alignment: .leading) {
+                            Text("Fecha Inicio: \(totalHour.weekI)")
+                            Text("Fecha Fin: \(totalHour.weekF)")
+                            Text("Total Horas: \(totalHour.hours)")
                         }
+                        .padding()
+                    }
                            
                 }
             }
             .offset(y: -60)
             .frame(height: 510)
             .onAppear {
-                networkListTotal.context = modelContext
+                print("Llamando a fetchWorkEntries...")
                 networkListTotal.fetchWorkEntries()
             }
         }

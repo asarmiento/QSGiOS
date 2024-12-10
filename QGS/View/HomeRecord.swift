@@ -163,9 +163,11 @@ struct HomeRecord: View {
     
     private func checkLocationAuthorization() {
         let status = locationManager.isAuthorized
-           if status  {
-               showLocationAlert = true
+        print("Cambione en liens \(status)")
+        if status  {
+            showLocationAlert = true
            } else {
+               
                locationManager.requestLocationPermission()
            }
        }

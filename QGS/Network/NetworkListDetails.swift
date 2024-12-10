@@ -14,11 +14,11 @@ import SwiftUI
 import SwiftData
 
 struct ApiResponse: Codable {
-    let data: [WorkEntry] // Aquí se espera que 'data' contenga el array de WorkEntry
+    let data: [WorkEntryDetails] // Aquí se espera que 'data' contenga el array de WorkEntry
 }
 
 class NetworkListDetails: ObservableObject {
-    @Published var workEntries = [WorkEntry]()
+    @Published var workEntries = [WorkEntryDetails]()
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
     private var cancellables = Set<AnyCancellable>()
@@ -75,13 +75,13 @@ class NetworkListDetails: ObservableObject {
                 }
                 print("Error: Too Many Attempts")
                 return
-            }
+            } 
             
             // Intentamos decodificar el JSON en un arreglo de WorkEntry
             do {
                 // Decodificamos directamente el arreglo de WorkEntry
                 let decoder = JSONDecoder()
-                let workEntries = try decoder.decode([WorkEntry].self, from: data)
+                let workEntries = try decoder.decode([WorkEntryDetails].self, from: data)
                 
                 DispatchQueue.main.async {
                     self.workEntries = workEntries // Asignamos los datos a la propiedad workEntries
@@ -98,18 +98,18 @@ class NetworkListDetails: ObservableObject {
         }.resume()
     }
     
-    private var currentUser: UserModel? {
-        guard let context = context else { return nil }
-        return try? context.fetch(FetchDescriptor<UserModel>()).first
-    }
+   
 
     private var authToken: String? {
-        currentUser?.token
+      return  UserManager.shared.authToken
     }
-
+    private var getUser: UserModel? {
+        return  UserManager.shared.getUser()
+    }
+    
     private var employeeId: String? {
-        guard let id = currentUser?.employeeId else { return nil }
-        return String(id)
+        
+        return UserManager.shared.employeeId
     }
 }
 

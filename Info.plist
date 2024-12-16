@@ -1,0 +1,5 @@
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>Necesitamos acceso a tu ubicación para mostrarte contenido relevante</string>
+
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>Necesitamos acceso a tu ubicación para funcionalidades en segundo plano</string> 

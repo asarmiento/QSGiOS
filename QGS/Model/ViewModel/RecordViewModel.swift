@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 class RecordViewModel: ObservableObject {
     @Published var isEntradaEnabled: Bool = true
@@ -22,21 +23,77 @@ class RecordViewModel: ObservableObject {
     }
     
     func record(type: String, params: [String: Any], completion: @escaping (Bool) -> Void) {
-        APIServiceRecord.shared.record(params: params) { result in
-            DispatchQueue.main.async {
-                
-                switch result {
-                case .success(let response):
+        guard let url = URL(string: Endpoints.storeRecord) else {
+            print("URL inválida")
+            completion(false)
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        if let token = UserManager.shared.authToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: params)
+        } catch {
+            print("Error al serializar parámetros: \(error)")
+            completion(false)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            if let error = error {
+                print("Error de red: \(error)")
+                DispatchQueue.main.async {
+                    completion(false)
+                }
+                return
+            }
+            
+            guard let data = data else {
+                print("No se recibieron datos")
+                DispatchQueue.main.async {
+                    completion(false)
+                }
+                return
+            }
+            
+            // Debug: Imprimir respuesta JSON
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("JSON recibido: \(jsonString)")
+            }
+            
+            do {
+                let response = try JSONDecoder().decode(RecordResponse.self, from: data)
+                DispatchQueue.main.async {
                     if response.success {
-                        RecordManager.shared.saveRecord(from: response.data)
+                        if let recordData = response.data {
+                            RecordManager.shared.saveRecord(from: recordData)
+                        }
                         completion(true)
                     } else {
+                        print("Error del servidor: \(response.message)")
                         completion(false)
                     }
-                case .failure:
+                }
+            } catch {
+                print("Error al decodificar: \(error)")
+                if let decodingError = error as? DecodingError {
+                    switch decodingError {
+                    case .keyNotFound(let key, _):
+                        print("Llave no encontrada: \(key)")
+                    default:
+                        print("Otro error de decodificación")
+                    }
+                }
+                DispatchQueue.main.async {
                     completion(false)
                 }
             }
-        }
+        }.resume()
     }
 }

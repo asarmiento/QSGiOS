@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SplashView: View {
-    @Environment(\.modelContext) private var context
+    @Environment(\.modelContext) private var modelContext
     @State private var isActive = false
     @State private var size = 0.5
     @State private var opacity = 0.5
@@ -25,14 +26,14 @@ struct SplashView: View {
                 HomeRecord()
                     .navigationBarBackButtonHidden(false)  .onAppear {
                         // Configurar el UserManager con el contexto
-                        UserManager.shared.configure(with: context)
-                        RecordManager.shared.configure(with: context)
+                        UserManager.shared.configure(with: modelContext)
+                        RecordManager.shared.configure(with: modelContext)
                     }
              }else{
                  Login()  .onAppear {
                      // Configurar el UserManager con el contexto
-                     UserManager.shared.configure(with: context)
-                     RecordManager.shared.configure(with: context)
+                     UserManager.shared.configure(with: modelContext)
+                     RecordManager.shared.configure(with: modelContext)
                  }
              }
         }
@@ -55,8 +56,8 @@ struct SplashView: View {
                 }
             }
             .onAppear{
-                UserManager.shared.configure(with:  context)
-                RecordManager.shared.configure(with: context)
+                UserManager.shared.configure(with:  modelContext)
+                RecordManager.shared.configure(with: modelContext)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
                     withAnimation {
                         self.isActive = true

@@ -7,9 +7,14 @@
 
 import Foundation
 import SwiftData
+import OSLog
 
 class UserManager {
     static let shared = UserManager()
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "QGS", category: "UserManager")
+    
+    @Published private(set) var loadingState: LoadingState = .idle
+    
     private var user: UserModel?
     private var context: ModelContext?
     
@@ -18,20 +23,18 @@ class UserManager {
     func configure(with context: ModelContext) {
         self.context = context
         loadUser()
-       // performMigration(context: modelContainer.mainContext)
-
         print("UserManager configurado con el contexto correctamente.")
     }
     
     private func loadUser() {
         guard let context = context else {
-            print("Error: ModelContext no está configurado.")
+            logger.error("Error: ModelContext no está configurado.")
             return
         }
         do {
             user = try context.fetch(FetchDescriptor<UserModel>()).first
         } catch {
-            print("Error al obtener el usuario: \(error)")
+            logger.error("Error al obtener el usuario: \(error.localizedDescription)")
         }
     }
     
@@ -54,56 +57,90 @@ class UserManager {
     
     func saveUser(from response: LoginResponse) {
         guard let context = context else {
-            print("Error: ModelContext no está configurado.")
+            logger.error("Error: ModelContext no está configurado.")
             return
         }
-        print("guardando usuario \(response)")
+        
         do {
-            // Crear un nuevo modelo UserModel desde el JSON
             let newUser = UserModel(
                 name: response.user.name,
                 email: response.user.email,
                 token: response.token,
                 employeeId: response.user.employee.id,
-                sysconf: response.sysconf,
+                sysconf: String(response.sysconf),
                 type: response.user.type
-                
             )
             
-            // Eliminar usuarios previos (opcional)
+            // Eliminar usuarios previos
             let existingUsers = try context.fetch(FetchDescriptor<UserModel>())
             for existingUser in existingUsers {
                 context.delete(existingUser)
             }
             
-            // Guardar el nuevo usuario
-            try context.insert(newUser)
+            context.insert(newUser)
             try context.save()
             user = newUser
+            logger.info("Usuario guardado exitosamente")
         } catch {
-            print("Error al guardar el usuario: \(error)")
+            logger.error("Error al guardar el usuario: \(error.localizedDescription)")
         }
     }
     
-    func performMigration(context: ModelContext) {
+    func validateAndSaveUser(_ userData: [String: Any]) async throws {
+        loadingState = .loading
+        
+        guard let email = userData["email"] as? String,
+              isValidEmail(email) else {
+            loadingState = .failure(NSLocalizedString("INVALID_EMAIL", comment: ""))
+            throw ValidationError.invalidEmail
+        }
+        
+        guard let password = userData["password"] as? String,
+              isValidPassword(password) else {
+            loadingState = .failure(NSLocalizedString("INVALID_PASSWORD", comment: ""))
+            throw ValidationError.invalidPassword
+        }
+        
         do {
-            // Busca los registros antiguos
-            let fetchDescriptor = FetchDescriptor<UserModel>()
-            let oldRecords = try context.fetch(fetchDescriptor)
-
-            // Migra cada registro al nuevo modelo
-            for record in oldRecords {
-                if record.type == nil {
-                    record.type = "employee"
-                }
-            }
-
-            // Guarda los cambios
-            try context.save()
-            print("Migración completada exitosamente.")
+            let loginResponse: LoginResponse = try await NetworkManager.shared.request(
+                Endpoints.login,
+                method: "POST",
+                params: userData
+            )
+            saveUser(from: loginResponse)
+            loadingState = .success
         } catch {
-            print("Error al realizar la migración: \(error.localizedDescription)")
+            loadingState = .failure(error.localizedDescription)
+            throw error
         }
     }
+    
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
+    
+    private func isValidPassword(_ password: String) -> Bool {
+        let passwordRegEx = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"
+        let passwordPred = NSPredicate(format:"SELF MATCHES %@", passwordRegEx)
+        return passwordPred.evaluate(with: password)
+    }
+}
 
+enum ValidationError: LocalizedError {
+    case invalidEmail
+    case invalidPassword
+    case invalidInput(String)
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidEmail:
+            return NSLocalizedString("INVALID_EMAIL", comment: "")
+        case .invalidPassword:
+            return NSLocalizedString("INVALID_PASSWORD", comment: "")
+        case .invalidInput(let field):
+            return String(format: NSLocalizedString("INVALID_FIELD", comment: ""), field)
+        }
+    }
 }

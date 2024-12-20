@@ -6,102 +6,95 @@
 //
 
 import Foundation
+import OSLog
 
-
-// Modelo para la respuesta completa
-struct LoginResponse: Decodable {
-    let status: Bool
-    let message: String
-    let user: User
-    let name: String
-    let sysconf: Int
-    let email: String
-    let token: String
-}
-
-// Modelo para el usuario
-struct User: Decodable {
-    let id: Int
-    let name: String
-    let type: String
-    let sysconfId: Int
-    let code: String
-    let email: String
-    let emailVerifiedAt: String?
-    let createdAt: String
-    let updatedAt: String
-    let sysconfs: [Sysconf]
-    let employee: Employee
+class NetworkManager {
+    static let shared = NetworkManager()
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "QGS", category: "Network")
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case type
-        case sysconfId = "sysconf_id"
-        case code
-        case email
-        case emailVerifiedAt = "email_verified_at"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
-        case sysconfs
-        case employee
-    }
-}
-
-
-
-
-
-class APIService {
-    static let shared = APIService()
+    private let maxRetries = 3
+    private let retryDelay: TimeInterval = 2.0
     
-    private let baseURL = Endpoints.login
-    
-    func login(email: String, password: String, completion: @escaping (Result<LoginResponse, Error>) -> Void) {
-        guard let url = URL(string: baseURL) else {
-            return
+    func request<T: Decodable>(_ endpoint: String,
+                              method: String = "GET",
+                              params: [String: Any]? = nil,
+                              retryCount: Int = 0) async throws -> T {
+        guard let url = URL(string: endpoint) else {
+            self.logger.error("URL inválida: \(endpoint)")
+            throw NetworkError.invalidURL
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpMethod = method
         
-        let body: [String: Any] = [
-            "email": email,
-            "password": password
-        ]
+        if let token = UserManager.shared.authToken {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        if let params = params {
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params)
+        }
+        
         do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: .prettyPrinted)
+            self.logger.debug("Iniciando request: \(endpoint)")
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                self.logger.error("Respuesta inválida")
+                throw NetworkError.invalidResponse
+            }
+            
+            // Log response
+            self.logger.debug("Respuesta recibida: \(httpResponse.statusCode)")
+            if let responseString = String(data: data, encoding: .utf8) {
+                self.logger.debug("Datos recibidos: \(responseString)")
+            }
+            
+            switch httpResponse.statusCode {
+            case 200...299:
+                do {
+                    return try JSONDecoder().decode(T.self, from: data)
+                } catch {
+                    self.logger.error("Error de decodificación: \(error.localizedDescription)")
+                    throw NetworkError.decodingError(error)
+                }
+            case 401:
+                self.logger.error("Error de autenticación")
+                throw NetworkError.unauthorized
+            case 503:
+                // Retry logic for server errors
+                if retryCount < self.maxRetries {
+                    self.logger.warning("Reintentando request (\(retryCount + 1)/\(self.maxRetries))")
+                    try await Task.sleep(nanoseconds: UInt64(self.retryDelay * 1_000_000_000))
+                    return try await self.request(endpoint, 
+                                                method: method, 
+                                                params: params, 
+                                                retryCount: retryCount + 1)
+                }
+                throw NetworkError.serverError(httpResponse.statusCode)
+            default:
+                self.logger.error("Error del servidor: \(httpResponse.statusCode)")
+                throw NetworkError.serverError(httpResponse.statusCode)
+            }
         } catch {
-            print("linea 78 estamos revisando APIService")
-            completion(.failure(error))
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("linea 85 estamos revisando APIService")
-                completion(.failure(error))
-                return
+            if let networkError = error as? NetworkError {
+                throw networkError
             }
             
-            guard let data = data else {
-                print("linea 91 estamos revisando APIService")
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
-                return
+            // Retry for network errors
+            if retryCount < self.maxRetries {
+                self.logger.warning("Error de red, reintentando (\(retryCount + 1)/\(self.maxRetries))")
+                try await Task.sleep(nanoseconds: UInt64(self.retryDelay * 1_000_000_000))
+                return try await self.request(endpoint, 
+                                            method: method, 
+                                            params: params, 
+                                            retryCount: retryCount + 1)
             }
             
-            do {
-                let decodedResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
-                print("probando \(decodedResponse)")
-                completion(.success(decodedResponse))
-            } catch {
-                completion(.failure(error))
-            }
+            self.logger.error("Error de red: \(error.localizedDescription)")
+            throw NetworkError.networkError(error)
         }
-        
-        task.resume()
     }
 }
 

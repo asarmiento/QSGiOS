@@ -15,7 +15,8 @@ struct Login: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var errorMessage: String? = nil
-    
+    @State private var showError = false
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         NavigationStack {
@@ -95,6 +96,14 @@ struct Login: View {
                 
             }
             .navigationBarHidden(false)
+            .alert("Error", isPresented: $showError) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(errorMessage ?? "")
+            }
+            .navigationDestination(isPresented: $isLoginSuccessful) {
+                HomeRecord()
+            }
         }
     }
     func version() -> String {
@@ -103,43 +112,32 @@ struct Login: View {
         return "\(version) (\(build))"
     }
     func login() {
+        isLoading = true
+        
         APIService.shared.login(email: email, password: password) { result in
+            isLoading = false
             
             switch result {
             case .success(let response):
-                if response.status  {
-                    
+                if response.status {
+                    UserManager.shared.configure(with: modelContext)
                     UserManager.shared.saveUser(from: response)
-                    // Redirigir a la pantalla de bienvenida
                     DispatchQueue.main.async {
-                        isLoginSuccessful = true
-                        // Usar el NavigationLink para navegar
-                        navigateToWelcomeScreen()
-                        print("Login successful")
-                        
-                            isLoading = false
+                        self.isLoginSuccessful = true
+                        self.navigateToWelcomeScreen()
                     }
                 } else {
-                    DispatchQueue.main.async {
-                        print("Error esta llegando a seccion case0: ")
-                        errorMessage = response.message
-                    }
+                    errorMessage = response.message
+                    showError = true
                 }
-            
             case .failure(let error):
-                
-                DispatchQueue.main.async {
-                    print("Error esta llegando a seccion case1: \(error.localizedDescription)")
-                    errorMessage = "Usuario o contraseña incorrectos"
-                    
-                        isLoading = false
-                }
+                errorMessage = error.localizedDescription
+                showError = true
             }
         }
     }
     
     func navigateToWelcomeScreen() {
-        // Navegar a la pantalla de bienvenida
         isLoginSuccessful = true
     }
     

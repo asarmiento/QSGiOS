@@ -10,16 +10,17 @@ import SwiftData
 
 @Model
 class RecordModel {
-    @Attribute(.unique) var id: UUID = UUID()
+    var id: UUID
     var latitude: Double
     var longitude: Double
-     var type: String
-     var date: Date
-     var times: String
+    var type: String
+    var date: Date
+    var times: String
     var employeeId: String
     var address: String
     
-    init(latitude: Double, longitude: Double, type: String , date: Date, times: String, employeeId: String, address: String) {
+    init(id: UUID = UUID(), latitude: Double, longitude: Double, type: String, date: Date, times: String, employeeId: String, address: String) {
+        self.id = id
         self.latitude = latitude
         self.longitude = longitude
         self.type = type
@@ -27,9 +28,6 @@ class RecordModel {
         self.times = times
         self.employeeId = employeeId
         self.address = address
-        }
-  
-    
-    
+    }
 }
 

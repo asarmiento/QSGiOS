@@ -87,7 +87,7 @@ struct ButtonIn: View {
     }
     
     private var getRecord: Bool {
-        return    RecordManager.shared.getRecordExistsfor()
+        return RecordManager.shared.getRecordExistsFor()
     }
     private func record(type: String) {
         isLoading = true
@@ -95,10 +95,10 @@ struct ButtonIn: View {
             "type": type,
             "time": currentTimeString,
             "date": currentDateString,
-            "latitude": locationManager.latitude,
-            "longitude": locationManager.longitude,
-            "address": locationManager.address,
-            "employee_id": UserManager.shared.employeeId
+            "latitude": locationManager.latitude ?? "",
+            "longitude": locationManager.longitude ?? "",
+            "address": locationManager.address ?? "",
+            "employee_id": UserManager.shared.employeeId ?? ""
         ]
         
         viewModel.record(type: type, params: params) { success in

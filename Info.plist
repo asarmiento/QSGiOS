@@ -1,5 +1,20 @@
 <key>NSLocationWhenInUseUsageDescription</key>
-<string>Necesitamos acceso a tu ubicación para mostrarte contenido relevante</string>
+<string>Necesitamos acceso a tu ubicación para mostrarla en el mapa</string>
 
 <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<string>Necesitamos acceso a tu ubicación para funcionalidades en segundo plano</string> 
+<string>Necesitamos acceso a tu ubicación para mostrarla en el mapa</string>
+
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+</dict>
+
+<key>CFBundleLocalizations</key>
+<array>
+    <string>es</string>
+    <string>en</string>
+</array>
+
+<key>CFBundleDevelopmentRegion</key>
+<string>es</string> 

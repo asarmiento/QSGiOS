@@ -19,3 +19,21 @@
 "Abrir Configuración" = "Abrir Configuración";
 "Usuario o contraseña incorrectos" = "Usuario o contraseña incorrectos";
 "Quality Group Services v%@" = "Quality Group Services v%@";
+
+// Network Errors
+"URL_INVALID" = "URL inválida";
+"RESPONSE_INVALID" = "Respuesta inválida del servidor";
+"AUTH_ERROR" = "Error de autenticación. Por favor, inicie sesión nuevamente";
+"SERVER_ERROR" = "Error del servidor (%d)";
+"NETWORK_ERROR" = "Error de red: %@";
+"DECODING_ERROR" = "Error al procesar la respuesta: %@";
+
+// Validation Errors
+"INVALID_EMAIL" = "El correo electrónico no es válido";
+"INVALID_PASSWORD" = "La contraseña debe tener al menos 8 caracteres, una letra y un número";
+"INVALID_FIELD" = "El campo %@ no es válido";
+
+// Loading States
+"LOADING" = "Cargando...";
+"RETRY" = "Reintentar";
+"CANCEL" = "Cancelar";

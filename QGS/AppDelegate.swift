@@ -8,16 +8,12 @@
 import UIKit
 import CoreData
 
-
-class AppDelegate : UIResponder, UIApplicationDelegate{
-    
+class AppDelegate : UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions lauchOptions: [UIApplication.LaunchOptionsKey : Any]?)  -> Bool {
+                    didFinishLaunchingWithOptions lauchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
         LocationViewController.shared.requestLocationPermission()
-    return true
+        return true
     }
-    
-   
 }

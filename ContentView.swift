@@ -2,30 +2,82 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var locationManager = LocationManager()
-    @State private var showingErrorAlert = false
+    @State private var showingUpdateAlert = false
+    @State private var versionInfo: (current: String, latest: String, needsUpdate: Bool)?
+    @State private var checkingVersion = false
+    @State private var versionError: String?
     
     var body: some View {
-        VStack {
-            switch locationManager.locationStatus {
-            case .authorizedWhenInUse, .authorizedAlways:
-                if let location = locationManager.lastLocation {
-                    LocationInfoView(location: location)
-                } else {
-                    LoadingView()
+        ZStack {
+            // Contenido existente
+            VStack {
+                switch locationManager.locationStatus {
+                case .authorizedWhenInUse, .authorizedAlways:
+                    if let location = locationManager.lastLocation {
+                        LocationInfoView(location: location)
+                    } else {
+                        LoadingView()
+                    }
+                case .denied, .restricted:
+                    LocationPermissionDeniedView()
+                case .notDetermined:
+                    RequestLocationButton(locationManager: locationManager)
+                default:
+                    EmptyView()
                 }
-            case .denied, .restricted:
-                LocationPermissionDeniedView()
-            case .notDetermined:
-                RequestLocationButton(locationManager: locationManager)
-            default:
-                EmptyView()
+                
+                if let errorMessage = locationManager.errorMessage {
+                    ErrorBannerView(message: errorMessage)
+                }
             }
+            .padding()
             
-            if let errorMessage = locationManager.errorMessage {
-                ErrorBannerView(message: errorMessage)
+            // Alerta de actualización
+            if showingUpdateAlert,
+               let versionInfo = versionInfo {
+                Color.black.opacity(0.3)
+                    .edgesIgnoringSafeArea(.all)
+                    .overlay(
+                        UpdateAlertView(
+                            currentVersion: versionInfo.current,
+                            latestVersion: versionInfo.latest,
+                            isPresented: $showingUpdateAlert
+                        )
+                        .padding()
+                    )
             }
         }
-        .padding()
+        .task {
+            await checkVersion()
+        }
+        .alert("Error", isPresented: .constant(versionError != nil)) {
+            Button("OK") {
+                versionError = nil
+            }
+        } message: {
+            if let error = versionError {
+                Text(error)
+            }
+        }
+    }
+    
+    private func checkVersion() async {
+        guard !checkingVersion else { return }
+        checkingVersion = true
+        
+        do {
+            let result = try await VersionCheckService.shared.checkForUpdate()
+            DispatchQueue.main.async {
+                versionInfo = result
+                showingUpdateAlert = result.needsUpdate
+                checkingVersion = false
+            }
+        } catch {
+            DispatchQueue.main.async {
+                versionError = error.localizedDescription
+                checkingVersion = false
+            }
+        }
     }
 }
 

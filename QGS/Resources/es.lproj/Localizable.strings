@@ -1,0 +1,8 @@
+// Botones generales
+"Cancelar" = "Cancelar";
+"Aceptar" = "Aceptar";
+"Abrir Configuración" = "Abrir Configuración";
+
+// Alertas de ubicación
+"Permiso de Localización" = "Permiso de Localización";
+"La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida. Por favor, otorga los permisos en Configuración." = "La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida. Por favor, otorga los permisos en Configuración."; 

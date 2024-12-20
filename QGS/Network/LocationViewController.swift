@@ -17,61 +17,90 @@ class LocationViewController: NSObject, ObservableObject, CLLocationManagerDeleg
     @Published var longitude: String = ""
     @Published var address: String = ""
     @Published var isAuthorized: Bool = false
+    @Published var isRequestingAuthorization: Bool = false
     private var isProcessingRequest = false
 
     override init() {
         super.init()
         locationManager.delegate = self
-        requestLocationPermission()
+        checkLocationAuthorization()
+    }
+
+    private func checkLocationAuthorization() {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            
+            let status = self.locationManager.authorizationStatus
+            DispatchQueue.main.async {
+                self.handleAuthorizationStatus(status)
+            }
+        }
     }
 
     func requestLocationPermission() {
-        guard CLLocationManager.locationServicesEnabled() else {
-            print("Los servicios de ubicación están desactivados.")
-            return
-        }
-
-        DispatchQueue.main.async {
-            switch self.locationManager.authorizationStatus {
-            case .notDetermined:
-                self.locationManager.requestWhenInUseAuthorization()
-            case .authorizedWhenInUse, .authorizedAlways:
-                self.startUpdatingLocation()
-            case .denied, .restricted:
-                self.isAuthorized = true
-                print("Permiso denegado o restringido.1")
-            @unknown default:
-                self.isAuthorized = true
-                print("Estado de autorización desconocido.")
+        guard !isRequestingAuthorization else { return }
+        
+        isRequestingAuthorization = true
+        
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            
+            if CLLocationManager.locationServicesEnabled() {
+                let status = self.locationManager.authorizationStatus
+                DispatchQueue.main.async {
+                    switch status {
+                    case .notDetermined:
+                        self.locationManager.requestWhenInUseAuthorization()
+                    case .authorizedWhenInUse, .authorizedAlways:
+                        self.startUpdatingLocation()
+                    case .denied, .restricted:
+                        self.isAuthorized = false
+                        print("Permiso denegado o restringido.")
+                    @unknown default:
+                        self.isAuthorized = false
+                        print("Estado de autorización desconocido.")
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.isAuthorized = false
+                    print("Servicios de localización desactivados")
+                }
             }
         }
     }
 
-    func startUpdatingLocation() {
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.distanceFilter = 50
-        locationManager.startUpdatingLocation()
+    private func handleAuthorizationStatus(_ status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
+            isAuthorized = true
+            startUpdatingLocation()
+        case .denied, .restricted:
+            isAuthorized = false
+            print("Permisos de ubicación denegados.")
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        @unknown default:
+            isAuthorized = false
+            print("Estado desconocido de autorización.")
+        }
+        isRequestingAuthorization = false
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        DispatchQueue.main.async {
-            switch manager.authorizationStatus {
-            case .authorizedAlways, .authorizedWhenInUse:
-                self.locationManager.startUpdatingLocation()
-            case .denied, .restricted:
-                self.isAuthorized = true
-                print("Permisos de ubicación denegados. Muestra alerta al usuario.")
-                // Muestra una alerta para guiar al usuario a habilitar permisos.
-            case .notDetermined:
-                self.isAuthorized = true
-                print("Esperando autorización de ubicación.")
-            @unknown default:
-                self.isAuthorized = true
-                print("Estado desconocido.")
-            }
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.handleAuthorizationStatus(manager.authorizationStatus)
         }
     }
-    
+
+    private func startUpdatingLocation() {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            self?.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            self?.locationManager.distanceFilter = 50
+            self?.locationManager.startUpdatingLocation()
+        }
+    }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard !isProcessingRequest, let bestLocation = locations.last else { return }

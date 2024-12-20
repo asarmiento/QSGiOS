@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>English (en)</string>
+		<string>Spanish (es)</string>
+	</array>
 	<key>NSLocationAlwaysAndWheInUseUsageDescription</key>
 	<string>Usaremos tu ubicación para el regitro Entrada y Salida del trabajo!!</string>
 	<key>NSLocationWheInUseUsageDescription</key>
@@ -10,9 +15,9 @@
 	<array>
 		<string>location</string>
 	</array>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Your message describing why you need location access</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Your message describing why you need location access</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your message describing why you need location access</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your message describing why you need location access</string>
 </dict>
 </plist>

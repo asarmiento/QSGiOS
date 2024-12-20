@@ -24,7 +24,8 @@ struct HomeRecord: View {
    // @StateObject private var creaturesVM = RecordHttpPost()
     
     @State private var isButtonDisabled = false
-    
+    @State private var hasCheckedLocation = false
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -110,19 +111,19 @@ struct HomeRecord: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center).offset(y:90)
                 .alert(isPresented: $showLocationAlert) {
-                                        Alert(
-                                            title: Text("Permiso de Localización"),
-                                            message: Text("La aplicación necesita acceso a tu ubicación para realizar esta acción. Ve a Configuración para otorgar permisos."),
-                                            primaryButton: .default(Text("Abrir Configuración")) {
-                                                if let url = URL(string: UIApplication.openSettingsURLString) {
-                                                    UIApplication.shared.open(url)
-                                                }
-                                            },
-                                            secondaryButton: .destructive(Text("Cancelar")) {
-                                                        exit(0) // Cierra la aplicación
-                                                    }
-                                        )
-                                    }
+                    Alert(
+                        title: Text(NSLocalizedString("Permiso de Localización", comment: "")),
+                        message: Text(NSLocalizedString("La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida. Por favor, otorga los permisos en Configuración.", comment: "")),
+                        primaryButton: .default(Text(NSLocalizedString("Abrir Configuración", comment: ""))) {
+                            if let url = URL(string: UIApplication.openSettingsURLString) {
+                                UIApplication.shared.open(url)
+                            }
+                        },
+                        secondaryButton: .destructive(Text(NSLocalizedString("Cancelar", comment: ""))) {
+                            exit(0)
+                        }
+                    )
+                }
                 VStack {
                    
                     Text(String(format: NSLocalizedString("Quality Group Services v%@", comment: ""), version()))
@@ -131,7 +132,10 @@ struct HomeRecord: View {
                     
                 }.foregroundStyle(Color.gray).offset(y:400)
             }.onAppear {
-                checkLocationAuthorization()
+                if !hasCheckedLocation {
+                    checkLocationAuthorization()
+                    hasCheckedLocation = true
+                }
             }
            
         }
@@ -162,15 +166,15 @@ struct HomeRecord: View {
     }
     
     private func checkLocationAuthorization() {
-        let status = locationManager.isAuthorized
-        print("Cambione en liens \(status)")
-        if status  {
-            showLocationAlert = true
-           } else {
-               
-               locationManager.requestLocationPermission()
-           }
-       }
+        if !locationManager.isAuthorized {
+            // Solo mostrar la alerta si los permisos están denegados
+            if CLLocationManager.authorizationStatus() == .denied {
+                showLocationAlert = true
+            } else {
+                locationManager.requestLocationPermission()
+            }
+        }
+    }
     
 }
 

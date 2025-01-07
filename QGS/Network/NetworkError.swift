@@ -3,6 +3,7 @@ import Foundation
 enum NetworkError: LocalizedError {
     case invalidURL
     case invalidResponse
+    case invalidData
     case unauthorized
     case noData
     case decodingError(Error)
@@ -16,6 +17,8 @@ enum NetworkError: LocalizedError {
             return NSLocalizedString("URL_INVALID", comment: "")
         case .invalidResponse:
             return NSLocalizedString("RESPONSE_INVALID", comment: "")
+        case .invalidData:
+            return "Usuario o contraseña incorrectos"
         case .unauthorized:
             return NSLocalizedString("AUTH_ERROR", comment: "")
         case .noData:

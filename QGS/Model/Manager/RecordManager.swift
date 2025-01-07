@@ -47,6 +47,9 @@ class RecordManager {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let date = dateFormatter.date(from: recordData.date) ?? Date()
         
+        // Redondear dist a 2 decimales si existe
+        let distance = recordData.dist.map { Double(round($0 * 100) / 100) } ?? 0.0
+        
         let record = RecordModel(
             latitude: latitude,
             longitude: longitude,
@@ -54,11 +57,17 @@ class RecordManager {
             date: date,
             times: recordData.time,
             employeeId: String(recordData.employee_id),
-            address: recordData.address
+            address: recordData.address,
+            distance: distance
         )
         
         context.insert(record)
-        try? context.save()
+        do {
+            try context.save()
+            print("Registro guardado exitosamente.")
+        } catch {
+            print("Error al guardar el registro: \(error)")
+        }
     }
     
     func getRecordExistsFor() -> Bool {

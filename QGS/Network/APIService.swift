@@ -50,12 +50,17 @@ class APIService {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(LoginResponse.self, from: data)
                 DispatchQueue.main.async {
-                    completion(.success(response))
+                    if response.status {
+                        completion(.success(response))
+                    }else {
+                        let error = NetworkError.invalidData
+                        completion(.failure(error))
+                    }
                 }
             } catch {
                 print("Error de decodificación: \(error)")
                 DispatchQueue.main.async {
-                    completion(.failure(NetworkError.decodingError(error)))
+                    completion(.failure(NetworkError.invalidData))
                 }
             }
         }.resume()

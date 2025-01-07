@@ -4,20 +4,35 @@
 <dict>
 	<key>CFBundleLocalizations</key>
 	<array>
-		<string>English (en)</string>
-		<string>Spanish (es)</string>
+		<string>en</string>
+		<string>es</string>
 	</array>
-	<key>NSLocationAlwaysAndWheInUseUsageDescription</key>
-	<string>Usaremos tu ubicación para el regitro Entrada y Salida del trabajo!!</string>
-	<key>NSLocationWheInUseUsageDescription</key>
-	<string>Usaremos tu ubicación para el regitro Entrada y Salida del trabajo!!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
 	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your message describing why you need location access</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your message describing why you need location access</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>WhatsNewInThisVersion</key>
+	<dict>
+		<key>en</key>
+		<string>Initial release of QGS:
+- Employee check-in/check-out functionality
+- GPS location tracking
+- Daily and weekly hours summary
+- Improved user interface and experience</string>
+		<key>es</key>
+		<string>Lanzamiento inicial de QGS:
+- Funcionalidad de entrada/salida para empleados
+- Seguimiento de ubicación GPS
+- Resumen de horas diarias y semanales
+- Mejora en la interfaz y experiencia de usuario</string>
+	</dict>
 </dict>
 </plist>

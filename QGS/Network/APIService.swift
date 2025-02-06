@@ -47,14 +47,12 @@ class APIService {
             }
             
             do {
-                let decoder = JSONDecoder()
-                let response = try decoder.decode(LoginResponse.self, from: data)
+                let response = try JSONDecoder().decode(LoginResponse.self, from: data)
                 DispatchQueue.main.async {
                     if response.status {
                         completion(.success(response))
-                    }else {
-                        let error = NetworkError.invalidData
-                        completion(.failure(error))
+                    } else {
+                        completion(.failure(NetworkError.invalidData))
                     }
                 }
             } catch {

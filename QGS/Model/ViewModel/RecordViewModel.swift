@@ -72,7 +72,7 @@ class RecordViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     if response.success {
                         if let recordData = response.data {
-                            RecordManager.shared.saveRecord(from: recordData)
+                            RecordManager.shared.saveRecord(recordData: recordData)
                         }
                         completion(true)
                     } else {

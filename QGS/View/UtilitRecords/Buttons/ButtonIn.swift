@@ -87,7 +87,8 @@ struct ButtonIn: View {
     }
     
     private var getRecord: Bool {
-        return RecordManager.shared.getRecordExistsFor()
+        let currentDate = Date()
+        return RecordManager.shared.getRecordExistsFor(type: "Entrada", date: currentDate)
     }
     private func record(type: String) {
         isLoading = true
@@ -95,9 +96,9 @@ struct ButtonIn: View {
             "type": type,
             "time": currentTimeString,
             "date": currentDateString,
-            "latitude": locationManager.latitude ?? "",
-            "longitude": locationManager.longitude ?? "",
-            "address": locationManager.address ?? "",
+            "latitude": locationManager.latitude,
+            "longitude": locationManager.longitude,
+            "address": locationManager.address,
             "employee_id": UserManager.shared.employeeId ?? ""
         ]
         

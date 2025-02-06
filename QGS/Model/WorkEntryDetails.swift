@@ -20,7 +20,7 @@ struct WorkEntryDetails: Codable, Identifiable {
     let longitude: String
     let address: String?
     let observation: String?
-    let dist: String
+    let dist: Double
     let alerts: Int
     let createdAt: String
     let updatedAt: String
@@ -62,7 +62,7 @@ struct WorkEntryDetails: Codable, Identifiable {
         longitude = try container.decode(String.self, forKey: .longitude)
         address = try container.decodeIfPresent(String.self, forKey: .address)
         observation = try container.decodeIfPresent(String.self, forKey: .observation)
-        dist = try container.decode(String.self, forKey: .dist)
+        dist = try container.decode(Double.self, forKey: .dist)
         alerts = try container.decode(Int.self, forKey: .alerts)
         createdAt = try container.decode(String.self, forKey: .createdAt)
         updatedAt = try container.decode(String.self, forKey: .updatedAt)

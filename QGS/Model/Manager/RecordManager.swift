@@ -34,13 +34,12 @@ class RecordManager {
         }
     }
     
-    func saveRecord(from recordData: RecordResponseData) {
+    func saveRecord(recordData: RecordResponseData) {
         guard let context = context else {
             print("Error: ModelContext no está configurado.")
             return
         }
         
-        // Convertir los datos
         let latitude = Double(recordData.latitude) ?? 0.0
         let longitude = Double(recordData.longitude) ?? 0.0
         let dateFormatter = DateFormatter()
@@ -70,34 +69,32 @@ class RecordManager {
         }
     }
     
-    func getRecordExistsFor() -> Bool {
+    func getRecordExistsFor(type: String, date: Date) -> Bool {
         guard let context = context else {
             print("Error: ModelContext no está configurado.")
             return false
         }
-        
+
         // Establece el rango para el día actual
-        let date = Date()
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
         guard let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)?.addingTimeInterval(-1) else {
             return false
         }
-        
-        // Configura un descriptor para buscar el registro
+
+        // Configura un descriptor para buscar el registro con el tipo y la fecha
         let descriptor = FetchDescriptor<RecordModel>(
             predicate: #Predicate { record in
-                record.date >= startOfDay && record.date <= endOfDay
+                record.type == type && record.date >= startOfDay && record.date <= endOfDay
             }
         )
-        
+
         do {
-            // Verifica si existe al menos un registro
             let records = try context.fetch(descriptor)
-            print("Existen \(records.count) registros")
+            print("Existen \(records.count) registros con tipo '\(type)' para el día actual.")
             return !records.isEmpty
         } catch {
-            print("Error al verificar el registro: \(String(describing: error))")
+            print("Error al verificar los registros: \(error)")
             return false
         }
     }

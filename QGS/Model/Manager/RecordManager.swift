@@ -18,6 +18,14 @@ class RecordManager {
     
     func configure(with context: ModelContext) {
         self.context = context
+        let currentVersion = 2 // Cambia esto a la versión actual de tu modelo
+        let previousVersion = UserDefaults.standard.integer(forKey: "modelVersion")
+
+        if previousVersion < currentVersion {
+            Migration.migrate(from: previousVersion, to: currentVersion, context: context)
+            UserDefaults.standard.set(currentVersion, forKey: "modelVersion")
+        }
+
         loadRecords()
         print("RecordManager configurado con el contexto correctamente.")
     }
@@ -48,7 +56,7 @@ class RecordManager {
         
         // Redondear dist a 2 decimales si existe
         let distance = recordData.dist.map { Double(round($0 * 100) / 100) } ?? 0.0
-        
+        let message = "hola a todos llegue tarde"
         let record = RecordModel(
             latitude: latitude,
             longitude: longitude,
@@ -57,7 +65,8 @@ class RecordManager {
             times: recordData.time,
             employeeId: String(recordData.employee_id),
             address: recordData.address,
-            distance: distance
+            distance: distance,
+            message: message
         )
         
         context.insert(record)

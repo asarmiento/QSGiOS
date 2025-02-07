@@ -19,6 +19,10 @@
 "Abrir Configuración" = "Abrir Configuración";
 "Usuario o contraseña incorrectos" = "Usuario o contraseña incorrectos";
 "Quality Group Services v%@" = "Quality Group Services v%@";
+"hola a todos llegue tarde" = "hola a todos llegue tarde";
+"Migración a la versión 2 completada correctamente." ="Migración a la versión 2 completada correctamente.";
+"Error en la migración a la versión 2: "="Error en la migración a la versión 2: ";
+"Default Message"="Default Message";
 
 // Network Errors
 "URL_INVALID" = "URL inválida";

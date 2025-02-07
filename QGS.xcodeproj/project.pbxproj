@@ -16,13 +16,15 @@
 		EB3665FF2D08000600810713 /* EmployeeCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3665FE2D08000600810713 /* EmployeeCodable.swift */; };
 		EB3666362D15E81000810713 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666352D15E81000810713 /* APIService.swift */; };
 		EB36663D2D15E8E400810713 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB36663C2D15E8E400810713 /* NetworkError.swift */; };
-		EB3666412D15F16C00810713 /* WorkTimeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB36663F2D15F16C00810713 /* WorkTimeResponse.swift */; };
-		EB3666422D15F16C00810713 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB36663E2D15F16C00810713 /* LoginResponse.swift */; };
 		EB3666472D15F1C800810713 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666452D15F1C800810713 /* RecordViewModel.swift */; };
 		EB36666E2D16029B00810713 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB36666C2D16029B00810713 /* LoadingState.swift */; };
 		EB36666F2D16029B00810713 /* RecordData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB36666D2D16029B00810713 /* RecordData.swift */; };
-		EB3666712D160B0500810713 /* RecordResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666702D160B0500810713 /* RecordResponse.swift */; };
-		EB3666732D160B1500810713 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666722D160B1500810713 /* APIError.swift */; };
+		EB36667A2D55A33300810713 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666742D55A33300810713 /* APIError.swift */; };
+		EB36667B2D55A33300810713 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666762D55A33300810713 /* NetworkError.swift */; };
+		EB36667C2D55A33300810713 /* RecordResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666772D55A33300810713 /* RecordResponse.swift */; };
+		EB36667D2D55A33300810713 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666752D55A33300810713 /* LoginResponse.swift */; };
+		EB36667E2D55A33300810713 /* WorkTimeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666782D55A33300810713 /* WorkTimeResponse.swift */; };
+		EB3666812D55A3BF00810713 /* Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB36667F2D55A3BF00810713 /* Migration.swift */; };
 		EB44DB302CFE00410070B827 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB2F2CFE00340070B827 /* NetworkManager.swift */; };
 		EB44DB392CFE4D800070B827 /* NetworkListDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB382CFE4D680070B827 /* NetworkListDetails.swift */; };
 		EB44DB5B2CFECF170070B827 /* DeviceLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB5A2CFECF090070B827 /* DeviceLocations.swift */; };
@@ -81,13 +83,15 @@
 		EB3665FE2D08000600810713 /* EmployeeCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeCodable.swift; sourceTree = "<group>"; };
 		EB3666352D15E81000810713 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		EB36663C2D15E8E400810713 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
-		EB36663E2D15F16C00810713 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
-		EB36663F2D15F16C00810713 /* WorkTimeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTimeResponse.swift; sourceTree = "<group>"; };
 		EB3666452D15F1C800810713 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		EB36666C2D16029B00810713 /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		EB36666D2D16029B00810713 /* RecordData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordData.swift; sourceTree = "<group>"; };
-		EB3666702D160B0500810713 /* RecordResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordResponse.swift; sourceTree = "<group>"; };
-		EB3666722D160B1500810713 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		EB3666742D55A33300810713 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		EB3666752D55A33300810713 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		EB3666762D55A33300810713 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		EB3666772D55A33300810713 /* RecordResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordResponse.swift; sourceTree = "<group>"; };
+		EB3666782D55A33300810713 /* WorkTimeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTimeResponse.swift; sourceTree = "<group>"; };
+		EB36667F2D55A3BF00810713 /* Migration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Migration.swift; sourceTree = "<group>"; };
 		EB44DB2F2CFE00340070B827 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		EB44DB382CFE4D680070B827 /* NetworkListDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkListDetails.swift; sourceTree = "<group>"; };
 		EB44DB5A2CFECF090070B827 /* DeviceLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLocations.swift; sourceTree = "<group>"; };
@@ -163,17 +167,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		EB3666402D15F16C00810713 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				EB3666722D160B1500810713 /* APIError.swift */,
-				EB3666702D160B0500810713 /* RecordResponse.swift */,
-				EB36663E2D15F16C00810713 /* LoginResponse.swift */,
-				EB36663F2D15F16C00810713 /* WorkTimeResponse.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		EB3666462D15F1C800810713 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,10 +175,30 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		EB3666792D55A33300810713 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EB3666742D55A33300810713 /* APIError.swift */,
+				EB3666752D55A33300810713 /* LoginResponse.swift */,
+				EB3666762D55A33300810713 /* NetworkError.swift */,
+				EB3666772D55A33300810713 /* RecordResponse.swift */,
+				EB3666782D55A33300810713 /* WorkTimeResponse.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EB3666802D55A3BF00810713 /* Migrations */ = {
+			isa = PBXGroup;
+			children = (
+				EB36667F2D55A3BF00810713 /* Migration.swift */,
+			);
+			path = Migrations;
+			sourceTree = "<group>";
+		};
 		EB4B26B42C5998F80083397F /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				EB3666402D15F16C00810713 /* Models */,
+				EB3666792D55A33300810713 /* Models */,
 				EB36663C2D15E8E400810713 /* NetworkError.swift */,
 				EB3666352D15E81000810713 /* APIService.swift */,
 				EB44DBA02D0309C20070B827 /* APIServiceRecord.swift */,
@@ -203,6 +216,7 @@
 		EB4B26B92C5AB10B0083397F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EB3666802D55A3BF00810713 /* Migrations */,
 				EB36666C2D16029B00810713 /* LoadingState.swift */,
 				EB36666D2D16029B00810713 /* RecordData.swift */,
 				EB3665EC2D05F6B000810713 /* Manager */,
@@ -466,10 +480,10 @@
 				EB36666F2D16029B00810713 /* RecordData.swift in Sources */,
 				EBBC93392C51336400F3C8CD /* Colors.swift in Sources */,
 				EB44DB392CFE4D800070B827 /* NetworkListDetails.swift in Sources */,
+				EB3666812D55A3BF00810713 /* Migration.swift in Sources */,
 				EB6D31C92CECCD17000E02E7 /* BoxGPS.swift in Sources */,
 				EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */,
 				EB44DB612CFF40730070B827 /* Employee.swift in Sources */,
-				EB3666732D160B1500810713 /* APIError.swift in Sources */,
 				EB44DBA12D0309C50070B827 /* APIServiceRecord.swift in Sources */,
 				EB3666472D15F1C800810713 /* RecordViewModel.swift in Sources */,
 				EBF9DFA12CED8F2F002D7FA1 /* HeadSecondary.swift in Sources */,
@@ -481,12 +495,9 @@
 				EB44DB5B2CFECF170070B827 /* DeviceLocations.swift in Sources */,
 				EB44DB652CFF427F0070B827 /* Sysconf.swift in Sources */,
 				EB36663D2D15E8E400810713 /* NetworkError.swift in Sources */,
-				EB3666412D15F16C00810713 /* WorkTimeResponse.swift in Sources */,
-				EB3666422D15F16C00810713 /* LoginResponse.swift in Sources */,
 				EB3666362D15E81000810713 /* APIService.swift in Sources */,
 				EBBC933C2C515E9400F3C8CD /* Login.swift in Sources */,
 				EB44DB692CFF6F080070B827 /* TotalWorkEntry.swift in Sources */,
-				EB3666712D160B0500810713 /* RecordResponse.swift in Sources */,
 				EB6F03A22CEE172500190C0E /* Endpoints.swift in Sources */,
 				EBF9DF9F2CED8E4C002D7FA1 /* ListRecordTotals.swift in Sources */,
 				EB345D142CF4BC42001A62C8 /* ModalView.swift in Sources */,
@@ -500,6 +511,11 @@
 				EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */,
 				EB3665FF2D08000600810713 /* EmployeeCodable.swift in Sources */,
 				EB44DB632CFF40C20070B827 /* Project.swift in Sources */,
+				EB36667A2D55A33300810713 /* APIError.swift in Sources */,
+				EB36667B2D55A33300810713 /* NetworkError.swift in Sources */,
+				EB36667C2D55A33300810713 /* RecordResponse.swift in Sources */,
+				EB36667D2D55A33300810713 /* LoginResponse.swift in Sources */,
+				EB36667E2D55A33300810713 /* WorkTimeResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,7 +20,6 @@
 		EB36666E2D16029B00810713 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB36666C2D16029B00810713 /* LoadingState.swift */; };
 		EB36666F2D16029B00810713 /* RecordData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB36666D2D16029B00810713 /* RecordData.swift */; };
 		EB36667A2D55A33300810713 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666742D55A33300810713 /* APIError.swift */; };
-		EB36667B2D55A33300810713 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666762D55A33300810713 /* NetworkError.swift */; };
 		EB36667C2D55A33300810713 /* RecordResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666772D55A33300810713 /* RecordResponse.swift */; };
 		EB36667D2D55A33300810713 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666752D55A33300810713 /* LoginResponse.swift */; };
 		EB36667E2D55A33300810713 /* WorkTimeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666782D55A33300810713 /* WorkTimeResponse.swift */; };
@@ -512,7 +511,6 @@
 				EB3665FF2D08000600810713 /* EmployeeCodable.swift in Sources */,
 				EB44DB632CFF40C20070B827 /* Project.swift in Sources */,
 				EB36667A2D55A33300810713 /* APIError.swift in Sources */,
-				EB36667B2D55A33300810713 /* NetworkError.swift in Sources */,
 				EB36667C2D55A33300810713 /* RecordResponse.swift in Sources */,
 				EB36667D2D55A33300810713 /* LoginResponse.swift in Sources */,
 				EB36667E2D55A33300810713 /* WorkTimeResponse.swift in Sources */,

@@ -35,7 +35,7 @@ struct HomeRecord: View {
               //  Text(\(getUser))
                     
                 if let user = getUser {
-                    
+                   
                     HeadSecondary(title: "Bienvenido(a): \(user.name) ")
                    
                 } else {

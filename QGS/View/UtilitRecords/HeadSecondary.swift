@@ -11,8 +11,28 @@ struct HeadSecondary: View {
     var title: String = ""
     var body: some View {
         VStack(spacing: 0){
-            Color.myPrimary.frame(width: 1000, height: 270).contentMargins(.zero).overlay(content: {
-                
+            
+  
+            Color.myPrimary.frame(width: 1000, height: 250).contentMargins(.zero).overlay(content: {
+                if let user = getUser {
+                    // Menú accesible solo para usuarios que no son "Colaborador"
+                                       if user.type != "Colaborador" {
+                                           Menu {
+                                               Button("Historial de horas") {
+                                                   // Acción para Opción 1
+                                               }
+                                               Button("Horas en Proyectos") {
+                                                   // Acción para Opción 2
+                                               }
+                                           } label: {
+                                               Label("",      systemImage: "line.horizontal.3.decrease")
+                                                   .font(.title2)
+                                                   .padding()
+                                                   .foregroundStyle(Color.blue)
+                                           }
+                                           .frame(maxWidth: 200, alignment: .leading).offset(x:-80,y:-60) // Alinear a la izquierda
+                                       }
+                   }
                 Text(title).foregroundColor(.white).opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
                     .font(.system(size: 36,design: .default) ).bold()
                     .frame(width: 300,height:250,alignment: .center).offset( x:-40, y: 10)
@@ -31,10 +51,12 @@ struct HeadSecondary: View {
         }.edgesIgnoringSafeArea(.top)
        
         
-             
-        
+
         
          }
+    private var getUser: UserModel? {
+        return  UserManager.shared.getUser()
+    }
 }
 
 #Preview {

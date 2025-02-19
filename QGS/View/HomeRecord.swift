@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 import SwiftData
 import CoreLocation
+import QGS // Asegúrate de que el nombre del módulo sea correcto
 
 
 struct HomeRecord: View {
@@ -17,6 +18,7 @@ struct HomeRecord: View {
     @StateObject private var locationManager = LocationViewController.shared
        @State private var showLocationAlert = false
     @State private var isLoading: Bool = false
+    @State private var showPDFView = false
 
      // Indicador de carga
     @State private var errorMessage: String?  // Para manejar errores
@@ -36,10 +38,10 @@ struct HomeRecord: View {
                     
                 if let user = getUser {
                    
-                    HeadSecondary(title: "Bienvenido(a): \(user.name) ")
+                    HeadSecondary(title: "Bienvenido(a): \(user.name)", showPDFView: $showPDFView)
                    
                 } else {
-                    HeadSecondary(title: "Entrada o Salida ")
+                    HeadSecondary(title: "Entrada o Salida ", showPDFView: $showPDFView)
                     
                 }
                 
@@ -131,6 +133,11 @@ struct HomeRecord: View {
 
                     
                 }.foregroundStyle(Color.gray).offset(y:400)
+
+                NavigationLink(destination: PDFView(url: URL(string: "https://api.friendlypayroll.net/weekly-hours")!),
+                                               isActive: $showPDFView) {
+                                    EmptyView()
+                                }
             }.onAppear {
                 if !hasCheckedLocation {
                     checkLocationAuthorization()

@@ -9,17 +9,17 @@ import SwiftUI
 
 struct HeadSecondary: View {
     var title: String = ""
+    @Binding var showPDFView: Bool
     var body: some View {
         VStack(spacing: 0){
-            
-  
+              
             Color.myPrimary.frame(width: 1000, height: 250).contentMargins(.zero).overlay(content: {
                 if let user = getUser {
                     // Menú accesible solo para usuarios que no son "Colaborador"
                                        if user.type != "Colaborador" {
                                            Menu {
                                                Button("Historial de horas") {
-                                                   // Acción para Opción 1
+                                                   showPDFView = true
                                                }
                                                Button("Horas en Proyectos") {
                                                    // Acción para Opción 2
@@ -59,6 +59,6 @@ struct HeadSecondary: View {
     }
 }
 
-#Preview {
+/*#Preview {
     HeadSecondary(title: "Bienvenido Anwar Sarmiento")
-}
+}*/

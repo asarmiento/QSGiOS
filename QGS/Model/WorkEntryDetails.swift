@@ -22,8 +22,8 @@ struct WorkEntryDetails: Codable, Identifiable {
     let observation: String?
     let dist: Double
     let alerts: Int
-    let createdAt: String
-    let updatedAt: String
+    let createdAt: String? // Cambiado a opcional
+    let updatedAt: String? // Cambiado a opcional
     let employee: EmployeeCodable
     let project: Project
     
@@ -64,8 +64,8 @@ struct WorkEntryDetails: Codable, Identifiable {
         observation = try container.decodeIfPresent(String.self, forKey: .observation)
         dist = try container.decode(Double.self, forKey: .dist)
         alerts = try container.decode(Int.self, forKey: .alerts)
-        createdAt = try container.decode(String.self, forKey: .createdAt)
-        updatedAt = try container.decode(String.self, forKey: .updatedAt)
+        createdAt = try container.decodeIfPresent(String.self, forKey: .createdAt)
+        updatedAt = try container.decodeIfPresent(String.self, forKey: .updatedAt)
         employee = try container.decode(EmployeeCodable.self, forKey: .employee)
         project = try container.decode(Project.self, forKey: .project)
         

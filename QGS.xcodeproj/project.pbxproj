@@ -34,6 +34,7 @@
 		EB44DB672CFF6D680070B827 /* NetworkListTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB662CFF6D680070B827 /* NetworkListTotal.swift */; };
 		EB44DB692CFF6F080070B827 /* TotalWorkEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DB682CFF6EF80070B827 /* TotalWorkEntry.swift */; };
 		EB44DBA12D0309C50070B827 /* APIServiceRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB44DBA02D0309C20070B827 /* APIServiceRecord.swift */; };
+		EB6400D02D62D9E9000CA007 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6400CF2D62D9E9000CA007 /* PDFView.swift */; };
 		EB6D31C92CECCD17000E02E7 /* BoxGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6D31C82CECCD17000E02E7 /* BoxGPS.swift */; };
 		EB6F03A22CEE172500190C0E /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6F03A12CEE171300190C0E /* Endpoints.swift */; };
 		EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1532C6A6A3300E7D361 /* SplashView.swift */; };
@@ -101,6 +102,7 @@
 		EB44DB662CFF6D680070B827 /* NetworkListTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkListTotal.swift; sourceTree = "<group>"; };
 		EB44DB682CFF6EF80070B827 /* TotalWorkEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalWorkEntry.swift; sourceTree = "<group>"; };
 		EB44DBA02D0309C20070B827 /* APIServiceRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceRecord.swift; sourceTree = "<group>"; };
+		EB6400CF2D62D9E9000CA007 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 		EB6D31C82CECCD17000E02E7 /* BoxGPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxGPS.swift; sourceTree = "<group>"; };
 		EB6F03A12CEE171300190C0E /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		EB83A1532C6A6A3300E7D361 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 		EBBC933A2C515E7E00F3C8CD /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EB6400CF2D62D9E9000CA007 /* PDFView.swift */,
 				EB44DB342CFE0F420070B827 /* UtilsLogin */,
 				EBF9DF9E2CED8E38002D7FA1 /* ListRecordTotals.swift */,
 				EBF9DF9C2CED8E1D002D7FA1 /* ListRecordDetails.swift */,
@@ -479,6 +482,7 @@
 				EB36666F2D16029B00810713 /* RecordData.swift in Sources */,
 				EBBC93392C51336400F3C8CD /* Colors.swift in Sources */,
 				EB44DB392CFE4D800070B827 /* NetworkListDetails.swift in Sources */,
+				EB6400D02D62D9E9000CA007 /* PDFView.swift in Sources */,
 				EB3666812D55A3BF00810713 /* Migration.swift in Sources */,
 				EB6D31C92CECCD17000E02E7 /* BoxGPS.swift in Sources */,
 				EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */,

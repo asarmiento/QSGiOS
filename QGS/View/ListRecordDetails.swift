@@ -13,11 +13,12 @@ import SwiftData
 struct ListRecordDetails: View {
     @Environment(\.modelContext) private var modelContext
        @StateObject private var networkListDetails = NetworkListDetails()
-       
+    
+    @State private var showPDFView = false
        var body: some View {
            NavigationStack {
                
-               HeadSecondary(title: "Detalle de Horas diarios")
+               HeadSecondary(title: "Detalle de Horas diarios", showPDFView: $showPDFView)
                VStack {
                    if networkListDetails.isLoading {
                        ProgressView("Cargando...")
@@ -48,6 +49,10 @@ struct ListRecordDetails: View {
                                .font(.title)
                        }
                    }
+                   NavigationLink(destination: PDFView(url: URL(string: "https://api.friendlypayroll.net/weekly-hours")!),
+                                                  isActive: $showPDFView) {
+                                       EmptyView()
+                                   }
                }.frame(height:600).offset(y: -50)
                .onAppear {
                    networkListDetails.context = modelContext

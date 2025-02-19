@@ -24,6 +24,6 @@ struct HeadLogin: View {
          }
 }
 
-#Preview {
+/*#Preview {
     HeadSecondary(title: "Hello, World!")
-}
+}*/

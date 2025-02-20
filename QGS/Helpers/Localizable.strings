@@ -23,7 +23,25 @@
 "Migración a la versión 2 completada correctamente." ="Migración a la versión 2 completada correctamente.";
 "Error en la migración a la versión 2: "="Error en la migración a la versión 2: ";
 "Default Message"="Default Message";
+"Proyecto: %@" = "Proyecto: %@";
+"Siguiente" = "Siguiente";
+"Historial de horas" = "Historial de horas";
+"Horas en Proyectos" = "Horas en Proyectos";
+"Registros de Horas" = "Registros de Horas";
+"Cargando..." = "Cargando...";
+"No hay entradas y salidas registradas" = "No hay entradas y salidas registradas";
 
+"Bienvenido" = "Bienvenido";
+
+"No hay registros de horas" = "No hay registros de horas";
+"No hay más registros" = "No hay más registros";
+"Página anterior" = "Página anterior";
+"Página siguiente" = "Página siguiente";
+"No hay registros de horas" = "No hay registros de horas";
+
+"Entrada o Salida" = "Entrada o Salida"; // Ejemplo de cadena que podría faltar
+"Permiso de Localización" = "Permiso de Localización"; // Ejemplo de cadena que podría faltar
+"Error al cargar el PDF" = "Error al cargar el PDF"; // Ejemplo de cadena que podría faltar
 // Network Errors
 "URL_INVALID" = "URL inválida";
 "RESPONSE_INVALID" = "Respuesta inválida del servidor";

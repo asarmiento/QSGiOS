@@ -5,20 +5,20 @@
 //  Created by Anwar Sarmiento on 7/31/24.
 //
 
-
 import Foundation
 import SwiftUI
 import SwiftData
 import CoreLocation
-import QGS // Asegúrate de que el nombre del módulo sea correcto
-
+// Si LocationManager está en un módulo separado:
+// import Managers
 
 struct HomeRecord: View {
     @Environment(\.modelContext) private var context: ModelContext
-    @StateObject private var locationManager = LocationViewController.shared
-       @State private var showLocationAlert = false
+    @StateObject private var locationManager = LocationManager.shared
+    @State private var showLocationAlert = false
     @State private var isLoading: Bool = false
     @State private var showPDFView = false
+    @State private var showTimeRecordView = false
 
      // Indicador de carga
     @State private var errorMessage: String?  // Para manejar errores
@@ -38,10 +38,10 @@ struct HomeRecord: View {
                     
                 if let user = getUser {
                    
-                    HeadSecondary(title: "Bienvenido(a): \(user.name)", showPDFView: $showPDFView)
+                    HeadSecondary(title: "Bienvenido(a): \(user.name)", showPDFView: $showPDFView, showTimeRecordView: $showTimeRecordView)
                    
                 } else {
-                    HeadSecondary(title: "Entrada o Salida ", showPDFView: $showPDFView)
+                    HeadSecondary(title: "Entrada o Salida ", showPDFView: $showPDFView, showTimeRecordView: $showTimeRecordView)
                     
                 }
                 
@@ -134,10 +134,13 @@ struct HomeRecord: View {
                     
                 }.foregroundStyle(Color.gray).offset(y:400)
 
-                NavigationLink(destination: PDFView(url: URL(string: "https://api.friendlypayroll.net/weekly-hours")!),
-                                               isActive: $showPDFView) {
-                                    EmptyView()
-                                }
+            
+            }
+            .navigationDestination(isPresented: $showPDFView) {
+                PDFView(url: URL(string: "https://api.friendlypayroll.net/weekly-hours")!)
+            }
+            .navigationDestination(isPresented: $showTimeRecordView) {
+                TimeRecordsView()
             }.onAppear {
                 if !hasCheckedLocation {
                     checkLocationAuthorization()
@@ -174,8 +177,9 @@ struct HomeRecord: View {
     
     private func checkLocationAuthorization() {
         if !locationManager.isAuthorized {
-            // Solo mostrar la alerta si los permisos están denegados
-            if CLLocationManager.authorizationStatus() == .denied {
+            let authStatus = locationManager.getAuthorizationStatus()
+            
+            if authStatus == .denied {
                 showLocationAlert = true
             } else {
                 locationManager.requestLocationPermission()

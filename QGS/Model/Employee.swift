@@ -7,24 +7,12 @@
 import Foundation
 
 // Modelo para el empleado
-struct Employee: Decodable {
+struct Employee: Codable, Identifiable {
     let id: Int
-    let card: String
-    let typeOfCard: String
     let name: String
-    let vacation: Int
     let email: String
     let phone: String
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case card
-        case typeOfCard = "type_of_card"
-        case name
-        case vacation
-        case email
-        case phone
-    }
+    // Agrega otros campos según sea necesario
 }
 
 

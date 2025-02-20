@@ -21,7 +21,7 @@ class NetworkManager {
                               retryCount: Int = 0) async throws -> T {
         guard let url = URL(string: endpoint) else {
             self.logger.error("URL inválida: \(endpoint)")
-            throw NetworkError.invalidURL
+            throw NetworkLocalizedError.invalidURL
         }
         
         var request = URLRequest(url: url)
@@ -42,7 +42,7 @@ class NetworkManager {
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 self.logger.error("Respuesta inválida")
-                throw NetworkError.invalidResponse
+                throw NetworkLocalizedError.invalidResponse
             }
             
             // Log response
@@ -57,11 +57,11 @@ class NetworkManager {
                     return try JSONDecoder().decode(T.self, from: data)
                 } catch {
                     self.logger.error("Error de decodificación: \(error.localizedDescription)")
-                    throw NetworkError.decodingError(error)
+                    throw NetworkLocalizedError.decodingError(error)
                 }
             case 401:
                 self.logger.error("Error de autenticación")
-                throw NetworkError.unauthorized
+                throw NetworkLocalizedError.unauthorized
             case 503:
                 // Retry logic for server errors
                 if retryCount < self.maxRetries {
@@ -72,14 +72,16 @@ class NetworkManager {
                                                 params: params, 
                                                 retryCount: retryCount + 1)
                 }
-                throw NetworkError.serverError(httpResponse.statusCode)
+                let errorMessage = String(data: data, encoding: .utf8) ?? "Error desconocido"
+                throw NetworkLocalizedError.serverError(httpResponse.statusCode, errorMessage)
             default:
                 self.logger.error("Error del servidor: \(httpResponse.statusCode)")
-                throw NetworkError.serverError(httpResponse.statusCode)
+                let errorMessage = String(data: data, encoding: .utf8) ?? "Error desconocido"
+                throw NetworkLocalizedError.serverError(httpResponse.statusCode, errorMessage)
             }
         } catch {
             if let networkError = error as? NetworkError {
-                throw networkError
+                throw NetworkLocalizedError
             }
             
             // Retry for network errors
@@ -93,7 +95,7 @@ class NetworkManager {
             }
             
             self.logger.error("Error de red: \(error.localizedDescription)")
-            throw NetworkError.networkError(error)
+            throw NetworkLocalizedError.networkError(error)
         }
     }
 }

@@ -10,52 +10,51 @@ import SwiftUI
 struct HeadSecondary: View {
     var title: String = ""
     @Binding var showPDFView: Bool
+    @Binding var showTimeRecordView: Bool
+    
     var body: some View {
-        VStack(spacing: 0){
-              
+        VStack(spacing: 0) {
             Color.myPrimary.frame(width: 1000, height: 250).contentMargins(.zero).overlay(content: {
                 if let user = getUser {
                     // Menú accesible solo para usuarios que no son "Colaborador"
-                                       if user.type != "Colaborador" {
-                                           Menu {
-                                               Button("Historial de horas") {
-                                                   showPDFView = true
-                                               }
-                                               Button("Horas en Proyectos") {
-                                                   // Acción para Opción 2
-                                               }
-                                           } label: {
-                                               Label("",      systemImage: "line.horizontal.3.decrease")
-                                                   .font(.title2)
-                                                   .padding()
-                                                   .foregroundStyle(Color.blue)
-                                           }
-                                           .frame(maxWidth: 200, alignment: .leading).offset(x:-80,y:-60) // Alinear a la izquierda
-                                       }
-                   }
-                Text(title).foregroundColor(.white).opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
-                    .font(.system(size: 36,design: .default) ).bold()
-                    .frame(width: 300,height:250,alignment: .center).offset( x:-40, y: 10)
+                    if user.type != "Colaborador" {
+                        Menu {
+                            Button("Historial de horas") {
+                                showPDFView = true
+                            }
+                            Button("Horas en Proyectos") {
+                                showTimeRecordView = true // Cambiar el estado para navegar
+                            }
+                        } label: {
+                            Label("", systemImage: "line.horizontal.3.decrease")
+                                .font(.title2)
+                                .padding()
+                                .foregroundStyle(Color.blue)
+                        }
+                        .frame(maxWidth: 200, alignment: .leading).offset(x: -80, y: -60) // Alinear a la izquierda
+                    }
+                }
+                Text(title).foregroundColor(.white).opacity(0.8)
+                    .font(.system(size: 36, design: .default)).bold()
+                    .frame(width: 300, height: 250, alignment: .center).offset(x: -40, y: 10)
                     .fixedSize(horizontal: false, vertical: true)
             })
             
-            ZStack{
-                Circle().fill(Color.myPrimary).frame(width:120,height:120).shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/).overlay(
+            ZStack {
+                Circle().fill(Color.myPrimary).frame(width: 120, height: 120).shadow(radius: 10).overlay(
                     Image("QGS").resizable().scaledToFit().padding(.horizontal, 8)
                 )
                 .clipShape(Circle())
-                .overlay( Circle().stroke(Color.white,lineWidth: 2))
-                .offset(x:100, y:-60)
+                .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                .offset(x: 100, y: -60)
             }
             Color.white.edgesIgnoringSafeArea(.bottom)
-        }.edgesIgnoringSafeArea(.top)
-       
-        
-
-        
-         }
+        }
+        .edgesIgnoringSafeArea(.top)
+    }
+    
     private var getUser: UserModel? {
-        return  UserManager.shared.getUser()
+        return UserManager.shared.getUser()
     }
 }
 

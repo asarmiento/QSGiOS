@@ -13,7 +13,7 @@ enum NetworkLocalizedError: LocalizedError {
     case apiError(String)
     
     var errorDescription: String? {
-        switch self {
+        
             switch self {
             case .invalidURL:
                 return NSLocalizedString("URL_INVALID", comment: "")
@@ -34,7 +34,7 @@ enum NetworkLocalizedError: LocalizedError {
             case .apiError(let message):
                 return message
             }
-        }
+        
         
         
         

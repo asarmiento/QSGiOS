@@ -15,7 +15,7 @@ struct SplashScreen: View {
     let accessToken = UserDefaults.standard.string(forKey: "accessToken")
     let datecreatAt = UserDefaults.standard.string(forKey: "createdAt")
    @State private var locationH = LocationManager()
-   let persistenceController = PersistenceController.shared
+ //  let persistenceController = PersistenceController.shared
     
     var body: some View {
         if isActive {

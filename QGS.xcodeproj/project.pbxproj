@@ -18,7 +18,6 @@
 		EB3666472D15F1C800810713 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666452D15F1C800810713 /* RecordViewModel.swift */; };
 		EB36666E2D16029B00810713 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB36666C2D16029B00810713 /* LoadingState.swift */; };
 		EB36666F2D16029B00810713 /* RecordData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB36666D2D16029B00810713 /* RecordData.swift */; };
-		EB36667A2D55A33300810713 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666742D55A33300810713 /* APIError.swift */; };
 		EB36667C2D55A33300810713 /* RecordResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666772D55A33300810713 /* RecordResponse.swift */; };
 		EB36667D2D55A33300810713 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666752D55A33300810713 /* LoginResponse.swift */; };
 		EB36667E2D55A33300810713 /* WorkTimeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3666782D55A33300810713 /* WorkTimeResponse.swift */; };
@@ -54,6 +53,10 @@
 		EBBEB4722D67A24E005B9AEA /* APITimeRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB4682D67A24E005B9AEA /* APITimeRecords.swift */; };
 		EBBEB4732D67A24E005B9AEA /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB46B2D67A24E005B9AEA /* NetworkError.swift */; };
 		EBBEB4742D67A24E005B9AEA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB46E2D67A24E005B9AEA /* LocationManager.swift */; };
+		EBBEB4772D67A424005B9AEA /* PaginadoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB4752D67A424005B9AEA /* PaginadoResponse.swift */; };
+		EBBEB4782D67A424005B9AEA /* TimeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB4762D67A424005B9AEA /* TimeRecord.swift */; };
+		EBBEB47A2D67A622005B9AEA /* TimeRecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB4792D67A622005B9AEA /* TimeRecordsView.swift */; };
+		EBBEB47C2D67A62D005B9AEA /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB47B2D67A62D005B9AEA /* SplashScreen.swift */; };
 		EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE614972C5AE4FA00197660 /* HomeRecord.swift */; };
 		EBE6149A2C5AFA5D00197660 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE614992C5AFA5D00197660 /* LocationViewController.swift */; };
 		EBF9DF9D2CED8E30002D7FA1 /* ListRecordDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9DF9C2CED8E1D002D7FA1 /* ListRecordDetails.swift */; };
@@ -131,6 +134,10 @@
 		EBBEB46B2D67A24E005B9AEA /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		EBBEB46C2D67A24E005B9AEA /* NetworkLocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLocalizedError.swift; sourceTree = "<group>"; };
 		EBBEB46E2D67A24E005B9AEA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		EBBEB4752D67A424005B9AEA /* PaginadoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginadoResponse.swift; sourceTree = "<group>"; };
+		EBBEB4762D67A424005B9AEA /* TimeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecord.swift; sourceTree = "<group>"; };
+		EBBEB4792D67A622005B9AEA /* TimeRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecordsView.swift; sourceTree = "<group>"; };
+		EBBEB47B2D67A62D005B9AEA /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		EBE614972C5AE4FA00197660 /* HomeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecord.swift; sourceTree = "<group>"; };
 		EBE614992C5AFA5D00197660 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		EBE6149B2C5AFC8300197660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -222,6 +229,8 @@
 		EB4B26B92C5AB10B0083397F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EBBEB4752D67A424005B9AEA /* PaginadoResponse.swift */,
+				EBBEB4762D67A424005B9AEA /* TimeRecord.swift */,
 				EB3666802D55A3BF00810713 /* Migrations */,
 				EB36666C2D16029B00810713 /* LoadingState.swift */,
 				EB36666D2D16029B00810713 /* RecordData.swift */,
@@ -317,6 +326,8 @@
 		EBBC933A2C515E7E00F3C8CD /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EBBEB47B2D67A62D005B9AEA /* SplashScreen.swift */,
+				EBBEB4792D67A622005B9AEA /* TimeRecordsView.swift */,
 				EB6400CF2D62D9E9000CA007 /* PDFView.swift */,
 				EB44DB342CFE0F420070B827 /* UtilsLogin */,
 				EBF9DF9E2CED8E38002D7FA1 /* ListRecordTotals.swift */,
@@ -502,6 +513,7 @@
 				EB6D31C92CECCD17000E02E7 /* BoxGPS.swift in Sources */,
 				EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */,
 				EB44DB612CFF40730070B827 /* Employee.swift in Sources */,
+				EBBEB4742D67A24E005B9AEA /* LocationManager.swift in Sources */,
 				EB44DBA12D0309C50070B827 /* APIServiceRecord.swift in Sources */,
 				EB3666472D15F1C800810713 /* RecordViewModel.swift in Sources */,
 				EBF9DFA12CED8F2F002D7FA1 /* HeadSecondary.swift in Sources */,
@@ -520,7 +532,10 @@
 				EB345D142CF4BC42001A62C8 /* ModalView.swift in Sources */,
 				EB83A1B42C6BA23500E7D361 /* AppDelegate.swift in Sources */,
 				EBBC933F2C515FC100F3C8CD /* View+extensions.swift in Sources */,
+				EBBEB47A2D67A622005B9AEA /* TimeRecordsView.swift in Sources */,
 				EBF9DF9D2CED8E30002D7FA1 /* ListRecordDetails.swift in Sources */,
+				EBBEB4772D67A424005B9AEA /* PaginadoResponse.swift in Sources */,
+				EBBEB4782D67A424005B9AEA /* TimeRecord.swift in Sources */,
 				EB345D212CF781ED001A62C8 /* UserModel.swift in Sources */,
 				EB44DB5D2CFF3F3D0070B827 /* WorkEntryDetails.swift in Sources */,
 				EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */,
@@ -532,9 +547,8 @@
 				EBBEB4712D67A24E005B9AEA /* NetworkLocalizedError.swift in Sources */,
 				EBBEB4722D67A24E005B9AEA /* APITimeRecords.swift in Sources */,
 				EBBEB4732D67A24E005B9AEA /* NetworkError.swift in Sources */,
-				EBBEB4742D67A24E005B9AEA /* LocationManager.swift in Sources */,
 				EB44DB632CFF40C20070B827 /* Project.swift in Sources */,
-				EB36667A2D55A33300810713 /* APIError.swift in Sources */,
+				EBBEB47C2D67A62D005B9AEA /* SplashScreen.swift in Sources */,
 				EB36667C2D55A33300810713 /* RecordResponse.swift in Sources */,
 				EB36667D2D55A33300810713 /* LoginResponse.swift in Sources */,
 				EB36667E2D55A33300810713 /* WorkTimeResponse.swift in Sources */,

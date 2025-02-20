@@ -13,7 +13,7 @@ enum NetworkError: Error {
     case apiError(String)
     
     var errorDescription: String? {
-        switch self {
+      
             switch self {
             case .invalidURL:
                 return NSLocalizedString("URL_INVALID", comment: "")
@@ -33,8 +33,11 @@ enum NetworkError: Error {
                 return String(format: NSLocalizedString("DECODING_ERROR", comment: ""), error.localizedDescription)
             case .apiError(let message):
                 return message
+            @unknown default:
+                print("Unknown error")
             }
-        }
+            
+        
         
         
         

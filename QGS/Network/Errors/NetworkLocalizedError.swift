@@ -1,42 +1,27 @@
 import Foundation
 
 enum NetworkLocalizedError: LocalizedError {
-    case invalidURL
-    case invalidResponse
-    case invalidData
-    case unauthorized
-    case noData
-    case decodingError(Error)
-    case serverError(Int)
-    case networkError(Error)
-    case serverError(Int, String)
-    case apiError(String)
-    
-    var errorDescription: String? {
-        
-            switch self {
-            case .invalidURL:
-                return NSLocalizedString("URL_INVALID", comment: "")
-            case .invalidResponse:
-                return NSLocalizedString("RESPONSE_INVALID", comment: "")
-            case .invalidData:
-                return "Usuario o contraseña incorrectos"
-            case .unauthorized:
-                return NSLocalizedString("AUTH_ERROR", comment: "")
-            case .noData:
-                return NSLocalizedString("NO_DATA", comment: "")
-            case .serverError(let code, let message):
-                return String(format: NSLocalizedString("SERVER_ERROR", comment: ""), code, message)
-            case .networkError(let error):
-                return String(format: NSLocalizedString("NETWORK_ERROR", comment: ""), error.localizedDescription)
-            case .decodingError(let error):
-                return String(format: NSLocalizedString("DECODING_ERROR", comment: ""), error.localizedDescription)
-            case .apiError(let message):
-                return message
-            }
-        
-        
-        
-        
-    }
-}
+       case invalidURL
+       case invalidResponse
+       case decodingError(Error)
+       case unauthorized
+       case serverError(Int, String)
+       case networkError(Error)
+       
+       var errorDescription: String? {
+           switch self {
+           case .invalidURL:
+               return "La URL es inválida."
+           case .invalidResponse:
+               return "La respuesta del servidor es inválida."
+           case .decodingError(let error):
+               return "Error de decodificación: \(error.localizedDescription)"
+           case .unauthorized:
+               return "No autorizado."
+           case .serverError(let code, let message):
+               return "Error del servidor \(code): \(message)"
+           case .networkError(let error):
+               return "Error de red: \(error.localizedDescription)"
+           }
+       }
+   }

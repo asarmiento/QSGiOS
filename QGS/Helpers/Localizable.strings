@@ -30,7 +30,10 @@
 "Registros de Horas" = "Registros de Horas";
 "Cargando..." = "Cargando...";
 "No hay entradas y salidas registradas" = "No hay entradas y salidas registradas";
-
+"Empleado: %@" = "Empleado: %@";
+"Fecha: %@" = "Fecha: %@";
+"Hora: %@" = "Hora: %@";
+"Tipo: %@" = "Tipo: %@";
 "Bienvenido" = "Bienvenido";
 
 "No hay registros de horas" = "No hay registros de horas";
@@ -59,3 +62,5 @@
 "LOADING" = "Cargando...";
 "RETRY" = "Reintentar";
 "CANCEL" = "Cancelar";
+
+"Todos" = "Todos";

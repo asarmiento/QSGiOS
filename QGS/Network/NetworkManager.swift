@@ -81,7 +81,7 @@ class NetworkManager {
             }
         } catch {
             if let networkError = error as? NetworkError {
-                throw NetworkLocalizedError
+                throw NetworkLocalizedError.networkError(networkError)
             }
             
             // Retry for network errors

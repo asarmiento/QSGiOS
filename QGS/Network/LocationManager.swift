@@ -4,6 +4,7 @@ import CoreLocation
 import SwiftUI
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    static let shared = LocationManager()
     private let locationManager = CLLocationManager()
     @Published var locationStatus: CLAuthorizationStatus?
     @Published var lastLocation: CLLocation?
@@ -126,7 +127,12 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             self.errorMessage = error.errorDescription
         }
     }
-    
+    func getAuthorizationStatus() -> CLAuthorizationStatus {
+        return CLLocationManager().authorizationStatus
+    }
+    var isAuthorized: Bool {
+        return locationStatus == .authorizedWhenInUse || locationStatus == .authorizedAlways
+    }
     deinit {
         stopUpdatingLocation()
     }

@@ -34,7 +34,7 @@ enum NetworkError: Error {
             case .apiError(let message):
                 return message
             @unknown default:
-                print("Unknown error")
+                return ("Unknown error")
             }
             
         

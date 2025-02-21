@@ -93,9 +93,7 @@
 		EB3666452D15F1C800810713 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		EB36666C2D16029B00810713 /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		EB36666D2D16029B00810713 /* RecordData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordData.swift; sourceTree = "<group>"; };
-		EB3666742D55A33300810713 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		EB3666752D55A33300810713 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
-		EB3666762D55A33300810713 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		EB3666772D55A33300810713 /* RecordResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordResponse.swift; sourceTree = "<group>"; };
 		EB3666782D55A33300810713 /* WorkTimeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTimeResponse.swift; sourceTree = "<group>"; };
 		EB36667F2D55A3BF00810713 /* Migration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Migration.swift; sourceTree = "<group>"; };
@@ -189,9 +187,7 @@
 		EB3666792D55A33300810713 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EB3666742D55A33300810713 /* APIError.swift */,
 				EB3666752D55A33300810713 /* LoginResponse.swift */,
-				EB3666762D55A33300810713 /* NetworkError.swift */,
 				EB3666772D55A33300810713 /* RecordResponse.swift */,
 				EB3666782D55A33300810713 /* WorkTimeResponse.swift */,
 			);
@@ -737,7 +733,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.6;
+				MARKETING_VERSION = 1.1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -780,7 +776,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.6;
+				MARKETING_VERSION = 1.1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

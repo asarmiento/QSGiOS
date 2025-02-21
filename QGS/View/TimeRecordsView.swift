@@ -2,81 +2,119 @@ import SwiftUI
 
 struct TimeRecordsView: View {
     @StateObject private var timeRecordsViewModel = TimeRecordsViewModel()
+    
     @State private var selectedEmployeeId: Int?
-    @State private var selectedDate: Date = Date()
-    @State private var selectedType: String = "Entrada" // O "Salida"
+    @State private var selectedDates: Set<DateComponents> = []  // Múltiples fechas
+    @State private var selectedType: String = "Entrada"         // O "Salida"
+    let oneMonthAgo: Date = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
     
     var body: some View {
         NavigationStack {
-            VStack {
-                // Filtros
-                HStack {
-                    VStack{
-                        Picker("Empleado", selection: $selectedEmployeeId) {
-                            ForEach(timeRecordsViewModel.employees, id: \.id) { employee in
-                                Text(employee.name).tag(employee.id as Int?)
+            GeometryReader { proxy in
+                VStack(spacing: 0) {
+                    
+                    // ---------- Sección de Filtros (50%) ----------
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 16) {
+                            // Texto "Registros de Horas"
+                            Text("Registros de Horas")
+                                .font(.title)
+                                .padding(.top, 2)
+                            
+                            // 1) Picker Empleado
+                            VStack(alignment: .leading) {
+                                Text("Empleado")
+                                    .font(.headline)
+                                
+                                Picker("Empleado", selection: $selectedEmployeeId) {
+                                    Text("Todos").tag(nil as Int?)
+                                    ForEach(timeRecordsViewModel.employees, id: \.id) { employee in
+                                        Text(employee.name).tag(employee.id as Int?)
+                                    }
+                                }
+                                .pickerStyle(MenuPickerStyle())
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.gray.opacity(0.2))
+                                .cornerRadius(5)
+                            }
+                            
+                            Divider()
+                            
+                            // 2) MultiDatePicker (1 mes atrás...hoy)
+                            let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+                            
+                            VStack(alignment: .leading) {
+                                Text("Selecciona las fechas")
+                                    .font(.headline)
+                                
+                                MultiDatePicker("Fechas", selection: $selectedDates, in: oneMonthAgo..<tomorrow)
+                                    .datePickerStyle(GraphicalDatePickerStyle())
+                                    .frame(maxHeight: 300) // Altura controlada
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(4)
+                                    .environment(\.locale, Locale(identifier: "es"))
+                            }
+                            
+                            Divider()
+                            
+                            // 3) Picker Tipo (Segmented)
+                            VStack(alignment: .leading) {
+                                Text("Tipo de Registro")
+                                    .font(.headline)
+                                
+                                Picker("Tipo", selection: $selectedType) {
+                                    Text("Entrada").tag("Entrada")
+                                    Text("Salida").tag("Salida")
+                                }
+                                .pickerStyle(SegmentedPickerStyle())
                             }
                         }
-                        .pickerStyle(MenuPickerStyle())
-                        .frame(minWidth: 200)
-                        DatePicker("Fecha", selection: $selectedDate, displayedComponents: .date)
-                            .datePickerStyle(GraphicalDatePickerStyle())
-                            .frame(minWidth: 200, minHeight: 50)
+                        .padding()
+                    }
+                    .frame(height: proxy.size.height * 0.5) // Ocupa la mitad superior de la pantalla
+                    .background(Color.white)
+                    .cornerRadius(12)
+                    .shadow(radius: 5)
 
-                        Picker("Tipo", selection: $selectedType) {
-                            Text("Entrada").tag("Entrada")
-                            Text("Salida").tag("Salida")
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .frame(minWidth: 200)
-                    }
-                    
-                  
-                }
-                .padding()
-                
-                // Tabla de registros
-                if timeRecordsViewModel.isLoading {
-                    ProgressView("Cargando...")
-                } else if let errorMessage = timeRecordsViewModel.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                } else {
-                    List(timeRecordsViewModel.filteredRecords(selectedEmployeeId: selectedEmployeeId, selectedDate: selectedDate, selectedType: selectedType)) { record in
-                        VStack(alignment: .leading) {
-                            Text("Empleado: \(record.employee.name)")
-                                .font(.headline)
-                            Text("Fecha: \(record.date)")
-                            Text("Hora: \(record.time)")
-                            Text("Tipo: \(record.type)")
-                                .font(.subheadline)
-                                .foregroundColor(.black)
-                        }
-                        .padding(1)
-                    }.scrollDisabled(false)
-                }
-                
-                // Paginación
-                HStack {
-                    if let prevPageURL = timeRecordsViewModel.prevPageURL {
-                        Button("Anterior") {
-                            timeRecordsViewModel.loadPage(url: prevPageURL)
+                    // ---------- Sección de Lista (50%) ----------
+                    VStack {
+                        if timeRecordsViewModel.isLoading {
+                            ProgressView("Cargando...")
+                        } else if let errorMessage = timeRecordsViewModel.errorMessage {
+                            Text(errorMessage).foregroundColor(.red)
+                        } else {
+                            List(
+                                timeRecordsViewModel.filteredRecordsMultipleDates(
+                                    selectedEmployeeId: selectedEmployeeId,
+                                    selectedDates: selectedDates,
+                                    selectedType: selectedType
+                                )
+                            ) { record in
+                                VStack(alignment: .leading) {
+                                    Text("Empleado: \(record.employee.name)")
+                                        .font(.headline)
+                                    Text("Fecha: \(record.date)")
+                                    Text("Hora de Registro: \(record.time)")
+                                    if(record.type == "Salida"){
+                                        Text("Horas: \(record.hours)")
+                                    }
+                                    Text("Tipo: \(record.type)")
+                                        .font(.subheadline)
+                                   
+                                }
+                                .padding(4)
+                            }
                         }
                     }
-                    
-                    if let nextPageURL = timeRecordsViewModel.nextPageURL {
-                        Button("Siguiente") {
-                            timeRecordsViewModel.loadPage(url: nextPageURL)
-                        }
-                    }
+                    .frame(height: proxy.size.height * 0.5) // La lista ocupa la mitad inferior
                 }
-                .padding()
             }
-            .navigationTitle("Registros de Horas")
             .onAppear {
                 timeRecordsViewModel.fetchTimeRecords()
                 timeRecordsViewModel.fetchEmployees()
             }
         }
     }
+
 } 

@@ -14,7 +14,7 @@ import CoreLocation
 
 struct HomeRecord: View {
     @Environment(\.modelContext) private var context: ModelContext
-    @StateObject private var locationManager = LocationManager.shared
+    @ObservedObject private var locationManager = LocationManager.shared
     @State private var showLocationAlert = false
     @State private var isLoading: Bool = false
     @State private var showPDFView = false

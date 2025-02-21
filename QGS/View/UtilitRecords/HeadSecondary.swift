@@ -17,7 +17,7 @@ struct HeadSecondary: View {
             Color.myPrimary.frame(width: 1000, height: 250).contentMargins(.zero).overlay(content: {
                 if let user = getUser {
                     // Menú accesible solo para usuarios que no son "Colaborador"
-                    if user.type != "Colaborador" {
+                    if user.type != "employee" {
                         Menu {
                             Button("Historial de horas") {
                                 showPDFView = true

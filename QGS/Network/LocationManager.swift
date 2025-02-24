@@ -1,139 +1,92 @@
-
-
 import CoreLocation
 import SwiftUI
 
-class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    static let shared = LocationManager()
-    private let locationManager = CLLocationManager()
-    @Published var locationStatus: CLAuthorizationStatus?
-    @Published var lastLocation: CLLocation?
-    @Published var isRequestingAuthorization = false
-    @Published var errorMessage: String?
+public class LocationManager: NSObject, ObservableObject {
+    public static let shared = LocationManager()
+    
+    @Published public var locationStatus: CLAuthorizationStatus?
+    @Published public var lastLocation: CLLocation?
+    @Published public var isAuthorized = false
+    
+    private var locationManager: CLLocationManager
+    private var statusChecked = false
     
     override init() {
+        locationManager = CLLocationManager()
         super.init()
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = kCLDistanceFilterNone
-        DispatchQueue.main.async {
-            self.locationStatus = self.locationManager.authorizationStatus
+        locationManager.distanceFilter = 10
+        
+        // En lugar de verificar inmediatamente, espera el callback
+        DispatchQueue.global().async {
+            self.locationManager.delegate = self
         }
     }
     
-    func requestLocationPermission() {
-        guard CLLocationManager.locationServicesEnabled() else {
-            handleError(.servicioDesactivado)
-            return
-        }
-        
-        let currentStatus = locationManager.authorizationStatus
-        
-        switch currentStatus {
-        case .notDetermined:
-            isRequestingAuthorization = true
-            DispatchQueue.global(qos: .userInitiated).async {
+    /// Revisa si está autorizado y, si no, prepara la solicitud.
+    public func checkAuthorizationStatus() {
+        DispatchQueue.global().async {
+            let status = self.locationManager.authorizationStatus
+            // Si no está determinado, solicitamos el permiso más adelante.
+            if status == .notDetermined && !self.statusChecked {
+                // Marcamos que ya preguntamos en esta sesión
+                self.statusChecked = true
+                // Hacemos la solicitud en segundo plano para evitar bloqueo en la UI
                 self.locationManager.requestWhenInUseAuthorization()
             }
-        case .authorizedWhenInUse, .authorizedAlways:
-            startUpdatingLocation()
-        case .denied, .restricted:
-            handleError(.permisoDenegado)
-        @unknown default:
-            handleError(.errorDesconocido(nil))
         }
     }
     
     public func startUpdatingLocation() {
-        guard CLLocationManager.locationServicesEnabled() else {
-            handleError(.servicioDesactivado)
-            return
-        }
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            if self.locationManager.authorizationStatus == .authorizedWhenInUse ||
-               self.locationManager.authorizationStatus == .authorizedAlways {
-                self.locationManager.startUpdatingLocation()
-            }
+        DispatchQueue.global().async {
+            // Inicia la actualización de ubicación
+            self.locationManager.startUpdatingLocation()
         }
     }
     
-    private func stopUpdatingLocation() {
-        DispatchQueue.global(qos: .userInitiated).async {
+    public func stopUpdatingLocation() {
+        DispatchQueue.global().async {
             self.locationManager.stopUpdatingLocation()
         }
     }
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+}
+
+extension LocationManager: CLLocationManagerDelegate {
+    public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         DispatchQueue.main.async {
-            self.locationStatus = manager.authorizationStatus
-            self.isRequestingAuthorization = false
+            if #available(iOS 14.0, *) {
+                self.locationStatus = manager.authorizationStatus
+                self.isAuthorized =
+                    manager.authorizationStatus == .authorizedWhenInUse ||
+                    manager.authorizationStatus == .authorizedAlways
+            } else {
+                self.locationStatus = CLLocationManager.authorizationStatus()
+                self.isAuthorized =
+                    CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+                    CLLocationManager.authorizationStatus() == .authorizedAlways
+            }
             
-            switch manager.authorizationStatus {
-            case .authorizedWhenInUse, .authorizedAlways:
-                if self.lastLocation == nil {
-                    self.startUpdatingLocation()
-                }
-            case .denied, .restricted:
-                self.stopUpdatingLocation()
-                self.handleError(.permisoDenegado)
-            case .notDetermined:
-                break
-            @unknown default:
-                self.handleError(.errorDesconocido(nil))
+            // Si detectamos que no estamos autorizados pero tampoco lo hemos pedido, lo solicitamos
+            if !self.isAuthorized && !self.statusChecked {
+                self.checkAuthorizationStatus()
             }
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last,
-              location.horizontalAccuracy >= 0 else {
-            handleError(.ubicacionInvalida)
-            return
-        }
-        
-        let locationAge = -location.timestamp.timeIntervalSinceNow
-        guard locationAge <= 60 else {
-            return
-        }
+    public func locationManager(_ manager: CLLocationManager,
+                                didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
         
         DispatchQueue.main.async {
             self.lastLocation = location
-            self.errorMessage = nil
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        if let clError = error as? CLError {
-            switch clError.code {
-            case .denied:
-                handleError(.permisoDenegado)
-            case .locationUnknown:
-                handleError(.ubicacionDesconocida)
-            case .network:
-                handleError(.errorRed)
-            case .headingFailure:
-                break
-            default:
-                handleError(.errorDesconocido(clError))
-            }
-        } else {
-            handleError(.errorDesconocido(error))
-        }
-    }
-    
-    private func handleError(_ error: LocationError) {
-        DispatchQueue.main.async {
-            self.errorMessage = error.errorDescription
-        }
-    }
-    func getAuthorizationStatus() -> CLAuthorizationStatus {
-        return CLLocationManager().authorizationStatus
-    }
-    var isAuthorized: Bool {
-        return locationStatus == .authorizedWhenInUse || locationStatus == .authorizedAlways
-    }
-    deinit {
-        stopUpdatingLocation()
+    public func locationManager(_ manager: CLLocationManager,
+                                didFailWithError error: Error) {
+        print("Error de ubicación: \(error.localizedDescription)")
     }
 } 
+

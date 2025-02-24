@@ -15,7 +15,7 @@ import FirebaseAnalytics
 
 struct HomeRecord: View {
     @Environment(\.modelContext) private var context: ModelContext
-    @StateObject private var locationManager = LocationManager.shared
+    @ObservedObject private var locationManager = LocationManager.shared
     @State private var showLocationAlert = false
     @State private var isLoading: Bool = false
     @State private var showPDFView = false
@@ -148,7 +148,7 @@ struct HomeRecord: View {
             }.onAppear {
                 logScreenView()
                 if !hasCheckedLocation {
-                    checkLocationAuthorization()
+                    locationManager.checkAuthorizationStatus()
                     hasCheckedLocation = true
                 }
                 if locationManager.isAuthorized {
@@ -157,6 +157,9 @@ struct HomeRecord: View {
             }.onChange(of: locationManager.isAuthorized) { newValue in
                 if newValue {
                     locationManager.startUpdatingLocation()
+                } else {
+                    locationManager.stopUpdatingLocation()
+                    locationManager.checkAuthorizationStatus()
                 }
             }
            
@@ -185,18 +188,6 @@ struct HomeRecord: View {
     private var employeeId: String? {
         
         return UserManager.shared.employeeId
-    }
-    
-    private func checkLocationAuthorization() {
-        if !locationManager.isAuthorized {
-            let authStatus = locationManager.getAuthorizationStatus()
-            
-            if authStatus == .denied {
-                showLocationAlert = true
-            } else {
-                locationManager.requestLocationPermission()
-            }
-        }
     }
     
     private func logCheckInEvent(type: String) {

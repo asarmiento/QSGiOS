@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB126FE32D6CE23500FC1BE6 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB126FE22D6CE23500FC1BE6 /* NotificationScheduler.swift */; };
 		EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D152CF6A47B001A62C8 /* RecordModel.swift */; };
 		EB345D182CF6DBB1001A62C8 /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D172CF6DB9F001A62C8 /* JsonServices.swift */; };
 		EB345D1A2CF74DA8001A62C8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D192CF74D9D001A62C8 /* Utils.swift */; };
@@ -89,6 +90,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB126FE22D6CE23500FC1BE6 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
 		EB345D152CF6A47B001A62C8 /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
 		EB345D172CF6DB9F001A62C8 /* JsonServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonServices.swift; sourceTree = "<group>"; };
 		EB345D192CF74D9D001A62C8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 		EBBC933D2C515F9E00F3C8CD /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				EB126FE22D6CE23500FC1BE6 /* NotificationScheduler.swift */,
 				EB345D172CF6DB9F001A62C8 /* JsonServices.swift */,
 				EBBC93402C5161CD00F3C8CD /* CustomTF.swift */,
 				EBBC933E2C515FC100F3C8CD /* View+extensions.swift */,
@@ -552,6 +555,7 @@
 				EB44DB5B2CFECF170070B827 /* DeviceLocations.swift in Sources */,
 				EB44DB652CFF427F0070B827 /* Sysconf.swift in Sources */,
 				EB3666362D15E81000810713 /* APIService.swift in Sources */,
+				EB126FE32D6CE23500FC1BE6 /* NotificationScheduler.swift in Sources */,
 				EBBC933C2C515E9400F3C8CD /* Login.swift in Sources */,
 				EB44DB692CFF6F080070B827 /* TotalWorkEntry.swift in Sources */,
 				EB6F03A22CEE172500190C0E /* Endpoints.swift in Sources */,
@@ -757,13 +761,14 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.7;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -800,13 +805,14 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.7;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

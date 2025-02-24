@@ -11,7 +11,7 @@ import FirebaseCore
 @main
 struct QGSApp: App {
     let modelContainer: ModelContainer
-    
+    @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
     init() {
         
         do {

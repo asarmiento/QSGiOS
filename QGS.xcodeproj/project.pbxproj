@@ -312,6 +312,7 @@
 				EBBC93142C512EBC00F3C8CD /* Preview Content */,
 				EBBC93382C51336400F3C8CD /* Colors.swift */,
 				EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */,
+				EB3665F02D066DB600810713 /* Localizable.strings */,
 			);
 			path = QGS;
 			sourceTree = "<group>";
@@ -360,7 +361,6 @@
 		EBBC933D2C515F9E00F3C8CD /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				EB3665F02D066DB600810713 /* Localizable.strings */,
 				EB345D172CF6DB9F001A62C8 /* JsonServices.swift */,
 				EBBC93402C5161CD00F3C8CD /* CustomTF.swift */,
 				EBBC933E2C515FC100F3C8CD /* View+extensions.swift */,

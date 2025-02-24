@@ -18,7 +18,7 @@ struct CustomTF : View {
     var body: some View {
         HStack(alignment: .top, spacing: 2, content: {
             Image(systemName: sfIcon)
-                .foregroundStyle(iconTint)
+                .foregroundStyle(iconTint).foregroundColor(Color.myPrimary)
                 .frame(width: 30)
             VStack(alignment: .leading,spacing: 8, content: {
                 if isPassword {
@@ -28,10 +28,10 @@ struct CustomTF : View {
                         }else{
                             SecureField(hint, text: $value)
                         }
-                    }
+                    }.foregroundColor(Color.black)
                     
                 }else{
-                    TextField(hint, text: $value)
+                    TextField(hint, text: $value).foregroundColor(Color.black)
                 }
                 Divider()
             })

@@ -2,27 +2,38 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>es</string>
 	<key>CFBundleLocalizations</key>
 	<array>
+		<string>es</string>
 		<string>en</string>
 	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida</string>
-	<key>UIBackgroundModes</key>
+	<key>FirebaseAnalyticsDebugEnabled</key>
+	<true/>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<true/>
+	<key>FirebaseAutomaticScreenReportingEnabled</key>
+	<true/>
+	<key>FirebaseMessagingAutoInitEnabled</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+    <key>NSLocationWhenInUseUsageDescription</key>
+        <string>La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida</string>
+        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+        <string>La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida</string>
+       <key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
+		<string>remote-notification</string>
+		<string>fetch</string>
+		<string>push-to-talk</string>
+		<string>processing</string>
 	</array>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
-	<key>CFBundleVersion</key>
-	<string>1</string>
 	<key>WhatsNewInThisVersion</key>
 	<dict>
 		<key>en</key>
@@ -38,5 +49,15 @@
 - Resumen de horas diarias y semanales
 - Mejora en la interfaz y experiencia de usuario</string>
 	</dict>
+    <key>FirebaseAutomaticScreenReportingEnabled</key>
+    <true/>
+    <key>FirebaseAppDelegateProxyEnabled</key>
+    <true/>
+    <key>FirebaseAnalyticsDebugEnabled</key>
+    <true/>
+    <key>FirebaseMessagingAutoInitEnabled</key>
+    <true/>
+    <key>aps-environment</key>
+    <string>development</string>
 </dict>
 </plist>

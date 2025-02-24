@@ -2,10 +2,12 @@ import Foundation
 
 extension String {
     var localized: String {
-        return NSLocalizedString(self, comment: "")
+        let bundle = Bundle.main
+        return NSLocalizedString(self, tableName: "Localizable", bundle: bundle, comment: "")
     }
     
-    func localized(with arguments: CVarArg...) -> String {
-        return String(format: self.localized, arguments: arguments)
+    func localizedFormat(_ arguments: CVarArg...) -> String {
+        let format = NSLocalizedString(self, tableName: "Localizable", bundle: .main, comment: "")
+        return String(format: format, arguments: arguments)
     }
 } 

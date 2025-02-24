@@ -17,42 +17,44 @@ struct ListRecordTotals: View {
     private var counterLis: Int = 0
     var body: some View {
         NavigationStack {
-            HeadSecondary(title: "Total de Horas Semanal", showPDFView: $showPDFView, showTimeRecordView: $showTimeRecordView)
-            VStack {
-                if networkListTotal.isLoading {
-                    ProgressView("Cargando...") // Muestra un loading mientras se obtienen los datos
-                        .progressViewStyle(CircularProgressViewStyle())
-                } else if let errorMessage = networkListTotal.errorMessage {
-                    Text(errorMessage) // Muestra un error si algo falla
-                        .foregroundColor(.red)
-                } else {
-                    if networkListTotal.totalHours.isEmpty {
-                        Text("No hay registros para mostrar.")
-                            .foregroundColor(.gray).bold().font(.title)
-                    }
-                    List(networkListTotal.totalHours) { totalHour in
-                        VStack(alignment: .leading) {
-                            Text("Fecha Inicio: \(totalHour.weekI)")
-                            Text("Fecha Fin: \(totalHour.weekF)")
-                            Text("Total Horas: \(totalHour.hours)")
+            VStack{
+                HeadSecondary(title: "Total de Horas Semanal", showPDFView: $showPDFView, showTimeRecordView: $showTimeRecordView)
+                VStack {
+                    if networkListTotal.isLoading {
+                        ProgressView("Cargando...") // Muestra un loading mientras se obtienen los datos
+                            .progressViewStyle(CircularProgressViewStyle())
+                    } else if let errorMessage = networkListTotal.errorMessage {
+                        Text(errorMessage) // Muestra un error si algo falla
+                            .foregroundColor(.red)
+                    } else {
+                        if networkListTotal.totalHours.isEmpty {
+                            Text("No hay registros para mostrar.")
+                                .foregroundColor(.gray).bold().font(.title)
                         }
-                        .padding()
+                        List(networkListTotal.totalHours) { totalHour in
+                            VStack(alignment: .leading) {
+                                Text("Fecha Inicio: \(totalHour.weekI)")
+                                Text("Fecha Fin: \(totalHour.weekF)")
+                                Text("Total Horas: \(totalHour.hours)")
+                            }
+                            .padding()
+                        }
+                        
                     }
-                           
+                    
                 }
-              
-            }
-            .navigationDestination(isPresented: $showPDFView) {
-                PDFView(url: URL(string: "https://api.friendlypayroll.net/weekly-hours")!)
-            }
-            .navigationDestination(isPresented: $showTimeRecordView) {
-                TimeRecordsView()
-            }
-            .offset(y: -60)
-            .frame(height: 510)
-            .onAppear {
-                print("Llamando a fetchWorkEntries...")
-                networkListTotal.fetchWorkEntries()
+                .navigationDestination(isPresented: $showPDFView) {
+                    PDFView(url: URL(string: "https://api.friendlypayroll.net/weekly-hours")!)
+                }
+                .navigationDestination(isPresented: $showTimeRecordView) {
+                    TimeRecordsView()
+                }
+                .offset(y: -60)
+                .frame(height: 510)
+                .onAppear {
+                    print("Llamando a fetchWorkEntries...")
+                    networkListTotal.fetchWorkEntries()
+                }
             }
         }
     }

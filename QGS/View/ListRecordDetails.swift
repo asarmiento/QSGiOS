@@ -20,49 +20,52 @@ struct ListRecordDetails: View {
     var body: some View {
         NavigationStack {
             VStack {
+                Color.clear.edgesIgnoringSafeArea(.all)
                 HeadSecondary(title: "Detalle de Horas diarios", showPDFView: $showPDFView, showTimeRecordView: $showTimeRecordView)
-                
-                if networkListDetails.isLoading {
-                    ProgressView("Cargando...")
-                        .progressViewStyle(CircularProgressViewStyle())
-                } else if let errorMessage = networkListDetails.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                } else {
-                    if !networkListDetails.workEntries.isEmpty {
-                        List(networkListDetails.workEntries) { workEntry in
-                            VStack(alignment: .leading) {
-                                Text("Proyecto: \(workEntry.project.name)")
-                                    .font(.headline)
-                                HStack {
-                                    Text("Fecha: \(workEntry.date)")
-                                    Text("Horas: \(workEntry.hours != nil ? String(format: "%.2f", workEntry.hours!) : "N/A")")
-                                }
-                                Text("Tipo: \(workEntry.type)")
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-                            }
-                            .padding(1)
-                        }
+                VStack{
+                    if networkListDetails.isLoading {
+                        ProgressView("Cargando...")
+                            .progressViewStyle(CircularProgressViewStyle())
+                    } else if let errorMessage = networkListDetails.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
                     } else {
-                        Text("No hay entradas y salidas registradas")
-                            .foregroundColor(.gray)
-                            .font(.title)
+                        if !networkListDetails.workEntries.isEmpty {
+                            List(networkListDetails.workEntries) { workEntry in
+                                VStack(alignment: .leading) {
+                                    Text("Proyecto: \(workEntry.project.name)")
+                                        .font(.headline)
+                                    HStack {
+                                        Text("Fecha: \(workEntry.date)")
+                                        Text("Horas: \(workEntry.hours != nil ? String(format: "%.2f", workEntry.hours!) : "N/A")")
+                                    }
+                                    
+                                    Text("Hora de Registro: \(workEntry.time)")
+                                    Text("Tipo: \(workEntry.type)")
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
+                                .padding(1)
+                            }
+                        } else {
+                            Text("No hay entradas y salidas registradas")
+                                .foregroundColor(.gray)
+                                .font(.title)
+                        }
                     }
                 }
-            }
-            .frame(height: 600)
-            .offset(y: -50)
-            .navigationDestination(isPresented: $showPDFView) {
-                PDFView(url: URL(string: "https://api.friendlypayroll.net/weekly-hours")!)
-            }
-            .navigationDestination(isPresented: $showTimeRecordView) {
-                TimeRecordsView()
-            }
-            .onAppear {
-                networkListDetails.context = modelContext
-                networkListDetails.fetchWorkEntries()
-            }
+                .frame(height: 600)
+                .offset(y: -50)
+                .navigationDestination(isPresented: $showPDFView) {
+                    PDFView(url: URL(string: "https://api.friendlypayroll.net/weekly-hours")!)
+                }
+                .navigationDestination(isPresented: $showTimeRecordView) {
+                    TimeRecordsView()
+                }
+                .onAppear {
+                    networkListDetails.context = modelContext
+                    networkListDetails.fetchWorkEntries()
+                }}
         }
     }
 }

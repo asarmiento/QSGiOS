@@ -44,7 +44,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
-    private func startUpdatingLocation() {
+    public func startUpdatingLocation() {
         guard CLLocationManager.locationServicesEnabled() else {
             handleError(.servicioDesactivado)
             return

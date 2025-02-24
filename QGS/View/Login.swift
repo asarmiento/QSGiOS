@@ -54,6 +54,7 @@ struct Login: View {
                             .padding(12)
                             .frame(width: 350, height: 60)
                             .background(Color.black.opacity(0.05))
+                            .foregroundColor(Color.black)
                             .cornerRadius(10)
                             
                             Button(action: {

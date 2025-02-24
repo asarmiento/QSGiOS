@@ -1,4 +1,5 @@
 import SwiftUI
+import FirebaseAnalytics
 
 struct TimeRecordsView: View {
     @StateObject private var timeRecordsViewModel = TimeRecordsViewModel()
@@ -7,6 +8,14 @@ struct TimeRecordsView: View {
     @State private var selectedDates: Set<DateComponents> = []  // Múltiples fechas
     @State private var selectedType: String = "Entrada"         // O "Salida"
     let oneMonthAgo: Date = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
+    
+    private func logFilterEvent(employeeId: Int?, dates: Set<DateComponents>, type: String) {
+        Analytics.logEvent("filter_records", parameters: [
+            "employee_id": employeeId as Any,
+            "date_count": dates.count,
+            "type": type
+        ])
+    }
     
     var body: some View {
         NavigationStack {
@@ -37,6 +46,13 @@ struct TimeRecordsView: View {
                                 .padding()
                                 .background(Color.gray.opacity(0.2))
                                 .cornerRadius(5)
+                                .onChange(of: selectedEmployeeId) { _ in
+                                    logFilterEvent(
+                                        employeeId: selectedEmployeeId,
+                                        dates: selectedDates,
+                                        type: selectedType
+                                    )
+                                }
                             }
                             
                             Divider()
@@ -68,6 +84,13 @@ struct TimeRecordsView: View {
                                     Text("Salida").tag("Salida")
                                 }
                                 .pickerStyle(SegmentedPickerStyle())
+                                .onChange(of: selectedType) { _ in
+                                    logFilterEvent(
+                                        employeeId: selectedEmployeeId,
+                                        dates: selectedDates,
+                                        type: selectedType
+                                    )
+                                }
                             }
                         }
                         .padding()
@@ -111,6 +134,12 @@ struct TimeRecordsView: View {
                 }
             }
             .onAppear {
+                // Registrar vista en Analytics
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    appDelegate.logScreenView(screenName: "TimeRecords",
+                                            screenClass: "TimeRecordsView")
+                }
+                
                 timeRecordsViewModel.fetchTimeRecords()
                 timeRecordsViewModel.fetchEmployees()
             }

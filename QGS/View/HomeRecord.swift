@@ -9,12 +9,13 @@ import Foundation
 import SwiftUI
 import SwiftData
 import CoreLocation
+import FirebaseAnalytics
 // Si LocationManager está en un módulo separado:
 // import Managers
 
 struct HomeRecord: View {
     @Environment(\.modelContext) private var context: ModelContext
-    @ObservedObject private var locationManager = LocationManager.shared
+    @StateObject private var locationManager = LocationManager.shared
     @State private var showLocationAlert = false
     @State private var isLoading: Bool = false
     @State private var showPDFView = false
@@ -32,7 +33,7 @@ struct HomeRecord: View {
         NavigationStack {
             ZStack {
                 // Fondo y diseño general
-                Color(.systemBackground).edgesIgnoringSafeArea(.all)
+                Color(.white).edgesIgnoringSafeArea(.all)
                 // Encabezado
               //  Text(\(getUser))
                     
@@ -66,6 +67,9 @@ struct HomeRecord: View {
                                 .frame(maxWidth: .infinity)
                                 .padding()
                                 .environment(\.modelContext, context)
+                                .onTapGesture {
+                                    logCheckInEvent(type: "check_in")
+                                }
                         }
                         // Botones adicionales (Detalles y Totales)
                         HStack {
@@ -142,14 +146,22 @@ struct HomeRecord: View {
             .navigationDestination(isPresented: $showTimeRecordView) {
                 TimeRecordsView()
             }.onAppear {
+                logScreenView()
                 if !hasCheckedLocation {
                     checkLocationAuthorization()
                     hasCheckedLocation = true
                 }
+                if locationManager.isAuthorized {
+                    locationManager.startUpdatingLocation()
+                }
+            }.onChange(of: locationManager.isAuthorized) { newValue in
+                if newValue {
+                    locationManager.startUpdatingLocation()
+                }
             }
            
         }
-       
+    
     }
 
     
@@ -185,6 +197,25 @@ struct HomeRecord: View {
                 locationManager.requestLocationPermission()
             }
         }
+    }
+    
+    private func logCheckInEvent(type: String) {
+        Analytics.logEvent("employee_check", parameters: [
+            "type": type,
+            "employee_id": UserManager.shared.employeeId ?? "",
+            "timestamp": Date().timeIntervalSince1970
+        ])
+    }
+    
+    private func logScreenView() {
+        let user = getUser
+        Analytics.logEvent(AnalyticsEventScreenView, parameters: [
+            AnalyticsParameterScreenName: "Home",
+            AnalyticsParameterScreenClass: "HomeRecord",
+            "user_id": UserManager.shared.employeeId ?? "unknown",
+            "user_name": user?.name ?? "unknown",
+            "has_user": user != nil ? "yes" : "no"
+        ])
     }
     
 }

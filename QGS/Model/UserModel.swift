@@ -8,14 +8,27 @@ import Foundation
 import SwiftData
 
 @Model
-class UserModel: Codable {
-    var name: String
-    var email: String
-    var token: String
-    var employeeId: Int
-    var sysconf: String
-    var type: String?
+final class UserModel {
+    // Propiedades persistentes
+    @Attribute(.unique) var email: String
+    @Attribute var name: String
+    @Attribute var token: String
+    @Attribute var employeeId: Int
+    @Attribute var sysconf: String
+    @Attribute var type: String?
     
+    init(name: String, email: String, token: String, employeeId: Int, sysconf: String, type: String? = nil) {
+        self.name = name
+        self.email = email
+        self.token = token
+        self.employeeId = employeeId
+        self.sysconf = sysconf
+        self.type = type
+    }
+}
+
+// Extensión para Codable
+extension UserModel: Codable {
     enum CodingKeys: String, CodingKey {
         case name
         case email
@@ -25,14 +38,16 @@ class UserModel: Codable {
         case type
     }
     
-    required init(from decoder: Decoder) throws {
+    convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.decode(String.self, forKey: .name)
-        email = try container.decode(String.self, forKey: .email)
-        token = try container.decode(String.self, forKey: .token)
-        employeeId = try container.decode(Int.self, forKey: .employeeId)
-        sysconf = try container.decode(String.self, forKey: .sysconf)
-        type = try container.decodeIfPresent(String.self, forKey: .type)
+        let name = try container.decode(String.self, forKey: .name)
+        let email = try container.decode(String.self, forKey: .email)
+        let token = try container.decode(String.self, forKey: .token)
+        let employeeId = try container.decode(Int.self, forKey: .employeeId)
+        let sysconf = try container.decode(String.self, forKey: .sysconf)
+        let type = try container.decodeIfPresent(String.self, forKey: .type)
+        
+        self.init(name: name, email: email, token: token, employeeId: employeeId, sysconf: sysconf, type: type)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -43,15 +58,6 @@ class UserModel: Codable {
         try container.encode(employeeId, forKey: .employeeId)
         try container.encode(sysconf, forKey: .sysconf)
         try container.encodeIfPresent(type, forKey: .type)
-    }
-    
-    init(name: String, email: String, token: String, employeeId: Int, sysconf: String, type: String? = nil) {
-        self.name = name
-        self.email = email
-        self.token = token
-        self.employeeId = employeeId
-        self.sysconf = sysconf
-        self.type = type
     }
 }
 

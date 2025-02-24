@@ -34,6 +34,7 @@ struct QGSApp: App {
             // Fondo y diseño general
             
             SplashView()
+                .preferredColorScheme(.light)
         }
         .modelContainer(modelContainer)
     }

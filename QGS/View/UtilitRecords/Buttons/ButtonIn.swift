@@ -13,6 +13,9 @@ struct ButtonIn: View {
     
     @State private var errorMessage: String? = nil
     @State private var params: [String: Any] = [:]
+    @State private var showSuccessAlert: Bool = false
+    @State private var successMessage: String = ""
+
     let date: Date = Date()
 
     var body: some View {
@@ -47,6 +50,13 @@ struct ButtonIn: View {
                 viewModel.updateButtonStates() // Inicializa los estados
             }
         }
+        .alert(isPresented: $showSuccessAlert) {
+            Alert(
+                title: Text("Registro Exitoso"),
+                message: Text(successMessage),
+                dismissButton: .default(Text("Aceptar"))
+            )
+        }
     }
     
     private var currentDateString: String {
@@ -76,7 +86,10 @@ struct ButtonIn: View {
         viewModel.record(type: type, params: params) { success in
             DispatchQueue.main.async {
                 isLoading = false
-                if !success {
+                if success {
+                    successMessage = "Registro de \(type == "e" ? "Entrada" : "Salida") guardado con éxito."
+                    showSuccessAlert = true
+                } else {
                     errorMessage = "Error al registrar \(type)"
                 }
             }

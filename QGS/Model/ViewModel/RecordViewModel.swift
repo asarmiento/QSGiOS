@@ -11,6 +11,8 @@ class RecordViewModel: ObservableObject {
     @Published var isEntradaEnabled: Bool = true
     @Published var isSalidaEnabled: Bool = false
     
+    @Published  var showSuccessAlert: Bool = false
+    
     func updateButtonStates() {
         let entradaExists = RecordManager.shared.getRecordExists(for: "Entrada")
         let salidaExists = RecordManager.shared.getRecordExists(for: "Salida")
@@ -96,7 +98,7 @@ class RecordViewModel: ObservableObject {
             isEntradaEnabled = false
             isSalidaEnabled = true
         } else if type == "s" {
-            isEntradaEnabled = true
+            isEntradaEnabled = false
             isSalidaEnabled = false
         }
     }

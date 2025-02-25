@@ -150,6 +150,10 @@
 "Yesterday" = "Ayer";
 "Tomorrow" = "Mañana";
 "Horas: %@" = "Horas: %@";
+"Inicio" = "Inicio";
+ "Detalles" = "Detalles";
+ "Totales" = "Totales";
+ "Configuración" = "Configuración";
 
 // Mensajes específicos de la app
 "Quality Group Services" = "Quality Group Services";
@@ -159,4 +163,4 @@
 "Weekly Hours" = "Horas Semanales";
 "Location" = "Ubicación";
 "Records" = "Registros";
-"Settings" = "Configuración"; 
+"Settings" = "Configuración";

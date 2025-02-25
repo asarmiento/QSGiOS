@@ -101,8 +101,9 @@ class TimeRecordsViewModel: ObservableObject {
     func fetchRecordsFromAPI() async throws -> [TimeRecord] {
         let url = "https://api.friendlypayroll.net/api/projects/list-time-works"
         guard let accessToken = UserManager.shared.authToken else {
-            print("No se pudo obtener el usuario o el token.")
+            print("No se pudo obtener el usuario o el token. \(UserManager.shared.getUser())")
             throw NetworkError.unauthorized
+        //return Login()
         }
         
         var request = URLRequest(url: URL(string: url)!)

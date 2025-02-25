@@ -13,8 +13,8 @@ import UserNotifications
 struct QGSApp: App {
     let modelContainer: ModelContainer
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
+    
     init() {
-        
         do {
             // Configurar el esquema
             let schema = Schema([
@@ -25,35 +25,34 @@ struct QGSApp: App {
             // Configurar el contenedor
             let modelConfiguration = ModelConfiguration(schema: schema)
             modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
+            
+            // Configurar UserManager con el contexto
+            UserManager.shared.configure(with: modelContainer.mainContext)
+            
         } catch {
-            fatalError("Could not configure SwiftData container: \(error)")
+            fatalError("No se pudo configurar el contenedor SwiftData: \(error)")
         }
 
-        // (1) Pedimos permisos de notificaciones (si no lo haces en AppDelegate)
+        // Solicitar permisos para notificaciones
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
                 DispatchQueue.main.async {
                     UIApplication.shared.registerForRemoteNotifications()
-                    // (2) Programamos las notificaciones cuando tengamos permisos
                     NotificationScheduler.scheduleDailyNotifications()
                 }
             } else {
-                print("Permisos de notificaciones denegados o error: \(String(describing: error))")
+                print("Permisos de notificaciones denegados: \(String(describing: error))")
             }
         }
     }
     
     var body: some Scene {
         WindowGroup {
-            // Fondo y diseño general
-            
-            SplashView()
-                .preferredColorScheme(.light)
+            SplashScreen()
         }
         .modelContainer(modelContainer)
     }
 }
-
 
 
 

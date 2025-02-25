@@ -50,7 +50,22 @@ class UserManager {
         guard let id = user?.employeeId else { return nil }
         return String(id)
     }
-    
+    func userExists(completion: @escaping (Bool) -> Void) {
+        guard let context = context else {
+            logger.error("Error: ModelContext no está configurado.")
+            completion(false)
+            return
+        }
+        
+        do {
+            // Verifica si hay al menos un usuario en la base de datos
+            let userExists = try context.fetch(FetchDescriptor<UserModel>()).first != nil
+            completion(userExists)
+        } catch {
+            logger.error("Error al verificar la existencia del usuario: \(error.localizedDescription)")
+            completion(false) // En caso de error, asumimos que el usuario no existe
+        }
+    }
     func refreshUser() {
         loadUser()
     }

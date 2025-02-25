@@ -26,7 +26,7 @@ class NetworkListTotal: ObservableObject {
     func fetchWorkEntries() {
         // Optenemos el id de empleado y el token
         guard let id = employeeId, let token = authToken else {
-               print("No se pudo obtener el usuario o el token.")
+            print("No se pudo obtener el usuario o el token. ")
                return
            }
         

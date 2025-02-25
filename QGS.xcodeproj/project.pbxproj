@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		EB126FE32D6CE23500FC1BE6 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB126FE22D6CE23500FC1BE6 /* NotificationScheduler.swift */; };
+		EB126FE62D6CF3D200FC1BE6 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB126FE52D6CF3D200FC1BE6 /* MainTabView.swift */; };
+		EB126FE72D6CF3D200FC1BE6 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB126FE42D6CF3D200FC1BE6 /* ConfigurationView.swift */; };
 		EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D152CF6A47B001A62C8 /* RecordModel.swift */; };
 		EB345D182CF6DBB1001A62C8 /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D172CF6DB9F001A62C8 /* JsonServices.swift */; };
 		EB345D1A2CF74DA8001A62C8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D192CF74D9D001A62C8 /* Utils.swift */; };
@@ -91,6 +93,8 @@
 
 /* Begin PBXFileReference section */
 		EB126FE22D6CE23500FC1BE6 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
+		EB126FE42D6CF3D200FC1BE6 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
+		EB126FE52D6CF3D200FC1BE6 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		EB345D152CF6A47B001A62C8 /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
 		EB345D172CF6DB9F001A62C8 /* JsonServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonServices.swift; sourceTree = "<group>"; };
 		EB345D192CF74D9D001A62C8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -347,6 +351,8 @@
 		EBBC933A2C515E7E00F3C8CD /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EB126FE42D6CF3D200FC1BE6 /* ConfigurationView.swift */,
+				EB126FE52D6CF3D200FC1BE6 /* MainTabView.swift */,
 				EBBEB47B2D67A62D005B9AEA /* SplashScreen.swift */,
 				EBBEB4792D67A622005B9AEA /* TimeRecordsView.swift */,
 				EB6400CF2D62D9E9000CA007 /* PDFView.swift */,
@@ -543,6 +549,8 @@
 				EB6D31C92CECCD17000E02E7 /* BoxGPS.swift in Sources */,
 				EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */,
 				EB44DB612CFF40730070B827 /* Employee.swift in Sources */,
+				EB126FE62D6CF3D200FC1BE6 /* MainTabView.swift in Sources */,
+				EB126FE72D6CF3D200FC1BE6 /* ConfigurationView.swift in Sources */,
 				EBBEB4742D67A24E005B9AEA /* LocationManager.swift in Sources */,
 				EB44DBA12D0309C50070B827 /* APIServiceRecord.swift in Sources */,
 				EB3666472D15F1C800810713 /* RecordViewModel.swift in Sources */,

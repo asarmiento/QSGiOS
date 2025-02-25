@@ -71,28 +71,7 @@ struct HomeRecord: View {
                                     logCheckInEvent(type: "check_in")
                                 }
                         }
-                        // Botones adicionales (Detalles y Totales)
-                        HStack {
-                            Group {
-                                NavigationLink("Horas Diarias") {
-                                    ListRecordDetails()
-                                }
-                                .frame(width: 150, height: 50)
-                                .background(Color.init(red: 0.333, green: 0.333, blue: 0.333))
-                                .cornerRadius(12)
-                                .foregroundColor(.white)
-                                
-                                NavigationLink("Horas Semanales") {
-                                    // Acción para ver totales
-                                    ListRecordTotals()
-                                }
-                                .frame(width: 150, height: 50)
-                                .background(Color.init(red: 0.333, green: 0.333, blue: 0.333))
-                                .cornerRadius(12)
-                                .foregroundColor(.white)
-                            }
-                        }
-                        .padding()
+                       
                     }
                     .frame(maxWidth: .infinity)
                     .padding(-10)

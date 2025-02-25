@@ -2,23 +2,23 @@
 //  RecordViewModel.swift
 //  QGS
 //
-//  Created by Edin Martinez on 12/9/24.
+//  Created by Anwar Sarmiento on 12/9/24.
 //
-
 import SwiftUI
 import SwiftData
 
 class RecordViewModel: ObservableObject {
     @Published var isEntradaEnabled: Bool = true
-    @Published var isSalidaEnabled: Bool = true
+    @Published var isSalidaEnabled: Bool = false
     
     func updateButtonStates() {
         let entradaExists = RecordManager.shared.getRecordExists(for: "Entrada")
         let salidaExists = RecordManager.shared.getRecordExists(for: "Salida")
         
         DispatchQueue.main.async {
+            // Entrada habilitada si no existe, salida habilitada si ya existe entrada pero no salida
             self.isEntradaEnabled = (entradaExists == 0)
-            self.isSalidaEnabled = (salidaExists == 0)
+            self.isSalidaEnabled = (entradaExists > 0 && salidaExists == 0)
         }
     }
     
@@ -62,7 +62,7 @@ class RecordViewModel: ObservableObject {
                 return
             }
             
-            // Debug: Imprimir respuesta JSON
+            // Depuración: Imprimir respuesta JSON
             if let jsonString = String(data: data, encoding: .utf8) {
                 print("JSON recibido: \(jsonString)")
             }
@@ -74,6 +74,8 @@ class RecordViewModel: ObservableObject {
                         if let recordData = response.data {
                             RecordManager.shared.saveRecord(recordData: recordData)
                         }
+                        // Actualizar estados de los botones según el tipo de registro
+                        self?.updateButtonStatesAfterRecord(type: type)
                         completion(true)
                     } else {
                         print("Error del servidor: \(response.message)")
@@ -82,18 +84,20 @@ class RecordViewModel: ObservableObject {
                 }
             } catch {
                 print("Error al decodificar: \(error)")
-                if let decodingError = error as? DecodingError {
-                    switch decodingError {
-                    case .keyNotFound(let key, _):
-                        print("Llave no encontrada: \(key)")
-                    default:
-                        print("Otro error de decodificación")
-                    }
-                }
                 DispatchQueue.main.async {
                     completion(false)
                 }
             }
         }.resume()
+    }
+    
+    private func updateButtonStatesAfterRecord(type: String) {
+        if type == "e" {
+            isEntradaEnabled = false
+            isSalidaEnabled = true
+        } else if type == "s" {
+            isEntradaEnabled = true
+            isSalidaEnabled = false
+        }
     }
 }

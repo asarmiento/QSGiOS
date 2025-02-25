@@ -2,51 +2,38 @@
 //  ButtonIn.swift
 //  QGS
 //
-//  Created by Edin Martinez on 11/27/24.
+//  Created by Anwar Sarmiento on 11/27/24.
 //
-
 import SwiftUI
-import SwiftData
 
 struct ButtonIn: View {
     @StateObject private var viewModel = RecordViewModel()
     @StateObject private var locationManager = LocationViewController.shared
     @Binding var isLoading: Bool
-    @State private var showLocationAlert = false
-    @State private var isTwoButtonHidden = false
-    @State private var activeIs = false
-    @State private var isRecordSuccessful = false
-    @State private var latitude: String?
-    @State private var longitude: String?
-    @State var isButtonDisabled = false
-    @State var errorMessage:String? = nil
-    @State var params: [String: Any] = [:]
+    
+    @State private var errorMessage: String? = nil
+    @State private var params: [String: Any] = [:]
     let date: Date = Date()
-    @State private var salidaMessage: String? = nil
+
     var body: some View {
         VStack {
-            HStack{
+            HStack {
+                // Botón de Entrada
                 Button("Entrada") {
-                    
                     isLoading.toggle()
                     record(type: "e")
-                    
                 }
                 .padding()
                 .frame(width: 150, height: 50, alignment: .center)
-                .background(
-                    viewModel.isEntradaEnabled ? Color.green : Color.gray
-                )
+                .background(viewModel.isEntradaEnabled ? Color.green : Color.gray)
                 .cornerRadius(10)
                 .foregroundColor(.white)
                 .disabled(!viewModel.isEntradaEnabled)
                 
-                
+                // Botón de Salida
                 Button("Salida") {
                     isLoading.toggle()
-                    
-                    record(type:"s")
-                   
+                    record(type: "s")
                 }
                 .padding()
                 .frame(width: 150, height: 50, alignment: .center)
@@ -54,42 +41,26 @@ struct ButtonIn: View {
                 .cornerRadius(10)
                 .foregroundColor(.white)
                 .disabled(!viewModel.isSalidaEnabled)
-                
-                
-            
-                
-             
-            }.onAppear {
+            }
+            .onAppear {
                 locationManager.requestLocationPermission()
-                viewModel.updateButtonStates()
+                viewModel.updateButtonStates() // Inicializa los estados
             }
         }
     }
     
-
-    
-    private  var currentDateString: String {
+    private var currentDateString: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: date)
     }
-    private  var currentTimeString: String {
+    
+    private var currentTimeString: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
-        return formatter.string(from: date )
-    }
-    private var authToken: String? {
-        UserManager.shared.authToken
+        return formatter.string(from: date)
     }
     
-    private var employeeId: String? {
-        UserManager.shared.employeeId
-    }
-    
-    private var getRecord: Bool {
-        let currentDate = Date()
-        return RecordManager.shared.getRecordExistsFor(type: "Entrada", date: currentDate)
-    }
     private func record(type: String) {
         isLoading = true
         params = [
@@ -104,15 +75,11 @@ struct ButtonIn: View {
         
         viewModel.record(type: type, params: params) { success in
             DispatchQueue.main.async {
-                if success {
-                    viewModel.updateButtonStates()
-                    isLoading = false
-                } else {
+                isLoading = false
+                if !success {
                     errorMessage = "Error al registrar \(type)"
                 }
             }
         }
     }
-    
-    
 }

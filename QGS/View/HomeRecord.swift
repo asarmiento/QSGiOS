@@ -19,8 +19,6 @@ struct HomeRecord: View {
     @ObservedObject private var locationManager = LocationManager.shared
     @State private var showLocationAlert = false
     @State private var isLoading: Bool = false
-    @State private var showPDFView = false
-    @State private var showTimeRecordView = false
 
      // Indicador de carga
     @State private var errorMessage: String?  // Para manejar errores
@@ -40,10 +38,10 @@ struct HomeRecord: View {
                     
                 if let user = getUser {
                    
-                    HeadSecondary(title: "Bienvenido(a): \(user.name)", showPDFView: $showPDFView, showTimeRecordView: $showTimeRecordView)
+                    HeadSecondary(title: "Bienvenido(a): \(user.name)")
                    
                 } else {
-                    HeadSecondary(title: "Entrada o Salida ", showPDFView: $showPDFView, showTimeRecordView: $showTimeRecordView)
+                    HeadSecondary(title: "Entrada o Salida ")
                     
                 }
                 
@@ -120,12 +118,7 @@ struct HomeRecord: View {
 
             
             }
-            .navigationDestination(isPresented: $showPDFView) {
-                PDFView(url: URL(string: "https://api.friendlypayroll.net/weekly-hours")!)
-            }
-            .navigationDestination(isPresented: $showTimeRecordView) {
-                TimeRecordsView()
-            }.onAppear {
+            .onAppear {
                 logScreenView()
                    RecordManager.shared.configure(with: context) // <-- Configura el contexto aquí
                    if !hasCheckedLocation {

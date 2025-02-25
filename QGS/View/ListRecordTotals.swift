@@ -12,15 +12,11 @@ struct ListRecordTotals: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject private var networkListTotal = NetworkListTotal() // Crea una instancia del ViewModel
     private var isloading:Bool = true
-    @State private var showPDFView = false
-    @State private var showTimeRecordView = false
     private var counterLis: Int = 0
     var body: some View {
         NavigationStack {
-           
-                
                 VStack{
-                    HeadSecondary(title: "Total de Horas Semanal", showPDFView: $showPDFView, showTimeRecordView: $showTimeRecordView)
+                    HeadSecondary(title: "Total de Horas Semanal")
                     VStack {
                         if networkListTotal.isLoading {
                             ProgressView("Cargando...") // Muestra un loading mientras se obtienen los datos
@@ -54,12 +50,6 @@ struct ListRecordTotals: View {
                                 }
                             }
                         }
-                    }
-                    .navigationDestination(isPresented: $showPDFView) {
-                        PDFView(url: URL(string: "https://api.friendlypayroll.net/weekly-hours")!)
-                    }
-                    .navigationDestination(isPresented: $showTimeRecordView) {
-                        TimeRecordsView()
                     }
                     .offset(y: -60)
                     .frame(height: 510)

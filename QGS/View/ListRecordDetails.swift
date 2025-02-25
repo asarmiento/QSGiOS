@@ -14,15 +14,13 @@ struct ListRecordDetails: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject private var networkListDetails = NetworkListDetails()
     
-    @State private var showPDFView = false
-    @State var showTimeRecordView = false 
-    
+ 
     var body: some View {
         NavigationStack {
       
                 VStack {
                     
-                    HeadSecondary(title: "Detalle de Horas diarios", showPDFView: $showPDFView, showTimeRecordView: $showTimeRecordView)
+                    HeadSecondary(title: "Detalle de Horas diarios")
                     VStack{
                         if networkListDetails.isLoading {
                             ProgressView("Cargando...")
@@ -66,12 +64,7 @@ struct ListRecordDetails: View {
                     }
                     .frame(height: 600)
                     .offset(y: -50)
-                    .navigationDestination(isPresented: $showPDFView) {
-                        PDFView(url: URL(string: "https://api.friendlypayroll.net/weekly-hours")!)
-                    }
-                    .navigationDestination(isPresented: $showTimeRecordView) {
-                        TimeRecordsView()
-                    }
+                   
                     .onAppear {
                         networkListDetails.context = modelContext
                         networkListDetails.fetchWorkEntries()

@@ -68,7 +68,7 @@ class RecordManager {
             distance: distance,
             message: message
         )
-        
+       
         context.insert(record)
         do {
             try context.save()

@@ -19,9 +19,17 @@ public class LocationManager: NSObject, ObservableObject {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 10
         
-        // En lugar de verificar inmediatamente, esperamos el callback
+        // Solicitar permisos de ubicación
+        checkAuthorizationStatus()
+    }
+    
+    public func checkAuthorizationStatus() {
         DispatchQueue.global().async {
-            self.locationManager.delegate = self
+            let status = self.locationManager.authorizationStatus
+            if status == .notDetermined && !self.statusChecked {
+                self.statusChecked = true
+                self.locationManager.requestWhenInUseAuthorization()
+            }
         }
     }
     

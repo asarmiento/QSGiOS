@@ -14,6 +14,7 @@ import FirebaseAnalytics
 // import Managers
 
 struct HomeRecord: View {
+
     @Environment(\.modelContext) private var context: ModelContext
     @ObservedObject private var locationManager = LocationManager.shared
     @State private var showLocationAlert = false
@@ -126,13 +127,14 @@ struct HomeRecord: View {
                 TimeRecordsView()
             }.onAppear {
                 logScreenView()
-                if !hasCheckedLocation {
-                    locationManager.checkAuthorizationStatus()
-                    hasCheckedLocation = true
-                }
-                if locationManager.isAuthorized {
-                    locationManager.startUpdatingLocation()
-                }
+                   RecordManager.shared.configure(with: context) // <-- Configura el contexto aquí
+                   if !hasCheckedLocation {
+                       locationManager.checkAuthorizationStatus()
+                       hasCheckedLocation = true
+                   }
+                   if locationManager.isAuthorized {
+                       locationManager.startUpdatingLocation()
+                   }
             }.onChange(of: locationManager.isAuthorized) { newValue in
                 if newValue {
                     locationManager.startUpdatingLocation()

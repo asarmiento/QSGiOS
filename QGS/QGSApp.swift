@@ -28,7 +28,7 @@ struct QGSApp: App {
             
             // Configurar UserManager con el contexto
             UserManager.shared.configure(with: modelContainer.mainContext)
-            
+            RecordManager.shared.configure(with: modelContainer.mainContext)
         } catch {
             fatalError("No se pudo configurar el contenedor SwiftData: \(error)")
         }

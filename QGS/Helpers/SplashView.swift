@@ -57,6 +57,9 @@ struct SplashView: View {
                 UserManager.shared.configure(with: modelContext)
                 RecordManager.shared.configure(with: modelContext)
                 
+                // Verificar permisos de ubicación
+                LocationManager.shared.checkAuthorizationStatus()
+                
                 // Animación de entrada
                 withAnimation(.easeOut(duration: 1.2)) {
                     self.size = 1.0

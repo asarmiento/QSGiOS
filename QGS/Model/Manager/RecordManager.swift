@@ -5,7 +5,6 @@
 //  Created by Edin Martinez on 12/8/24.
 //
 
-
 import Foundation
 import SwiftData
 
@@ -56,6 +55,7 @@ class RecordManager {
         
         // Redondear dist a 2 decimales si existe
         let distance = recordData.dist.map { Double(round($0 * 100) / 100) } ?? 0.0
+        
         let message = "hola a todos llegue tarde"
         let record = RecordModel(
             latitude: latitude,

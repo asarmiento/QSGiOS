@@ -15,25 +15,18 @@ class TimeRecordsViewModel: ObservableObject {
         Task {
             do {
                 let records = try await fetchTimeRecords()
-                print("separado", records)
                 DispatchQueue.main.async {
                     self.timeRecords = records
-                   
                     self.isLoading = false
                 }
             } catch {
-                DispatchQueue.main.async {
-                    self.errorMessage = error.localizedDescription
-                    self.isLoading = false
-                }
+                handleError(error)
             }
         }
     }
 
     func fetchTimeRecords() async throws -> [TimeRecord] {
-        // Construir la URL con el endpoint correcto
         guard let accessToken = UserManager.shared.authToken else {
-            // Manejar error: no hay token
             throw NetworkLocalizedError.unauthorized
         }
         
@@ -41,21 +34,19 @@ class TimeRecordsViewModel: ObservableObject {
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        // Cabeceras y token
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         
-        // Hacer la llamada
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse,
               (200...299).contains(httpResponse.statusCode) else {
             let errorMessage = String(data: data, encoding: .utf8) ?? "Error desconocido"
-            throw NetworkLocalizedError.serverError((response as? HTTPURLResponse)?.statusCode ?? 500, errorMessage)
+            let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 500
+            throw NetworkLocalizedError.serverError(statusCode, errorMessage)
         }
         
-        // Decodificar el JSON
         let decoder = JSONDecoder()
         return try decoder.decode([TimeRecord].self, from: data)
     }
@@ -101,7 +92,7 @@ class TimeRecordsViewModel: ObservableObject {
     func fetchRecordsFromAPI() async throws -> [TimeRecord] {
         let url = "https://api.friendlypayroll.net/api/projects/list-time-works"
         guard let accessToken = UserManager.shared.authToken else {
-            print("No se pudo obtener el usuario o el token. \(UserManager.shared.getUser())")
+          //  print("No se pudo obtener el usuario o el token. \(UserManager.shared.getUser())")
             throw NetworkError.unauthorized
         //return Login()
         }
@@ -129,13 +120,11 @@ class TimeRecordsViewModel: ObservableObject {
             do {
                 let employees = try await fetchEmployeesFromAPI()
                 DispatchQueue.main.async {
-                    // Imprime lo que llega para confirmar que no está vacío
-                 
-                    
                     self.employees = employees
                 }
             } catch {
                 DispatchQueue.main.async {
+                    // Manejo seguro del mensaje de error
                     self.errorMessage = error.localizedDescription
                 }
             }
@@ -144,26 +133,24 @@ class TimeRecordsViewModel: ObservableObject {
 
     func fetchEmployeesFromAPI() async throws -> [EmployeeCodable] {
         guard let accessToken = UserManager.shared.authToken else {
-            throw NetworkError.unauthorized
+            throw NetworkLocalizedError.unauthorized
         }
         
-        let url = URL(string: "https://api.friendlypayroll.net/api/colaboradores/list-employees")! // Asegúrate de que esta URL sea correcta
+        let url = URL(string: "https://api.friendlypayroll.net/api/colaboradores/list-employees")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw NetworkError.invalidResponse
-        }
-        
-        guard (200...299).contains(httpResponse.statusCode) else {
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
             let errorMessage = String(data: data, encoding: .utf8) ?? "Error desconocido"
-            throw NetworkError.serverError(httpResponse.statusCode, errorMessage)
+            let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 500
+            throw NetworkLocalizedError.serverError(statusCode, errorMessage)
         }
         
         let decoder = JSONDecoder()
@@ -171,8 +158,8 @@ class TimeRecordsViewModel: ObservableObject {
     }
 
     func someFunctionUsingEmployeeID(record: TimeRecord) {
-        let id = record.employee_id
-        print("El ID del empleado es: \(id)")
+        // Asumiendo que employee_id es un Int no opcional en TimeRecord
+        print("El ID del empleado es: \(record.employee_id)")
     }
 
     func filteredRecordsMultipleDates(
@@ -180,29 +167,69 @@ class TimeRecordsViewModel: ObservableObject {
         selectedDates: Set<DateComponents>,
         selectedType: String
     ) -> [TimeRecord] {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        return timeRecords.filter { record in
-            guard let recordDate = dateFormatter.date(from: record.date) else {
-                return false
-            }
-            
+        timeRecords.filter { record in
             // Filtrar por empleado
-            let employeeMatches = (selectedEmployeeId == nil || record.employee_id == selectedEmployeeId)
+            let employeeMatches = selectedEmployeeId == nil || record.employee_id == selectedEmployeeId
             
-            // Filtrar por tipo (Entrada/Salida)
-            let typeMatches = (selectedType.isEmpty || record.type == selectedType)
+            // Filtrar por tipo
+            let typeMatches = selectedType.isEmpty || record.type == selectedType
             
-            // Si no se seleccionó ninguna fecha, mostrar todo
+            // Filtrar por fechas
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            
+            let dateMatches: Bool
             if selectedDates.isEmpty {
-                return employeeMatches && typeMatches
+                dateMatches = true
+            } else if let recordDate = dateFormatter.date(from: record.date) {
+                let components = Calendar.current.dateComponents([.year, .month, .day], from: recordDate)
+                dateMatches = selectedDates.contains(components)
             } else {
-                // Filtrar si coincide con las fechas en selectedDates
-                let recordComponents = Calendar.current.dateComponents([.year, .month, .day], from: recordDate)
-                let dateMatches = selectedDates.contains(recordComponents)
-                return employeeMatches && typeMatches && dateMatches
+                dateMatches = false
             }
+            
+            return employeeMatches && typeMatches && dateMatches
+        }
+    }
+
+    private func handleError(_ error: Error) {
+        DispatchQueue.main.async {
+            self.errorMessage = error.localizedDescription
+            self.isLoading = false
+        }
+    }
+}
+
+// Estructura para manejar respuestas de error
+struct ErrorResponse: Codable {
+    let message: String
+}
+
+enum APIErrorRecord: LocalizedError {
+    case invalidURL
+    case invalidResponse
+    case unauthorized
+    case notFound
+    case serverError(Int, String)
+    case networkError(Error)
+    case decodingError(Error)
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return "URL inválida"
+        case .invalidResponse:
+            return "Respuesta inválida del servidor"
+        case .unauthorized:
+            return "No autorizado"
+        case .notFound:
+            return "Recurso no encontrado"
+        case .serverError(let code, let message):
+            return "Error del servidor (\(code)): \(message)"
+        case .networkError(let error):
+            return "Error de red: \(error.localizedDescription)"
+        case .decodingError(let error):
+            return "Error al procesar datos: \(error.localizedDescription)"
         }
     }
 } 

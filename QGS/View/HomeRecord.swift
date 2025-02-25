@@ -16,7 +16,7 @@ import FirebaseAnalytics
 struct HomeRecord: View {
 
     @Environment(\.modelContext) private var context: ModelContext
-    @ObservedObject private var locationManager = LocationManager.shared
+    @StateObject private var locationManager = LocationViewController.shared
     @State private var showLocationAlert = false
     @State private var isLoading: Bool = false
 
@@ -41,14 +41,13 @@ struct HomeRecord: View {
                     HeadSecondary(title: "Bienvenido(a): \(user.name)")
                    
                 } else {
-                    HeadSecondary(title: "Entrada o Salida ")
+                    HeadSecondary(title: "Entrada o Salida")
                     
                 }
                 
                 VStack {
                     // Mensaje informativo
-                    Text(NSLocalizedString("Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo",
-                                           comment: "Mensaje para indicar al usuario qué hacer"))
+                    Text("Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo")
                         .font(.system(size: 18))
                         .font(.title3)
                         .foregroundColor(Color.myPrimary)
@@ -97,15 +96,13 @@ struct HomeRecord: View {
                 .alert(isPresented: $showLocationAlert) {
                     Alert(
                         title: Text(NSLocalizedString("Permiso de Localización", comment: "")),
-                        message: Text(NSLocalizedString("La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida. Por favor, otorga los permisos en Configuración.", comment: "")),
+                        message: Text(NSLocalizedString("La aplicación necesita acceso a tu ubicación", comment: "")),
                         primaryButton: .default(Text(NSLocalizedString("Abrir Configuración", comment: ""))) {
                             if let url = URL(string: UIApplication.openSettingsURLString) {
                                 UIApplication.shared.open(url)
                             }
                         },
-                        secondaryButton: .destructive(Text(NSLocalizedString("Cancelar", comment: ""))) {
-                            exit(0)
-                        }
+                        secondaryButton: .cancel(Text(NSLocalizedString("Cancelar", comment: "")))
                     )
                 }
                 VStack {
@@ -122,18 +119,18 @@ struct HomeRecord: View {
                 logScreenView()
                    RecordManager.shared.configure(with: context) // <-- Configura el contexto aquí
                    if !hasCheckedLocation {
-                       locationManager.checkAuthorizationStatus()
+                       LocationManager.shared.checkAuthorizationStatus()
                        hasCheckedLocation = true
                    }
                    if locationManager.isAuthorized {
-                       locationManager.startUpdatingLocation()
+                       LocationManager.shared.startUpdatingLocation()
                    }
-            }.onChange(of: locationManager.isAuthorized) { newValue in
+            }.onChange(of: locationManager.isAuthorized) { oldValue, newValue in
                 if newValue {
-                    locationManager.startUpdatingLocation()
+                    LocationManager.shared.startUpdatingLocation()
                 } else {
-                    locationManager.stopUpdatingLocation()
-                    locationManager.checkAuthorizationStatus()
+                    LocationManager.shared.stopUpdatingLocation()
+                    showLocationAlert = true
                 }
             }
            

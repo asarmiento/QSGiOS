@@ -21,11 +21,9 @@ struct TimeRecordsView: View {
         NavigationStack {
             GeometryReader { proxy in
                 VStack(spacing: 0) {
-                    
                     // ---------- Sección de Filtros (50%) ----------
                     ScrollView {
                         VStack(alignment: .leading, spacing: 16) {
-                            // Texto "Registros de Horas"
                             Text("Registros de Horas")
                                 .font(.title)
                                 .padding(.top, 2)
@@ -46,9 +44,9 @@ struct TimeRecordsView: View {
                                 .padding()
                                 .background(Color.gray.opacity(0.2))
                                 .cornerRadius(5)
-                                .onChange(of: selectedEmployeeId) { _ in
+                                .onChange(of: selectedEmployeeId) { oldValue, newValue in
                                     logFilterEvent(
-                                        employeeId: selectedEmployeeId,
+                                        employeeId: newValue,
                                         dates: selectedDates,
                                         type: selectedType
                                     )
@@ -57,7 +55,7 @@ struct TimeRecordsView: View {
                             
                             Divider()
                             
-                            // 2) MultiDatePicker (1 mes atrás...hoy)
+                            // 2) MultiDatePicker
                             let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
                             
                             VStack(alignment: .leading) {
@@ -66,7 +64,7 @@ struct TimeRecordsView: View {
                                 
                                 MultiDatePicker("Fechas", selection: $selectedDates, in: oneMonthAgo..<tomorrow)
                                     .datePickerStyle(GraphicalDatePickerStyle())
-                                    .frame(maxHeight: 300) // Altura controlada
+                                    .frame(maxHeight: 300)
                                     .background(Color.gray.opacity(0.1))
                                     .cornerRadius(4)
                                     .environment(\.locale, Locale(identifier: "es"))
@@ -74,7 +72,7 @@ struct TimeRecordsView: View {
                             
                             Divider()
                             
-                            // 3) Picker Tipo (Segmented)
+                            // 3) Picker Tipo
                             VStack(alignment: .leading) {
                                 Text("Tipo de Registro")
                                     .font(.headline)
@@ -84,60 +82,59 @@ struct TimeRecordsView: View {
                                     Text("Salida").tag("Salida")
                                 }
                                 .pickerStyle(SegmentedPickerStyle())
-                                .onChange(of: selectedType) { _ in
+                                .onChange(of: selectedType) { oldValue, newValue in
                                     logFilterEvent(
                                         employeeId: selectedEmployeeId,
                                         dates: selectedDates,
-                                        type: selectedType
+                                        type: newValue
                                     )
                                 }
                             }
                         }
                         .padding()
                     }
-                    .frame(height: proxy.size.height * 0.5) // Ocupa la mitad superior de la pantalla
+                    .frame(height: proxy.size.height * 0.5)
                     .background(Color.white)
                     .cornerRadius(12)
                     .shadow(radius: 5)
-
+                    
                     // ---------- Sección de Lista (50%) ----------
                     VStack {
                         if timeRecordsViewModel.isLoading {
                             ProgressView("Cargando...")
                         } else if let errorMessage = timeRecordsViewModel.errorMessage {
-                            Text(errorMessage).foregroundColor(.red)
+                            Text(errorMessage)
+                                .foregroundColor(.red)
                         } else {
-                            List(
-                                timeRecordsViewModel.filteredRecordsMultipleDates(
-                                    selectedEmployeeId: selectedEmployeeId,
-                                    selectedDates: selectedDates,
-                                    selectedType: selectedType
-                                )
-                            ) { record in
+                            List(timeRecordsViewModel.filteredRecordsMultipleDates(
+                                selectedEmployeeId: selectedEmployeeId,
+                                selectedDates: selectedDates,
+                                selectedType: selectedType
+                            )) { record in
                                 VStack(alignment: .leading) {
                                     Text("Empleado: \(record.employee.name)")
                                         .font(.headline)
                                     Text("Fecha: \(record.date)")
                                     Text("Hora de Registro: \(record.time)")
-                                    if(record.type == "Salida"){
-                                        Text("Horas: \(record.hours)")
+                                    if record.type == "Salida", let hours = record.hours {
+                                        Text("Horas: \(String(format: "%.2f", hours))")
                                     }
                                     Text("Tipo: \(record.type)")
                                         .font(.subheadline)
-                                   
                                 }
                                 .padding(4)
                             }
                         }
                     }
-                    .frame(height: proxy.size.height * 0.5) // La lista ocupa la mitad inferior
+                    .frame(height: proxy.size.height * 0.5)
                 }
             }
             .onAppear {
-                // Registrar vista en Analytics
                 if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                    appDelegate.logScreenView(screenName: "TimeRecords",
-                                            screenClass: "TimeRecordsView")
+                    appDelegate.logScreenView(
+                        screenName: "TimeRecords",
+                        screenClass: "TimeRecordsView"
+                    )
                 }
                 
                 timeRecordsViewModel.fetchTimeRecords()
@@ -145,5 +142,4 @@ struct TimeRecordsView: View {
             }
         }
     }
-
-} 
+}

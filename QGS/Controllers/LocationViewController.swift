@@ -34,6 +34,18 @@ class LocationViewController: NSObject, ObservableObject {
     func requestLocationPermission() {
         locationManager?.requestWhenInUseAuthorization()
     }
+    
+    func checkAuthorizationStatus() {
+        // Implementación del método
+    }
+    
+    func startUpdatingLocation() {
+        // Implementación del método
+    }
+    
+    func stopUpdatingLocation() {
+        // Implementación del método
+    }
 }
 
 extension LocationViewController: CLLocationManagerDelegate {

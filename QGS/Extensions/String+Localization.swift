@@ -2,8 +2,7 @@ import Foundation
 
 extension String {
     var localized: String {
-        let bundle = Bundle.main
-        return NSLocalizedString(self, tableName: "Localizable", bundle: bundle, comment: "")
+        return NSLocalizedString(self, comment: "")
     }
     
     func localizedFormat(_ arguments: CVarArg...) -> String {

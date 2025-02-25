@@ -1,11 +1,7 @@
-import Foundation
-
-enum APIError: LocalizedError {
+enum NetworkLocalizedError: LocalizedError {
     case invalidURL
-    case noData
-    case unauthorized
-    case apiError(String)
     case invalidResponse
+    case unauthorized
     case notFound
     case serverError(Int, String)
     case networkError(Error)
@@ -15,14 +11,10 @@ enum APIError: LocalizedError {
         switch self {
         case .invalidURL:
             return "URL inválida"
-        case .noData:
-            return "No se recibieron datos del servidor"
-        case .unauthorized:
-            return "No autorizado. Por favor, inicie sesión nuevamente"
-        case .apiError(let message):
-            return message
         case .invalidResponse:
             return "Respuesta inválida del servidor"
+        case .unauthorized:
+            return "No autorizado"
         case .notFound:
             return "Recurso no encontrado"
         case .serverError(let code, let message):

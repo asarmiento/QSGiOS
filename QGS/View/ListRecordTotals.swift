@@ -15,9 +15,11 @@ struct ListRecordTotals: View {
     private var counterLis: Int = 0
     var body: some View {
         NavigationStack {
+   
                 VStack{
                     HeadSecondary(title: "Total de Horas Semanal")
                     VStack {
+                
                         if networkListTotal.isLoading {
                             ProgressView("Cargando...") // Muestra un loading mientras se obtienen los datos
                                 .progressViewStyle(CircularProgressViewStyle())
@@ -33,14 +35,18 @@ struct ListRecordTotals: View {
                             } else {
                                 ZStack {
                                     Color.white.edgesIgnoringSafeArea(.all) // Fondo blanco principal
+                                  
                                     List(networkListTotal.totalHours) { totalHour in
-                                        VStack(alignment: .leading) {
-                                            Text("Fecha Inicio: \(totalHour.weekI)")
-                                                .foregroundColor(.black)
-                                            Text("Fecha Fin: \(totalHour.weekF)")
-                                                .foregroundColor(.black)
-                                            Text("Total Horas: \(totalHour.hours)")
-                                                .foregroundColor(.black)
+                              
+                                                VStack(alignment: .leading) {
+                                                
+                                                Text("Fecha Inicio: \(totalHour.weekI)")
+                                                    .foregroundColor(.black)
+                                                Text("Fecha Fin: \(totalHour.weekF)")
+                                                    .foregroundColor(.black)
+                                                Text("Total Horas: \(totalHour.hours)")
+                                                    .foregroundColor(.black)
+                                            
                                         }
                                         .padding()
                                         .listRowBackground(Color.white) // Fondo blanco para la celda

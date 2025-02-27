@@ -86,4 +86,14 @@
 "Weekly Hours" = "Horas Semanales";
 "Location" = "Ubicación";
 "Records" = "Registros";
-"Settings" = "Configuración"; 
+"Settings" = "Configuración";
+
+// Títulos de navegación
+"Proyectos" = "Proyectos";
+
+// Estados de carga
+"Cargando proyectos..." = "Cargando proyectos...";
+
+// Etiquetas de proyectos
+"Horas Quincenales" = "Horas Quincenales";
+"Horas Mensuales" = "Horas Mensuales"; 

@@ -46,18 +46,20 @@ struct HomeRecord: View {
                 }
                 
                 VStack {
-                    // Mensaje informativo
-                    Text("Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo")
-                        .font(.system(size: 18))
-                        .font(.title3)
-                        .foregroundColor(Color.myPrimary)
-                        .padding()
-                        .multilineTextAlignment(.center)
-                        .frame(width: 370, height: 200, alignment: .center)
-                    
-                    // Contenido principal
-                    VStack {
-                        BoxGPS()
+                             // Mensaje informativo
+                             Text(NSLocalizedString("Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo",
+                                                    comment: "Mensaje para indicar al usuario qué hacer"))
+                                 .font(.system(size: 18))
+                                 .font(.title3)
+                                 .foregroundColor(Color.myPrimary)
+                                 .padding()
+                                 .multilineTextAlignment(.center)
+                                 .frame(width: 370, height: 200, alignment: .center)
+                             
+                             // Contenido principal
+                             VStack {
+                                 BoxGPS()
+                       
                         
                         // Botones de acción
                         HStack {

@@ -32,22 +32,26 @@ struct ListRecordDetails: View {
                             if !networkListDetails.workEntries.isEmpty {
                                 ZStack {
                                     Color.white.edgesIgnoringSafeArea(.all)  // Fondo blanco general
+                                
                                     List(networkListDetails.workEntries) { workEntry in
-                                        VStack(alignment: .leading) {
-                                            Text("Proyecto: \(workEntry.project.name)")
-                                                .font(.headline)
-                                                .foregroundColor(.black)
-                                            HStack {
-                                                Text("Fecha: \(workEntry.date)")
+                                       
+                                                VStack(alignment: .leading) {
+                                                
+                                                Text("Proyecto: \(workEntry.project.name)")
+                                                    .font(.headline)
                                                     .foregroundColor(.black)
-                                                Text("Horas: \(workEntry.hours != nil ? String(format: "%.2f", workEntry.hours!) : "N/A")")
+                                                HStack {
+                                                    Text("Fecha: \(workEntry.date)")
+                                                        .foregroundColor(.black)
+                                                    Text("Horas: \(workEntry.hours != nil ? String(format: "%.2f", workEntry.hours!) : "N/A")")
+                                                        .foregroundColor(.black)
+                                                }
+                                                Text("Hora de Registro: \(workEntry.time)")
                                                     .foregroundColor(.black)
-                                            }
-                                            Text("Hora de Registro: \(workEntry.time)")
-                                                .foregroundColor(.black)
-                                            Text("Tipo: \(workEntry.type)")
-                                                .font(.subheadline)
-                                                .foregroundColor(.gray)
+                                                Text("Tipo: \(workEntry.type)")
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.gray)
+                                            
                                         }
                                         .padding(1)
                                         .listRowBackground(Color.white)       // Fondo blanco para la fila

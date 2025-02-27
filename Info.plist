@@ -17,4 +17,10 @@
 </array>
 
 <key>CFBundleDevelopmentRegion</key>
-<string>es</string> 
+<string>es</string>
+
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>maps</string>
+    <string>comgooglemaps</string>
+</array> 

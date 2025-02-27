@@ -28,10 +28,7 @@ struct ListRecordTotals: View {
                                 .foregroundColor(.red)
                         } else {
                             if networkListTotal.totalHours.isEmpty {
-                                Text("No hay registros para mostrar.")
-                                    .foregroundColor(.gray)
-                                    .bold()
-                                    .font(.title)
+                                ProgressView(NSLocalizedString("Cargando proyectos...", comment: ""))
                             } else {
                                 ZStack {
                                     Color.white.edgesIgnoringSafeArea(.all) // Fondo blanco principal

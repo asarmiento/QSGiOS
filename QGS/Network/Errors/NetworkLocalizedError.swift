@@ -7,6 +7,7 @@ enum NetworkLocalizedError: LocalizedError {
        case unauthorized
        case serverError(Int, String)
        case networkError(Error)
+       case httpError(Int)
        
        var errorDescription: String? {
            switch self {
@@ -20,6 +21,8 @@ enum NetworkLocalizedError: LocalizedError {
                return "No autorizado."
            case .serverError(let code, let message):
                return "Error del servidor \(code): \(message)"
+           case .httpError(let statusCode):
+                       return "Error HTTP: \(statusCode)"
            case .networkError(let error):
                return "Error de red: \(error.localizedDescription)"
            }

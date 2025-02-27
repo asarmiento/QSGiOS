@@ -11,7 +11,7 @@ class RecordViewModel: ObservableObject {
     @Published var isEntradaEnabled: Bool = true
     @Published var isSalidaEnabled: Bool = false
     @Published var hasEntradaDeHoy: Bool = false
-    @Published  var showSuccessAlert: Bool = false
+    @Published var showSuccessAlert: Bool = false
     
     func updateButtonStates() {
         let entradaExists = RecordManager.shared.getRecordExists(for: "Entrada")

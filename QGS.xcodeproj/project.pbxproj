@@ -55,7 +55,6 @@
 		EBBEB4722D67A24E005B9AEA /* APITimeRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB4682D67A24E005B9AEA /* APITimeRecords.swift */; };
 		EBBEB4732D67A24E005B9AEA /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB46B2D67A24E005B9AEA /* NetworkError.swift */; };
 		EBBEB4742D67A24E005B9AEA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB46E2D67A24E005B9AEA /* LocationManager.swift */; };
-		EBBEB4772D67A424005B9AEA /* PaginadoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB4752D67A424005B9AEA /* PaginadoResponse.swift */; };
 		EBBEB4782D67A424005B9AEA /* TimeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB4762D67A424005B9AEA /* TimeRecord.swift */; };
 		EBBEB47A2D67A622005B9AEA /* TimeRecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBEB4792D67A622005B9AEA /* TimeRecordsView.swift */; };
 		EBBEB47F2D68AD78005B9AEA /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EBBEB47E2D68AD78005B9AEA /* FirebaseAnalytics */; };
@@ -143,7 +142,6 @@
 		EBBEB46B2D67A24E005B9AEA /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		EBBEB46C2D67A24E005B9AEA /* NetworkLocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLocalizedError.swift; sourceTree = "<group>"; };
 		EBBEB46E2D67A24E005B9AEA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		EBBEB4752D67A424005B9AEA /* PaginadoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginadoResponse.swift; sourceTree = "<group>"; };
 		EBBEB4762D67A424005B9AEA /* TimeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecord.swift; sourceTree = "<group>"; };
 		EBBEB4792D67A622005B9AEA /* TimeRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecordsView.swift; sourceTree = "<group>"; };
 		EBBEB4882D68B3A6005B9AEA /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -249,7 +247,6 @@
 		EB4B26B92C5AB10B0083397F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EBBEB4752D67A424005B9AEA /* PaginadoResponse.swift */,
 				EBBEB4762D67A424005B9AEA /* TimeRecord.swift */,
 				EB3666802D55A3BF00810713 /* Migrations */,
 				EB36666C2D16029B00810713 /* LoadingState.swift */,
@@ -584,7 +581,6 @@
 				EBBC933F2C515FC100F3C8CD /* View+extensions.swift in Sources */,
 				EBBEB47A2D67A622005B9AEA /* TimeRecordsView.swift in Sources */,
 				EBF9DF9D2CED8E30002D7FA1 /* ListRecordDetails.swift in Sources */,
-				EBBEB4772D67A424005B9AEA /* PaginadoResponse.swift in Sources */,
 				EBBEB4782D67A424005B9AEA /* TimeRecord.swift in Sources */,
 				EB345D212CF781ED001A62C8 /* UserModel.swift in Sources */,
 				EB44DB5D2CFF3F3D0070B827 /* WorkEntryDetails.swift in Sources */,
@@ -791,7 +787,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -835,7 +831,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

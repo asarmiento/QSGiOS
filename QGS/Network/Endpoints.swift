@@ -12,4 +12,5 @@ enum Endpoints {
     static let getListTotal = "\(baseURL)/projects/total-time-work-employees/"
     static let getListDetail = "\(baseURL)/projects/detail-time-work-employees/"
     static let getListProjects = "\(baseURL)/projects/data-projects/"
+    static let getListEmployees = "\(baseURL)/colaboradores/list-employees/"
 }

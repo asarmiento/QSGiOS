@@ -5,9 +5,9 @@
 //  Created by Edin Martinez on 12/9/24.
 //
 
+import Foundation
 
-
-struct EmployeeCodable: Codable {
+struct EmployeeCodable: Codable, Identifiable {
     let id: Int
     let card: String
     let typeOfCard: String
@@ -22,6 +22,7 @@ struct EmployeeCodable: Codable {
     let maritalStatusId: Int?
     let nationalityId: Int?
     let userId: Int
+    let status: Int
     let createdAt: String?
     let updatedAt: String?
     
@@ -40,6 +41,7 @@ struct EmployeeCodable: Codable {
         case maritalStatusId = "marital_status_id"
         case nationalityId = "nationality_id"
         case userId = "user_id"
+        case status
         case createdAt = "created_at"
         case updatedAt = "updated_at"
     }

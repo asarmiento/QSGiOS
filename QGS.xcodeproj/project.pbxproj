@@ -39,6 +39,7 @@
 		EB83A1B42C6BA23500E7D361 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */; };
 		EB84DB8D2D68E52A0062D13B /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = EB84DB8C2D68E52A0062D13B /* FirebaseCore */; };
 		EB90F79B2D68CBAF00684251 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = EB90F79A2D68CBAF00684251 /* FirebaseMessaging */; };
+		EBADECB32D71347A00B56617 /* EmployeesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADECB22D71346A00B56617 /* EmployeesViewModel.swift */; };
 		EBBC930F2C512EBB00F3C8CD /* QGSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */; };
 		EBBC93132C512EBC00F3C8CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBBC93122C512EBC00F3C8CD /* Assets.xcassets */; };
 		EBBC93162C512EBC00F3C8CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBBC93152C512EBC00F3C8CD /* Preview Assets.xcassets */; };
@@ -123,6 +124,7 @@
 		EB83A1532C6A6A3300E7D361 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB86403C2C66400A0072534E /* QGS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QGS.entitlements; sourceTree = "<group>"; };
+		EBADECB22D71346A00B56617 /* EmployeesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesViewModel.swift; sourceTree = "<group>"; };
 		EBBC930B2C512EBB00F3C8CD /* QGS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QGS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QGSApp.swift; sourceTree = "<group>"; };
 		EBBC93122C512EBC00F3C8CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 		EB3666462D15F1C800810713 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				EBADECB22D71346A00B56617 /* EmployeesViewModel.swift */,
 				EBDAF1142D6FDD940099D03C /* ProjectsViewModel.swift */,
 				EB3666452D15F1C800810713 /* RecordViewModel.swift */,
 			);
@@ -569,6 +572,7 @@
 				EBBC93412C5161CD00F3C8CD /* CustomTF.swift in Sources */,
 				EBDAF1212D7019630099D03C /* HeadSecondary.swift in Sources */,
 				EBBC930F2C512EBB00F3C8CD /* QGSApp.swift in Sources */,
+				EBADECB32D71347A00B56617 /* EmployeesViewModel.swift in Sources */,
 				EB44DB5B2CFECF170070B827 /* DeviceLocations.swift in Sources */,
 				EB44DB652CFF427F0070B827 /* Sysconf.swift in Sources */,
 				EB3666362D15E81000810713 /* APIService.swift in Sources */,

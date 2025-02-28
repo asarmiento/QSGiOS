@@ -22,7 +22,7 @@ struct ConfigurationView: View {
     // Lista de menú items
     private var menuItems: [MenuItem] {
         [
-            MenuItem(icon: "Employees", title: "Empleados", destination: nil),
+            MenuItem(icon: "Employees", title: "Empleados", destination: AnyView(EmployeeListView())),
             MenuItem(icon: "Message1", title: "Reportes", destination: nil),
             MenuItem(icon: "Message2", title: "Calendario", destination: nil),
             MenuItem(icon: "Message3", title: "Ajustes", destination: nil),

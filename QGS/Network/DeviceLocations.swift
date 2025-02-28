@@ -45,7 +45,7 @@ class DeviceLocations: NSObject, CLLocationManagerDelegate, ObservableObject {
             deniedLocationAccessPublisher.send()
         }
     }
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func  locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("Location updated \(locations)")
         guard let location = locations.last else { return }
         coordinatesPublisher.send(location.coordinate)

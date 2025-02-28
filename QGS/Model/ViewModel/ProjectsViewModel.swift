@@ -1,4 +1,4 @@
-import SwiftUI
+import Foundation
 
 @MainActor
 class ProjectsViewModel: ObservableObject {
@@ -7,58 +7,97 @@ class ProjectsViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     func fetchProjects() {
-        guard let url = URL(string: Endpoints.getListProjects) else {
-            self.errorMessage = "URL inválida"
-            return
-        }
-        
         isLoading = true
         errorMessage = nil
-        
+
         Task {
             do {
+                let url = URL(string: "https://api.friendlypayroll.net/public/api/projects/data-projects")!
                 var request = URLRequest(url: url)
                 request.httpMethod = "GET"
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                request.setValue("application/json", forHTTPHeaderField: "Accept")
+                request.addValue("Bearer 2291|DmpJoqafDWBHh40ACzESMNxVZAUL8dSmOweLRokD8e90314a", forHTTPHeaderField: "Authorization")
+                request.addValue("application/json", forHTTPHeaderField: "Accept")
                 
-                // Validar y agregar el token de autorización
-                if let token = UserManager.shared.authToken {
-                    print("Token enviado: \(token)")
-                    request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-                } else {
-                    throw NetworkLocalizedError.unauthorized
-                }
-                
-                print("Request: \(request)")
-                
-                // Realizar la solicitud
                 let (data, response) = try await URLSession.shared.data(for: request)
                 
-                // Depuración: Mostrar respuesta en consola
-                print("Response: \(response)")
-                print("Data: \(String(data: data, encoding: .utf8) ?? "No data")")
-                
-                // Validar código de estado HTTP
-                guard let httpResponse = response as? HTTPURLResponse else {
-                    throw NetworkLocalizedError.invalidResponse
+                // Validar el código de estado HTTP
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+                    throw URLError(.badServerResponse)
+                }
+
+                // Imprimir la respuesta para depuración
+                if let jsonString = String(data: data, encoding: .utf8) {
+                    print("JSON recibido: \(jsonString.prefix(200))...")
                 }
                 
-                guard (200...299).contains(httpResponse.statusCode) else {
-                    throw NetworkLocalizedError.httpError(httpResponse.statusCode)
+                // Intentar decodificar manualmente primero para verificar la estructura
+                if let json = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]],
+                   let firstProject = json.first {
+                    print("Claves del primer proyecto: \(firstProject.keys)")
                 }
                 
-                // Decodificar la respuesta
+                // Decodificar los proyectos
                 let decoder = JSONDecoder()
+                
+                // Configurar el decodificador para manejar claves en snake_case
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                self.projects = try decoder.decode([Project].self, from: data)
+                
+                do {
+                    self.projects = try decoder.decode([Project].self, from: data)
+                    print("Proyectos cargados: \(self.projects.count)")
+                } catch let decodingError {
+                    print("Error de decodificación: \(decodingError)")
+                    
+                    // Intentar una decodificación alternativa
+                    let alternativeDecoder = JSONDecoder()
+                    // Sin estrategia de conversión de claves
+                    
+                    do {
+                        // Definir un modelo alternativo para la decodificación
+                        struct ProjectDTO: Codable {
+                            let id: Int
+                            let name: String
+                            let address: String
+                            let altitude: String
+                            let longitude: String
+                            let status: Int
+                            let created_at: String
+                            let updated_at: String
+                            let hours: String?
+                            let month: String?
+                        }
+                        
+                        let dtos = try alternativeDecoder.decode([ProjectDTO].self, from: data)
+                        
+                        // Convertir DTOs a modelos Project
+                        self.projects = dtos.map { dto in
+                            Project(
+                                id: dto.id,
+                                name: dto.name,
+                                address: dto.address,
+                                altitude: dto.altitude,
+                                longitude: dto.longitude,
+                                status: dto.status,
+                                createdAt: dto.created_at,
+                                updatedAt: dto.updated_at,
+                                hours: dto.hours,
+                                month: dto.month
+                            )
+                        }
+                        
+                        print("Proyectos cargados con método alternativo: \(self.projects.count)")
+                    } catch let alternativeError {
+                        print("Error en decodificación alternativa: \(alternativeError)")
+                        throw decodingError
+                    }
+                }
                 
             } catch {
-                print("Error: \(error.localizedDescription)")
-                self.errorMessage = error.localizedDescription
+                print("Error detallado: \(error)")
+                self.errorMessage = "Error al cargar proyectos: \(error.localizedDescription)"
             }
             
-            self.isLoading = false
+            isLoading = false
         }
     }
 }

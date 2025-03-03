@@ -46,6 +46,10 @@ class UserManager {
         user?.token
     }
     
+    var userType: String? {
+        user?.type
+    }
+    
     var employeeId: String? {
         guard let id = user?.employeeId else { return nil }
         return String(id)
@@ -118,7 +122,7 @@ class UserManager {
         
         do {
             let loginResponse: LoginResponse = try await NetworkManager.shared.request(
-                Endpoints.login,
+                EndPoints.login,
                 method: "POST",
                 params: userData
             )

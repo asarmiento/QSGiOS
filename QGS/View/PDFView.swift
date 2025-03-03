@@ -2,7 +2,7 @@ import SwiftUI
 import WebKit
 
 struct PDFView: UIViewRepresentable {
-    let url: URL
+    let url = URL(string:"https://api.friendlypayroll.net/weekly-hours")!
 
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()

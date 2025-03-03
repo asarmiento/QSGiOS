@@ -34,7 +34,7 @@ class NetworkListDetails: ObservableObject {
            }
         
         
-        guard let url = URL(string: "\(Endpoints.getListDetail)\(id)") else {
+        guard let url = URL(string: "\(EndPoints.getListDetail)\(id)") else {
             self.errorMessage = "URL no válida"
             return
         }

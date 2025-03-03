@@ -2,7 +2,7 @@ import Foundation
 
 class APIService {
     static let shared = APIService()
-    private let baseURL = Endpoints.login
+    private let baseURL = EndPoints.login
     
     func login(email: String, password: String, completion: @escaping (Result<LoginResponse, Error>) -> Void) {
         guard let url = URL(string: baseURL) else {

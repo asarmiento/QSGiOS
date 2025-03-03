@@ -10,7 +10,7 @@ class APIServiceRecord {
     static let shared = APIServiceRecord()
     // Contexto para cambios
 
-    private let baseURL = Endpoints.storeRecord
+    private let baseURL = EndPoints.storeRecord
     
     func record(params: [String: Any], completion: @escaping (Result<RecordResponse, Error>) -> Void) {
         guard let url = URL(string: baseURL) else {

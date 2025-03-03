@@ -25,7 +25,7 @@ class RecordViewModel: ObservableObject {
     }
     
     func record(type: String, params: [String: Any], completion: @escaping (Bool) -> Void) {
-        guard let url = URL(string: Endpoints.storeRecord) else {
+        guard let url = URL(string: EndPoints.storeRecord) else {
             print("URL inválida")
             completion(false)
             return

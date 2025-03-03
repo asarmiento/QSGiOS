@@ -22,15 +22,16 @@ struct ConfigurationView: View {
     // Lista de menú items
     private var menuItems: [MenuItem] {
         [
+            
             MenuItem(icon: "Employees", title: "Empleados", destination: AnyView(EmployeeListView())),
-            MenuItem(icon: "Message1", title: "Reportes", destination: nil),
+            MenuItem(icon: "Message1", title: "Reportes", destination: AnyView(TimeRecordsView())),
             MenuItem(icon: "Message2", title: "Calendario", destination: nil),
             MenuItem(icon: "Message3", title: "Ajustes", destination: nil),
             MenuItem(icon: "NewProject", title: "Nuevo Proyecto", destination: nil),
             MenuItem(icon: "NewProject2", title: "Gestión Proyectos", destination: nil),
             MenuItem(icon: "Projects", title: "Proyectos", destination: AnyView(ProjectsListView())),
-            MenuItem(icon: "Projects2", title: "Lista Proyectos", destination: nil),
-            MenuItem(icon: "WorkHours", title: "Horas Trabajo", destination: nil)
+            MenuItem(icon: "Projects2", title: "Ubicación de Empleados", destination: AnyView(EmployeeMapView())),
+            MenuItem(icon: "WorkHours", title: "Horas Trabajo", destination: AnyView(PDFView()))
         ]
     }
     

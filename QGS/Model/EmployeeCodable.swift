@@ -25,6 +25,8 @@ struct EmployeeCodable: Codable, Identifiable {
     let status: Int
     let createdAt: String?
     let updatedAt: String?
+    let typeWork: TypeWork?
+    let user: User?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -42,6 +44,64 @@ struct EmployeeCodable: Codable, Identifiable {
         case nationalityId = "nationality_id"
         case userId = "user_id"
         case status
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case typeWork = "type_work"
+        case user
+    }
+}
+
+struct TypeWork: Codable {
+    let id: Int
+    let employeeId: Int
+    let workTypeId: Int
+    let createdAt: String?
+    let updatedAt: String?
+    let workType: WorkType?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case employeeId = "employee_id"
+        case workTypeId = "work_type_id"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case workType = "work_type"
+    }
+}
+
+struct WorkType: Codable {
+    let id: Int
+    let name: String
+    let createdAt: String?
+    let updatedAt: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+    }
+}
+
+struct User: Codable {
+    let id: Int
+    let name: String
+    let type: String
+    let sysconfId: Int
+    let code: String
+    let email: String
+    let emailVerifiedAt: String?
+    let createdAt: String?
+    let updatedAt: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case type
+        case sysconfId = "sysconf_id"
+        case code
+        case email
+        case emailVerifiedAt = "email_verified_at"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
     }

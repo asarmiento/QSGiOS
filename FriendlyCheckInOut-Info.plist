@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.myapp.refresh</string>
+	</array>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>es</string>
+		<string>en</string>
+	</array>
+	<key>FirebaseAnalyticsDebugEnabled</key>
+	<true/>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<true/>
+	<key>FirebaseAutomaticScreenReportingEnabled</key>
+	<true/>
+	<key>FirebaseMessagingAutoInitEnabled</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>remote-notification</string>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
+	<key>WhatsNewInThisVersion</key>
+	<dict>
+		<key>en</key>
+		<string>Initial release of QGS:
+- Employee check-in/check-out functionality
+- GPS location tracking
+- Daily and weekly hours summary
+- Improved user interface and experience</string>
+		<key>es</key>
+		<string>Lanzamiento inicial de QGS:
+- Funcionalidad de entrada/salida para empleados
+- Seguimiento de ubicación GPS
+- Resumen de horas diarias y semanales
+- Mejora en la interfaz y experiencia de usuario</string>
+	</dict>
+	<key>aps-environment</key>
+	<string>development</string>
+</dict>
+</plist>

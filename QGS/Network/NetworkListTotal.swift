@@ -31,7 +31,7 @@ class NetworkListTotal: ObservableObject {
            }
         
    
-        guard let url = URL(string: "\(Endpoints.getListTotal)\(id)") else {
+        guard let url = URL(string: "\(EndPoints.getListTotal)\(id)") else {
             self.errorMessage = "URL no válida"
             return
         }

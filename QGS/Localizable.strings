@@ -171,6 +171,26 @@
 "Registro"="Registro";
 "Total"="Total";
 "Empleados"="Empleados";
+"Empleado"="Empleado";
 "Buscar empleado..."="Buscar empleado...";
 "Cargando empleados..."="Cargando empleados...";
+"Número de teléfono"="Número de teléfono";
+"Correo"="Correo";
+"Teléfono"="Teléfono";
+"Cédula: "="Cédula: ";
+"Nombre"="Nombre";
+"Cerrar"="Cerrar";
+"Selecciona las fechas"="Selecciona las fechas";
+"Tipo de Registro"="Tipo de Registro";
+"Nombre completo"="Nombre completo";
+"Correo electrónico"="Correo electrónico";
+"Nombre completo"="Nombre completo";
+"Empleado activo"="Empleado activo";
+"Guardar cambios"="Guardar cambios";
+"Editar Empleado"="Editar Empleado";
+"Error del servidor (500):"="Error del servidor (500):";
+"%lld"="%lld";
+"Ok "="Ok ";
+"ID: "="ID: ";
+
 

@@ -1,3 +1,9 @@
+//
+//  APIServiceRecord.swift
+//  QGS
+//
+//  Created by Anwar Sarmiento on 12/6/24.
+//
 import Foundation
 
 @MainActor
@@ -7,28 +13,44 @@ class ProjectsViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     func fetchProjects() {
+
         isLoading = true
         errorMessage = nil
 
         Task {
             do {
-                let url = URL(string: "https://api.friendlypayroll.net/public/api/projects/data-projects")!
+                guard let accessToken = UserManager.shared.authToken, !accessToken.isEmpty else {
+                    print("Token de autenticación no válido o vacío.")
+                    self.errorMessage = "Token no válido o ausente."
+                    return
+                }
+                print("Token usado: \(accessToken)")
+                let url = URL(string: "\(EndPoints.getListProjects)")!
+                print("obtener el usuario o el token. url: \(url)")
                 var request = URLRequest(url: url)
                 request.httpMethod = "GET"
-                request.addValue("Bearer 2291|DmpJoqafDWBHh40ACzESMNxVZAUL8dSmOweLRokD8e90314a", forHTTPHeaderField: "Authorization")
+                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
                 request.addValue("application/json", forHTTPHeaderField: "Accept")
-                
+                print("request headers: \(request.allHTTPHeaderFields ?? [:])")
                 let (data, response) = try await URLSession.shared.data(for: request)
                 
                 // Validar el código de estado HTTP
-                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                    throw URLError(.badServerResponse)
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("Código de estado HTTP: \(httpResponse.statusCode)")
+                    print("Headers de respuesta: \(httpResponse.allHeaderFields)")
+                    
+                    if httpResponse.statusCode != 200 {
+                        let responseBody = String(data: data, encoding: .utf8) ?? "No se pudo leer el cuerpo de la respuesta"
+                        print("Cuerpo de la respuesta: \(responseBody)")
+                        throw URLError(.badServerResponse)
+                    }
                 }
 
+
                 // Imprimir la respuesta para depuración
-                if let jsonString = String(data: data, encoding: .utf8) {
-                    print("JSON recibido: \(jsonString.prefix(200))...")
-                }
+//                if let jsonString = String(data: data, encoding: .utf8) {
+//                    print("JSON recibido: \(jsonString.prefix(200))...")
+//                }
                 
                 // Intentar decodificar manualmente primero para verificar la estructura
                 if let json = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]],
@@ -92,12 +114,17 @@ class ProjectsViewModel: ObservableObject {
                     }
                 }
                 
+            } catch let error as URLError {
+                print("Error de red: \(error.localizedDescription) - Código: \(error.code)")
+                self.errorMessage = "Error de red: \(error.localizedDescription)"
             } catch {
-                print("Error detallado: \(error)")
-                self.errorMessage = "Error al cargar proyectos: \(error.localizedDescription)"
+                print("Error inesperado: \(error)")
+                self.errorMessage = "Error inesperado: \(error.localizedDescription)"
             }
             
             isLoading = false
         }
+      
     }
+  
 }

@@ -9,6 +9,17 @@
 /* Begin PBXBuildFile section */
 		EB126FE32D6CE23500FC1BE6 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB126FE22D6CE23500FC1BE6 /* NotificationScheduler.swift */; };
 		EB126FE72D6CF3D200FC1BE6 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB126FE42D6CF3D200FC1BE6 /* ConfigurationView.swift */; };
+		EB1763FB2D7B86430016A8C1 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1763FA2D7B863C0016A8C1 /* NotificationManager.swift */; };
+		EB1763FC2D7B86430016A8C1 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1763FA2D7B863C0016A8C1 /* NotificationManager.swift */; };
+		EB1763FE2D7B924C0016A8C1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EB1763FD2D7B924C0016A8C1 /* FirebaseFirestore */; };
+		EB1764022D7F23CC0016A8C1 /* EmployeeLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1764002D7F23CC0016A8C1 /* EmployeeLocationViewModel.swift */; };
+		EB1764032D7F23CC0016A8C1 /* TimeRecordsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1764012D7F23CC0016A8C1 /* TimeRecordsViewModel.swift */; };
+		EB1764042D7F23CC0016A8C1 /* EmployeeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1763FF2D7F23CC0016A8C1 /* EmployeeDetailViewModel.swift */; };
+		EB1764052D7F23CC0016A8C1 /* EmployeeLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1764002D7F23CC0016A8C1 /* EmployeeLocationViewModel.swift */; };
+		EB1764062D7F23CC0016A8C1 /* TimeRecordsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1764012D7F23CC0016A8C1 /* TimeRecordsViewModel.swift */; };
+		EB1764072D7F23CC0016A8C1 /* EmployeeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1763FF2D7F23CC0016A8C1 /* EmployeeDetailViewModel.swift */; };
+		EB1764092D7F2D910016A8C1 /* EmployeeLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1764082D7F2D8E0016A8C1 /* EmployeeLocation.swift */; };
+		EB17640A2D7F2D910016A8C1 /* EmployeeLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1764082D7F2D8E0016A8C1 /* EmployeeLocation.swift */; };
 		EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D152CF6A47B001A62C8 /* RecordModel.swift */; };
 		EB345D182CF6DBB1001A62C8 /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D172CF6DB9F001A62C8 /* JsonServices.swift */; };
 		EB345D1A2CF74DA8001A62C8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB345D192CF74D9D001A62C8 /* Utils.swift */; };
@@ -39,6 +50,8 @@
 		EB83A1B42C6BA23500E7D361 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */; };
 		EB84DB8D2D68E52A0062D13B /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = EB84DB8C2D68E52A0062D13B /* FirebaseCore */; };
 		EB90F79B2D68CBAF00684251 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = EB90F79A2D68CBAF00684251 /* FirebaseMessaging */; };
+		EBA23F9C2D7786CB00DAB27D /* LogScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA23F9B2D7786BC00DAB27D /* LogScreen.swift */; };
+		EBA23F9D2D7786CB00DAB27D /* LogScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA23F9B2D7786BC00DAB27D /* LogScreen.swift */; };
 		EBADECB32D71347A00B56617 /* EmployeesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBADECB22D71346A00B56617 /* EmployeesViewModel.swift */; };
 		EBBC930F2C512EBB00F3C8CD /* QGSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */; };
 		EBBC93132C512EBC00F3C8CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBBC93122C512EBC00F3C8CD /* Assets.xcassets */; };
@@ -158,6 +171,11 @@
 /* Begin PBXFileReference section */
 		EB126FE22D6CE23500FC1BE6 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
 		EB126FE42D6CF3D200FC1BE6 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
+		EB1763FA2D7B863C0016A8C1 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		EB1763FF2D7F23CC0016A8C1 /* EmployeeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeDetailViewModel.swift; sourceTree = "<group>"; };
+		EB1764002D7F23CC0016A8C1 /* EmployeeLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeLocationViewModel.swift; sourceTree = "<group>"; };
+		EB1764012D7F23CC0016A8C1 /* TimeRecordsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecordsViewModel.swift; sourceTree = "<group>"; };
+		EB1764082D7F2D8E0016A8C1 /* EmployeeLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeLocation.swift; sourceTree = "<group>"; };
 		EB345D152CF6A47B001A62C8 /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
 		EB345D172CF6DB9F001A62C8 /* JsonServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonServices.swift; sourceTree = "<group>"; };
 		EB345D192CF74D9D001A62C8 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -187,6 +205,7 @@
 		EB83A1532C6A6A3300E7D361 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		EB83A1B32C6BA23500E7D361 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB86403C2C66400A0072534E /* QGS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QGS.entitlements; sourceTree = "<group>"; };
+		EBA23F9B2D7786BC00DAB27D /* LogScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogScreen.swift; sourceTree = "<group>"; };
 		EBADECB22D71346A00B56617 /* EmployeesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesViewModel.swift; sourceTree = "<group>"; };
 		EBBC930B2C512EBB00F3C8CD /* QGS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QGS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QGSApp.swift; sourceTree = "<group>"; };
@@ -209,7 +228,7 @@
 		EBBEB46E2D67A24E005B9AEA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		EBBEB4762D67A424005B9AEA /* TimeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecord.swift; sourceTree = "<group>"; };
 		EBBEB4792D67A622005B9AEA /* TimeRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecordsView.swift; sourceTree = "<group>"; };
-		EBBEB4882D68B3A6005B9AEA /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EBBEB4882D68B3A6005B9AEA /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EBD531B12D71F941007BF316 /* FriendlyCheckInOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendlyCheckInOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBD531B72D71F943007BF316 /* FriendlyCheckInOut-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "FriendlyCheckInOut-Info.plist"; path = "/Users/edinmartinez/Documents/Projects/QGS/FriendlyCheckInOut-Info.plist"; sourceTree = "<absolute>"; };
 		EBDAF1142D6FDD940099D03C /* ProjectsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsViewModel.swift; sourceTree = "<group>"; };
@@ -262,6 +281,7 @@
 				EBBEB47F2D68AD78005B9AEA /* FirebaseAnalytics in Frameworks */,
 				EBBEB4872D68AD78005B9AEA /* FirebaseAppDistribution-Beta in Frameworks */,
 				EB84DB8D2D68E52A0062D13B /* FirebaseCore in Frameworks */,
+				EB1763FE2D7B924C0016A8C1 /* FirebaseFirestore in Frameworks */,
 				EBBEB4832D68AD78005B9AEA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				EBBEB4812D68AD78005B9AEA /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 			);
@@ -301,6 +321,9 @@
 		EB3666462D15F1C800810713 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				EB1763FF2D7F23CC0016A8C1 /* EmployeeDetailViewModel.swift */,
+				EB1764002D7F23CC0016A8C1 /* EmployeeLocationViewModel.swift */,
+				EB1764012D7F23CC0016A8C1 /* TimeRecordsViewModel.swift */,
 				EBADECB22D71346A00B56617 /* EmployeesViewModel.swift */,
 				EBDAF1142D6FDD940099D03C /* ProjectsViewModel.swift */,
 				EB3666452D15F1C800810713 /* RecordViewModel.swift */,
@@ -311,6 +334,7 @@
 		EB3666792D55A33300810713 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EB1764082D7F2D8E0016A8C1 /* EmployeeLocation.swift */,
 				EB3666752D55A33300810713 /* LoginResponse.swift */,
 				EB3666772D55A33300810713 /* RecordResponse.swift */,
 				EB3666782D55A33300810713 /* WorkTimeResponse.swift */,
@@ -329,6 +353,7 @@
 		EB4B26B42C5998F80083397F /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				EB1763FA2D7B863C0016A8C1 /* NotificationManager.swift */,
 				EBBEB4682D67A24E005B9AEA /* APITimeRecords.swift */,
 				EBBEB46D2D67A24E005B9AEA /* Errors */,
 				EBBEB46E2D67A24E005B9AEA /* LocationManager.swift */,
@@ -394,6 +419,7 @@
 				EBBC93282C512EBC00F3C8CD /* QGSUITests */,
 				EB84DB8B2D68E52A0062D13B /* Frameworks */,
 				EBD531B72D71F943007BF316 /* FriendlyCheckInOut-Info.plist */,
+				EBBEB4882D68B3A6005B9AEA /* GoogleService-Info.plist */,
 				EBBC930C2C512EBB00F3C8CD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -413,7 +439,6 @@
 			isa = PBXGroup;
 			children = (
 				EBDAF1152D6FDD940099D03C /* Configurations */,
-				EBBEB4882D68B3A6005B9AEA /* GoogleService-Info.plist */,
 				EB345D922CFA11A4001A62C8 /* Interactor */,
 				EB4B26B92C5AB10B0083397F /* Model */,
 				EB86403C2C66400A0072534E /* QGS.entitlements */,
@@ -476,6 +501,7 @@
 		EBBC933D2C515F9E00F3C8CD /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				EBA23F9B2D7786BC00DAB27D /* LogScreen.swift */,
 				EB126FE22D6CE23500FC1BE6 /* NotificationScheduler.swift */,
 				EB345D172CF6DB9F001A62C8 /* JsonServices.swift */,
 				EBBC93402C5161CD00F3C8CD /* CustomTF.swift */,
@@ -534,6 +560,7 @@
 				EBBEB4862D68AD78005B9AEA /* FirebaseAppDistribution-Beta */,
 				EB90F79A2D68CBAF00684251 /* FirebaseMessaging */,
 				EB84DB8C2D68E52A0062D13B /* FirebaseCore */,
+				EB1763FD2D7B924C0016A8C1 /* FirebaseFirestore */,
 			);
 			productName = QGS;
 			productReference = EBBC930B2C512EBB00F3C8CD /* QGS.app */;
@@ -707,9 +734,14 @@
 				EB3666812D55A3BF00810713 /* Migration.swift in Sources */,
 				EBE614982C5AE4FA00197660 /* HomeRecord.swift in Sources */,
 				EB44DB612CFF40730070B827 /* Employee.swift in Sources */,
+				EB1764022D7F23CC0016A8C1 /* EmployeeLocationViewModel.swift in Sources */,
+				EB1764032D7F23CC0016A8C1 /* TimeRecordsViewModel.swift in Sources */,
+				EB1764042D7F23CC0016A8C1 /* EmployeeDetailViewModel.swift in Sources */,
 				EB126FE72D6CF3D200FC1BE6 /* ConfigurationView.swift in Sources */,
 				EBBEB4742D67A24E005B9AEA /* LocationManager.swift in Sources */,
 				EB44DBA12D0309C50070B827 /* APIServiceRecord.swift in Sources */,
+				EB17640A2D7F2D910016A8C1 /* EmployeeLocation.swift in Sources */,
+				EBA23F9C2D7786CB00DAB27D /* LogScreen.swift in Sources */,
 				EB3666472D15F1C800810713 /* RecordViewModel.swift in Sources */,
 				EBE6149A2C5AFA5D00197660 /* LocationViewController.swift in Sources */,
 				EB345D182CF6DBB1001A62C8 /* JsonServices.swift in Sources */,
@@ -734,6 +766,7 @@
 				EB345D212CF781ED001A62C8 /* UserModel.swift in Sources */,
 				EB44DB5D2CFF3F3D0070B827 /* WorkEntryDetails.swift in Sources */,
 				EBDAF1172D6FDD940099D03C /* ProjectsViewModel.swift in Sources */,
+				EB1763FB2D7B86430016A8C1 /* NotificationManager.swift in Sources */,
 				EB345D162CF6A493001A62C8 /* RecordModel.swift in Sources */,
 				EB44DB672CFF6D680070B827 /* NetworkListTotal.swift in Sources */,
 				EB83A1542C6A6A3300E7D361 /* SplashView.swift in Sources */,
@@ -784,9 +817,14 @@
 				EBD531742D71F941007BF316 /* Migration.swift in Sources */,
 				EBD531752D71F941007BF316 /* HomeRecord.swift in Sources */,
 				EBD531762D71F941007BF316 /* Employee.swift in Sources */,
+				EB1764052D7F23CC0016A8C1 /* EmployeeLocationViewModel.swift in Sources */,
+				EB1764062D7F23CC0016A8C1 /* TimeRecordsViewModel.swift in Sources */,
+				EB1764072D7F23CC0016A8C1 /* EmployeeDetailViewModel.swift in Sources */,
 				EBD531772D71F941007BF316 /* ConfigurationView.swift in Sources */,
 				EBD531782D71F941007BF316 /* LocationManager.swift in Sources */,
 				EBD531792D71F941007BF316 /* APIServiceRecord.swift in Sources */,
+				EB1764092D7F2D910016A8C1 /* EmployeeLocation.swift in Sources */,
+				EBA23F9D2D7786CB00DAB27D /* LogScreen.swift in Sources */,
 				EBD5317A2D71F941007BF316 /* RecordViewModel.swift in Sources */,
 				EBD5317B2D71F941007BF316 /* LocationViewController.swift in Sources */,
 				EBD5317C2D71F941007BF316 /* JsonServices.swift in Sources */,
@@ -811,6 +849,7 @@
 				EBD5318F2D71F941007BF316 /* UserModel.swift in Sources */,
 				EBD531902D71F941007BF316 /* WorkEntryDetails.swift in Sources */,
 				EBD531912D71F941007BF316 /* ProjectsViewModel.swift in Sources */,
+				EB1763FC2D7B86430016A8C1 /* NotificationManager.swift in Sources */,
 				EBD531922D71F941007BF316 /* RecordModel.swift in Sources */,
 				EBD531932D71F941007BF316 /* NetworkListTotal.swift in Sources */,
 				EBD531942D71F941007BF316 /* SplashView.swift in Sources */,
@@ -981,6 +1020,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QGS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = QGS;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida";
@@ -996,7 +1036,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1025,6 +1065,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QGS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = QGS;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida";
@@ -1040,7 +1081,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1304,6 +1345,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		EB1763FD2D7B924C0016A8C1 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EBBEB47D2D68AD78005B9AEA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
 		EB84DB8C2D68E52A0062D13B /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EBBEB47D2D68AD78005B9AEA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

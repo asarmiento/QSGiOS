@@ -1,6 +1,14 @@
+
+
 import Foundation
 import MapKit
+import CoreLocation
+import SwiftUI
 
+
+
+// ViewModel definido aquí para asegurar que esté disponible
+@MainActor
 class EmployeeLocationViewModel: ObservableObject {
     @Published var employeeLocations: [EmployeeLocation] = []
     @Published var isLoading = false
@@ -10,18 +18,25 @@ class EmployeeLocationViewModel: ObservableObject {
         span: MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
     )
     
+    // Para iOS 17+, usa MapCameraPosition
+    @available(iOS 17.0, *)
+    var mapCameraPosition: MapCameraPosition {
+        MapCameraPosition.region(region)
+    }
+
+    // Para iOS 16 o versiones anteriores, usa MKCoordinateRegion
+    var mapCameraRegion: MKCoordinateRegion {
+        region
+    }
+    
     func fetchEmployeeLocations() async {
-        DispatchQueue.main.async {
-            self.isLoading = true
-            self.errorMessage = nil
-        }
+        isLoading = true
+        errorMessage = nil
         
         do {
             guard let token = UserManager.shared.authToken else {
-                DispatchQueue.main.async {
-                    self.errorMessage = "No hay token de autenticación"
-                    self.isLoading = false
-                }
+                errorMessage = "No hay token de autenticación"
+                isLoading = false
                 return
             }
             
@@ -39,28 +54,22 @@ class EmployeeLocationViewModel: ObservableObject {
             
             if httpResponse.statusCode == 200 {
                 let locations = try JSONDecoder().decode([EmployeeLocation].self, from: data)
+                self.employeeLocations = locations
                 
-                DispatchQueue.main.async {
-                    self.employeeLocations = locations
-                    
-                    // Actualizar la región del mapa si hay ubicaciones
-                    if let firstLocation = locations.first {
-                        self.region = MKCoordinateRegion(
-                            center: firstLocation.coordinate,
-                            span: MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
-                        )
-                    }
-                    
-                    self.isLoading = false
+                if let firstLocation = locations.first {
+                    self.region = MKCoordinateRegion(
+                        center: firstLocation.coordinate,
+                        span: MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
+                    )
+                    // No necesitamos actualizar mapPosition aquí, ya que ahora es una propiedad computada
                 }
             } else {
                 throw URLError(.badServerResponse)
             }
         } catch {
-            DispatchQueue.main.async {
-                self.errorMessage = "Error al cargar las ubicaciones: \(error.localizedDescription)"
-                self.isLoading = false
-            }
+            errorMessage = "Error al cargar las ubicaciones: \(error.localizedDescription)"
         }
+        
+        isLoading = false
     }
-} 
+}

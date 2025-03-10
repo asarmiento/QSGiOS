@@ -191,6 +191,18 @@
 "Error del servidor (500):"="Error del servidor (500):";
 "%lld"="%lld";
 "Ok "="Ok ";
+"Ok"="Ok";
 "ID: "="ID: ";
+"Buscar..."="Buscar...";
+"%lld seleccionados"="%lld seleccionados";
+"Mensaje"="Mensaje";
+"Enviar Mensaje"="Enviar Mensaje";
+"Seleccionar todos"="Seleccionar todos";
+"Mensajes a Empleados"="Mensajes a Empleados";
+"Código: %@"="Código: %@";
+"No tienes permisos para acceder a esta sección."="No tienes permisos para acceder a esta sección.";
+"Acceso Denegado"="Acceso Denegado";
+"Activo"="Activo";
+"Éxito"="Éxito";
 
 

@@ -127,6 +127,7 @@ struct HomeRecord: View {
                    if locationManager.isAuthorized {
                        LocationManager.shared.startUpdatingLocation()
                    }
+                LogScreen.shared.logScreenView(screenName: "Home Screen")
             }.onChange(of: locationManager.isAuthorized) { oldValue, newValue in
                 if newValue {
                     LocationManager.shared.startUpdatingLocation()

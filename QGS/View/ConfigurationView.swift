@@ -26,7 +26,7 @@ struct ConfigurationView: View {
             MenuItem(icon: "Employees", title: "Empleados", destination: AnyView(EmployeeListView())),
             MenuItem(icon: "Message1", title: "Reportes", destination: AnyView(TimeRecordsView())),
             MenuItem(icon: "Message2", title: "Calendario", destination: nil),
-            MenuItem(icon: "Message3", title: "Ajustes", destination: nil),
+            MenuItem(icon: "Message3", title: "Mensaje", destination: AnyView(EmployeeMessagingView())),
             MenuItem(icon: "NewProject", title: "Nuevo Proyecto", destination: nil),
             MenuItem(icon: "NewProject2", title: "Gestión Proyectos", destination: nil),
             MenuItem(icon: "Projects", title: "Proyectos", destination: AnyView(ProjectsListView())),

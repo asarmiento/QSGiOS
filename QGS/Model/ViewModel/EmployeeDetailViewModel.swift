@@ -1,9 +1,12 @@
 import Foundation
 
-@MainActor
+
+
+// Definición local del ViewModel en caso de que no se pueda importar
 class EmployeeDetailViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
+    @Published var workTypes: [WorkType] = []
     
     enum EmployeeUpdateError: Error, LocalizedError {
         case networkError(String)
@@ -25,7 +28,24 @@ class EmployeeDetailViewModel: ObservableObject {
         }
     }
     
-    func updateEmployee(id: Int, name: String, email: String, phone: String, status: Int, completion: @escaping (Result<Void, Error>) -> Void) {
+    func fetchWorkTypes(completion: @escaping ([WorkType]) -> Void) {
+        // Aquí podrías implementar una llamada a la API para obtener los tipos de trabajo
+        // Por ahora, usaremos datos estáticos basados en el JSON proporcionado
+        let workTypes = [
+            WorkType(id: 1, name: "All Works", createdAt: nil, updatedAt: nil),
+            WorkType(id: 2, name: "Sheetrock", createdAt: nil, updatedAt: nil),
+            WorkType(id: 3, name: "Drywall", createdAt: nil, updatedAt: nil),
+            WorkType(id: 4, name: "Finiship", createdAt: nil, updatedAt: nil),
+            WorkType(id: 5, name: "Remodelacion", createdAt: nil, updatedAt: nil)
+        ]
+        
+        DispatchQueue.main.async {
+            self.workTypes = workTypes
+            completion(workTypes)
+        }
+    }
+    
+    func updateEmployee(id: Int, name: String, email: String, phone: String, status: Int, workTypeId: Int, userEmail: String, completion: @escaping (Result<Void, Error>) -> Void) {
         isLoading = true
         errorMessage = nil
         
@@ -41,7 +61,7 @@ class EmployeeDetailViewModel: ObservableObject {
             do {
                 let url = URL(string: "https://api.friendlypayroll.net/api/colaboradores/update-employee/\(id)")!
                 var request = URLRequest(url: url)
-                request.httpMethod = "POST"
+                request.httpMethod = "PUT"
                 
                 // Obtener el token de autenticación
                 if let token = UserManager.shared.authToken {
@@ -58,7 +78,9 @@ class EmployeeDetailViewModel: ObservableObject {
                     "name": name,
                     "email": email,
                     "phone": phone,
-                    "status": status
+                    "status": status,
+                    "work_type_id": workTypeId,
+                    "user_email": userEmail
                 ]
                 
                 request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
@@ -92,4 +114,4 @@ class EmployeeDetailViewModel: ObservableObject {
             self.isLoading = false
         }
     }
-} 
+}

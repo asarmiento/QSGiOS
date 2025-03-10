@@ -1,5 +1,6 @@
 import UIKit
 import SwiftData
+import Firebase
 import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
@@ -22,12 +23,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configurar notificaciones
         UNUserNotificationCenter.current().delegate = self
         
+        
         // Solicitar permisos para notificaciones
         requestNotificationPermissions()
         
         // Registra para recibir notificaciones remotas
         application.registerForRemoteNotifications()
         
+        // enviar el token a firebase
+      //  NotificationManager.shared.registerForPushNotifications()
         // Imprimir estado actual
         if let token = Messaging.messaging().fcmToken {
             print("✅ Token FCM existente: \(token)")

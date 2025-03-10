@@ -36,15 +36,25 @@ class LocationViewController: NSObject, ObservableObject {
     }
     
     func checkAuthorizationStatus() {
-        // Implementación del método
+        checkAuthorization()
     }
     
     func startUpdatingLocation() {
-        // Implementación del método
+        // Verificar si tenemos permiso para acceder a la ubicación
+        if isAuthorized {
+            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager?.distanceFilter = 10 // Actualizar cada 10 metros
+            locationManager?.startUpdatingLocation()
+            print("Iniciando actualización de ubicación")
+        } else {
+            print("No hay autorización para acceder a la ubicación")
+            requestLocationPermission()
+        }
     }
     
     func stopUpdatingLocation() {
-        // Implementación del método
+        locationManager?.stopUpdatingLocation()
+        print("Deteniendo actualización de ubicación")
     }
 }
 
@@ -56,5 +66,17 @@ extension LocationViewController: CLLocationManagerDelegate {
     // Para compatibilidad con iOS 13 y anteriores
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         checkAuthorization()
+    }
+    
+    // Implementar el método para recibir actualizaciones de ubicación
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            print("Ubicación actualizada: \(location.coordinate.latitude), \(location.coordinate.longitude)")
+        }
+    }
+    
+    // Implementar el método para manejar errores de ubicación
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error al obtener la ubicación: \(error.localizedDescription)")
     }
 } 

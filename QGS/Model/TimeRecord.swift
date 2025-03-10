@@ -1,26 +1,46 @@
 import Foundation
 
-struct TimeRecord: Codable, Identifiable {
+struct TimeRecord: Identifiable, Codable {
     let id: Int
-    let employee_id: Int
-    let work_type_id: Int
-    let project_id: Int
-    let time: String
+    let employee: EmployeeCodable
     let date: String
-    let hours: String? // Porque ahora a veces viene "0" (string) o null
+    let time: String
     let type: String
+    var hours: Double?
+    var observation: String?
+    let project: ProjectTimeRecord?
     
-    let latitude: String?
-    let longitude: String?
-    let address: String?
-    let observation: String?
-    let dist: Double?
-    let alerts: Int?
-    let created_at: String?
-    let updated_at: String?
+    enum CodingKeys: String, CodingKey {
+        case id
+        case employee
+        case date
+        case time
+        case type
+        case hours
+        case observation
+        case project
+    }
     
-    let employee: EmployeeTimeRecord
-    let project: ProjectTimeRecord
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        id = try container.decode(Int.self, forKey: .id)
+        employee = try container.decode(EmployeeCodable.self, forKey: .employee)
+        date = try container.decode(String.self, forKey: .date)
+        time = try container.decode(String.self, forKey: .time)
+        type = try container.decode(String.self, forKey: .type)
+        project = try container.decodeIfPresent(ProjectTimeRecord.self, forKey: .project)
+        observation = try container.decodeIfPresent(String.self, forKey: .observation)
+        
+        // Manejar el campo hours que puede venir como string o como double
+        if let hoursDouble = try? container.decodeIfPresent(Double.self, forKey: .hours) {
+            hours = hoursDouble
+        } else if let hoursString = try? container.decodeIfPresent(String.self, forKey: .hours) {
+            hours = Double(hoursString)
+        } else {
+            hours = nil
+        }
+    }
 }
 
 /// Empleado
@@ -48,9 +68,9 @@ struct EmployeeTimeRecord: Codable, Identifiable {
 struct ProjectTimeRecord: Codable, Identifiable {
     let id: Int
     let name: String
-    let address: String
-    let altitude: String
-    let longitude: String
+    let address: String?
+    let altitude: String?
+    let longitude: String?
     let created_at: String?
     let updated_at: String?
 }

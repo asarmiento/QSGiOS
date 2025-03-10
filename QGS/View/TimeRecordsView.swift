@@ -297,18 +297,34 @@ struct ClearFiltersButton: View {
     @Binding var selectedType: String
     
     var body: some View {
-        Button(action: {
-            selectedEmployeeId = nil
-            selectedDates = []
-            selectedType = "Todos"
-            viewModel.clearFilters()
-        }) {
-            Text("Limpiar filtros")
+        HStack {
+            Button(action: {
+                selectedEmployeeId = nil
+                selectedDates = []
+                selectedType = "Todos"
+                viewModel.clearFilters()
+            }) {
+                Text("Limpiar filtros")
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(Color.red)
+                    .cornerRadius(8)
+            }
+            
+            Spacer()
+            
+            NavigationLink(destination: AddTimeRecordView(viewModel: viewModel)) {
+                HStack {
+                    Image(systemName: "plus.circle.fill")
+                    Text("Nuevo registro")
+                }
                 .foregroundColor(.white)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
-                .background(Color.red)
+                .background(Color.green)
                 .cornerRadius(8)
+            }
         }
         .padding(.top, 8)
     }
@@ -358,9 +374,16 @@ struct RecordsList: View {
     let records: [TimeRecord]
     
     var body: some View {
-        List(records) { record in
-            RecordRow(record: record)
+        List {
+            ForEach(records) { record in
+                NavigationLink(destination: EditTimeRecordView(record: record)) {
+                    RecordRow(record: record)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding(.vertical, 2)
+            }
         }
+        .listStyle(PlainListStyle())
     }
 }
 
@@ -369,17 +392,432 @@ struct RecordRow: View {
     let record: TimeRecord
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Empleado: \(record.employee.name)")
-                .font(.headline)
-            Text("Fecha: \(record.date)")
-            Text("Hora de Registro: \(record.time)")
-            if record.type == "Salida", let hours = record.hours {
-                Text("Horas: \(String(format: "%.2f", hours))")
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text("Empleado: \(record.employee.name)")
+                    .font(.headline)
+                
+                Spacer()
+                
+                Image(systemName: "pencil.circle.fill")
+                    .foregroundColor(.blue)
+                    .font(.title3)
             }
+            
+            Text("Fecha: \(record.date)")
+            Text("Hora: \(record.time)")
+            
+            if let project = record.project {
+                Text("Proyecto: \(project.name)")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            
+            if record.type == "Salida" {
+                HStack {
+                    Text("Horas: \(formatHours(record.hours))")
+                    
+                    if let observation = record.observation, !observation.isEmpty {
+                        Spacer()
+                        Image(systemName: "doc.text.fill")
+                            .foregroundColor(.green)
+                            .font(.caption)
+                    }
+                }
+            }
+            
             Text("Tipo: \(record.type)")
                 .font(.subheadline)
+                .padding(.top, 2)
+            
+            if let observation = record.observation, !observation.isEmpty {
+                Text("Observación: \(observation)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.top, 2)
+            }
         }
-        .padding(4)
+        .padding(8)
+        .background(Color.gray.opacity(0.05))
+        .cornerRadius(8)
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.blue.opacity(0.2), lineWidth: 1)
+        )
+    }
+    
+    private func formatHours(_ hours: Double?) -> String {
+        if let hours = hours {
+            return String(format: "%.2f", hours)
+        } else {
+            return "No registradas"
+        }
+    }
+}
+
+// Vista para editar un registro de tiempo
+struct EditTimeRecordView: View {
+    let record: TimeRecord
+    @StateObject private var viewModel = TimeRecordsViewModel()
+    @Environment(\.presentationMode) var presentationMode
+    
+    @State private var hours: String
+    @State private var observation: String
+    @State private var isLoading = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var isSuccess = false
+    
+    init(record: TimeRecord) {
+        self.record = record
+        self._hours = State(initialValue: record.hours != nil ? String(format: "%.2f", record.hours!) : "")
+        self._observation = State(initialValue: record.observation ?? "")
+    }
+    
+    var body: some View {
+        Form {
+            Section(header: Text("Información del registro")) {
+                HStack {
+                    Text("Empleado:")
+                    Spacer()
+                    Text(record.employee.name)
+                        .foregroundColor(.secondary)
+                }
+                
+                HStack {
+                    Text("Fecha:")
+                    Spacer()
+                    Text(record.date)
+                        .foregroundColor(.secondary)
+                }
+                
+                HStack {
+                    Text("Hora:")
+                    Spacer()
+                    Text(record.time)
+                        .foregroundColor(.secondary)
+                }
+                
+                if let project = record.project {
+                    HStack {
+                        Text("Proyecto:")
+                        Spacer()
+                        Text(project.name)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                
+                HStack {
+                    Text("Tipo:")
+                    Spacer()
+                    Text(record.type)
+                        .foregroundColor(.secondary)
+                }
+            }
+            
+            Section(header: Text("Editar información")) {
+                if record.type == "Salida" {
+                    HStack {
+                        Text("Horas:")
+                        Spacer()
+                        TextField("Horas trabajadas", text: $hours)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 100)
+                    }
+                } else {
+                    Text("Las horas solo se pueden editar en registros de salida")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                
+                VStack(alignment: .leading) {
+                    Text("Observación:")
+                    TextEditor(text: $observation)
+                        .frame(minHeight: 100)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                        )
+                }
+            }
+            
+            Section {
+                Button(action: saveChanges) {
+                    if isLoading {
+                        ProgressView()
+                    } else {
+                        Text("Guardar cambios")
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    }
+                }
+                .disabled(isLoading || (record.type == "Salida" && !isValidHours(hours)))
+            }
+        }
+        .navigationTitle("Editar Registro")
+        .navigationBarItems(trailing: Button("Cancelar") {
+            presentationMode.wrappedValue.dismiss()
+        })
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text(isSuccess ? "Éxito" : "Error"),
+                message: Text(alertMessage),
+                dismissButton: .default(Text("Aceptar")) {
+                    if isSuccess {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
+            )
+        }
+    }
+    
+    private func saveChanges() {
+        isLoading = true
+        
+        // Convertir horas a Double
+        let hoursValue: Double
+        if record.type == "Salida" && !hours.isEmpty {
+            hoursValue = Double(hours.replacingOccurrences(of: ",", with: ".")) ?? 0.0
+        } else {
+            hoursValue = record.hours ?? 0.0
+        }
+        
+        Task {
+            let success = await viewModel.updateTimeRecord(
+                id: record.id,
+                hours: hoursValue,
+                observation: observation
+            )
+            
+            DispatchQueue.main.async {
+                isLoading = false
+                isSuccess = success
+                alertMessage = viewModel.updateMessage
+                showAlert = true
+            }
+        }
+    }
+    
+    private func isValidHours(_ hoursString: String) -> Bool {
+        if hoursString.isEmpty {
+            return false
+        }
+        
+        let cleanedString = hoursString.replacingOccurrences(of: ",", with: ".")
+        guard let value = Double(cleanedString) else {
+            return false
+        }
+        
+        return value > 0 && value <= 24
+    }
+}
+
+// Vista para agregar un nuevo registro de tiempo
+struct AddTimeRecordView: View {
+    @ObservedObject var viewModel: TimeRecordsViewModel
+    @Environment(\.presentationMode) var presentationMode
+    @StateObject private var locationController = LocationViewController.shared
+    
+    @State private var selectedEmployeeId: Int?
+    @State private var selectedDate = Date()
+    @State private var selectedType = "Salida"
+    @State private var hours = ""
+    @State private var observation = ""
+    @State private var isLoading = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var isSuccess = false
+    @State private var showLocationAlert = false
+    
+    var body: some View {
+        Form {
+            Section(header: Text("Información del registro")) {
+                // Selector de empleado
+                Picker("Empleado", selection: $selectedEmployeeId) {
+                    Text("Seleccionar empleado").tag(nil as Int?)
+                    ForEach(viewModel.employees, id: \.id) { employee in
+                        Text(employee.name).tag(employee.id as Int?)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+                
+                // Selector de fecha
+                DatePicker("Fecha", selection: $selectedDate, displayedComponents: .date)
+                    .environment(\.locale, Locale(identifier: "es"))
+                
+                // Selector de tipo
+                Picker("Tipo", selection: $selectedType) {
+                    Text("Entrada").tag("Entrada")
+                    Text("Salida").tag("Salida")
+                }
+                .pickerStyle(SegmentedPickerStyle())
+            }
+            
+            Section(header: Text("Detalles")) {
+                if selectedType == "Salida" {
+                    HStack {
+                        Text("Horas:")
+                        Spacer()
+                        TextField("Horas trabajadas", text: $hours)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 100)
+                    }
+                } else {
+                    Text("Las horas solo se aplican a registros de salida")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                
+                VStack(alignment: .leading) {
+                    Text("Observación:")
+                    TextEditor(text: $observation)
+                        .frame(minHeight: 100)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                        )
+                }
+            }
+            
+            Section(header: Text("Ubicación")) {
+                HStack {
+                    Image(systemName: locationController.isAuthorized ? "location.fill" : "location.slash.fill")
+                        .foregroundColor(locationController.isAuthorized ? .green : .red)
+                    
+                    Text(locationController.isAuthorized ? "Ubicación disponible" : "Ubicación no disponible")
+                    
+                    Spacer()
+                    
+                    if !locationController.isAuthorized {
+                        Button("Permitir") {
+                            locationController.requestLocationPermission()
+                        }
+                        .foregroundColor(.blue)
+                    }
+                }
+            }
+            
+            Section {
+                Button(action: saveNewRecord) {
+                    if isLoading {
+                        ProgressView()
+                    } else {
+                        Text("Guardar registro")
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    }
+                }
+                .disabled(isLoading || selectedEmployeeId == nil || (selectedType == "Salida" && !isValidHours(hours)))
+            }
+        }
+        .navigationTitle("Nuevo Registro")
+        .onAppear {
+            // Verificar permisos de ubicación al cargar la vista
+            if !locationController.isAuthorized {
+                showLocationAlert = true
+            }
+        }
+        .alert(isPresented: $showLocationAlert) {
+            Alert(
+                title: Text("Permiso de ubicación"),
+                message: Text("Para registrar correctamente su entrada/salida, necesitamos acceder a su ubicación. Por favor, conceda el permiso cuando se le solicite."),
+                dismissButton: .default(Text("Entendido")) {
+                    locationController.requestLocationPermission()
+                }
+            )
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text(isSuccess ? "Éxito" : "Error"),
+                message: Text(alertMessage),
+                dismissButton: .default(Text("Aceptar")) {
+                    if isSuccess {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
+            )
+        }
+    }
+    
+    private func saveNewRecord() {
+        guard let employeeId = selectedEmployeeId else {
+            alertMessage = "Por favor, selecciona un empleado"
+            showAlert = true
+            return
+        }
+        
+        // Verificar si tenemos permiso de ubicación
+        if !locationController.isAuthorized {
+            alertMessage = "Se requiere acceso a la ubicación para registrar la entrada/salida. Por favor, conceda el permiso."
+            showAlert = true
+            locationController.requestLocationPermission()
+            return
+        }
+        
+        isLoading = true
+        
+        // Convertir horas a Double si es un registro de salida
+        let hoursValue: Double?
+        if selectedType == "Salida" && !hours.isEmpty {
+            hoursValue = Double(hours.replacingOccurrences(of: ",", with: "."))
+        } else {
+            hoursValue = nil
+        }
+        
+        // Formatear la fecha
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateString = dateFormatter.string(from: selectedDate)
+        
+        // Formatear la hora actual
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm:ss"
+        let timeString = timeFormatter.string(from: Date())
+        
+        Task {
+            let success = await viewModel.createTimeRecord(
+                employeeId: employeeId,
+                date: dateString,
+                time: timeString,
+                type: selectedType,
+                hours: hoursValue,
+                observation: observation
+            )
+            
+            DispatchQueue.main.async {
+                isLoading = false
+                isSuccess = success
+                alertMessage = viewModel.updateMessage
+                showAlert = true
+                
+                if success {
+                    // Recargar los registros después de crear uno nuevo
+                    Task {
+                        await viewModel.fetchTimeRecords()
+                    }
+                }
+            }
+        }
+    }
+    
+    private func isValidHours(_ hoursString: String) -> Bool {
+        if hoursString.isEmpty {
+            return false
+        }
+        
+        let cleanedString = hoursString.replacingOccurrences(of: ",", with: ".")
+        guard let value = Double(cleanedString) else {
+            return false
+        }
+        
+        return value > 0 && value <= 24
     }
 }

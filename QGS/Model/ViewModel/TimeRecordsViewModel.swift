@@ -1,7 +1,8 @@
 import Foundation
 import Combine
 
-class TimeRecordsViewModel: ObservableObject {
+@MainActor
+class TimeRecordsViewModel: ObservableObject, @unchecked Sendable {
     @Published var timeRecords: [TimeRecord] = []
     @Published var filteredRecords: [TimeRecord] = []
     @Published var employees: [EmployeeCodable] = []
@@ -76,17 +77,13 @@ class TimeRecordsViewModel: ObservableObject {
     
     // Método para cargar datos detallados de un empleado específico
     func fetchEmployeeDetailRecords(employeeId: Int) async {
-        DispatchQueue.main.async {
-            self.isLoading = true
-            self.errorMessage = nil
-        }
+        isLoading = true
+        errorMessage = nil
         
         do {
             guard let token = UserManager.shared.authToken else {
-                DispatchQueue.main.async {
-                    self.errorMessage = "No hay token de autenticación"
-                    self.isLoading = false
-                }
+                errorMessage = "No hay token de autenticación"
+                isLoading = false
                 return
             }
             
@@ -111,32 +108,28 @@ class TimeRecordsViewModel: ObservableObject {
                 let decoder = JSONDecoder()
                 let detailedRecords = try decoder.decode([TimeRecord].self, from: data)
                 
-                DispatchQueue.main.async {
-                    // Actualizar los registros filtrados con los datos detallados
-                    self.filteredRecords = detailedRecords
-                    
-                    // También actualizar los registros generales si es necesario
-                    // Esto es útil si queremos mantener una caché de todos los registros detallados
-                    for detailedRecord in detailedRecords {
-                        if let index = self.timeRecords.firstIndex(where: { $0.id == detailedRecord.id }) {
-                            self.timeRecords[index] = detailedRecord
-                        } else {
-                            // Si el registro no existe en la lista general, lo añadimos
-                            self.timeRecords.append(detailedRecord)
-                        }
+                // Actualizar los registros filtrados con los datos detallados
+                filteredRecords = detailedRecords
+                
+                // También actualizar los registros generales si es necesario
+                // Esto es útil si queremos mantener una caché de todos los registros detallados
+                for detailedRecord in detailedRecords {
+                    if let index = timeRecords.firstIndex(where: { $0.id == detailedRecord.id }) {
+                        timeRecords[index] = detailedRecord
+                    } else {
+                        // Si el registro no existe en la lista general, lo añadimos
+                        timeRecords.append(detailedRecord)
                     }
-                    
-                    self.isLoading = false
                 }
+                
+                isLoading = false
             } else {
                 throw URLError(.badServerResponse)
             }
         } catch {
-            DispatchQueue.main.async {
-                self.errorMessage = "Error al cargar los registros detallados: \(error.localizedDescription)"
-                self.isLoading = false
-                print("Error al cargar registros detallados: \(error)")
-            }
+            errorMessage = "Error al cargar los registros detallados: \(error.localizedDescription)"
+            isLoading = false
+            print("Error al cargar registros detallados: \(error)")
         }
     }
     
@@ -167,20 +160,19 @@ class TimeRecordsViewModel: ObservableObject {
     
     // Método para actualizar horas y observaciones de un registro
     func updateTimeRecord(id: Int, hours: Double, observation: String) async -> Bool {
+        updateSuccess = false
+        updateMessage = ""
+        
         guard let token = UserManager.shared.authToken else {
-            DispatchQueue.main.async {
-                self.updateSuccess = false
-                self.updateMessage = "No hay token de autenticación"
-            }
+            updateSuccess = false
+            updateMessage = "No hay token de autenticación"
             return false
         }
         
         let urlString = "https://api.friendlypayroll.net/api/projects/update-data-time-work/\(id)"
         guard let url = URL(string: urlString) else {
-            DispatchQueue.main.async {
-                self.updateSuccess = false
-                self.updateMessage = "URL inválida"
-            }
+            updateSuccess = false
+            updateMessage = "URL inválida"
             return false
         }
         
@@ -202,33 +194,29 @@ class TimeRecordsViewModel: ObservableObject {
             let (data, response) = try await URLSession.shared.data(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
-                DispatchQueue.main.async {
-                    self.updateSuccess = false
-                    self.updateMessage = "Respuesta inválida del servidor"
-                }
+                updateSuccess = false
+                updateMessage = "Respuesta inválida del servidor"
                 return false
             }
             
             if httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 {
                 // Actualizar el registro localmente
-                DispatchQueue.main.async {
-                    if let index = self.timeRecords.firstIndex(where: { $0.id == id && $0.type == "Salida"}) {
-                        var updatedRecord = self.timeRecords[index]
-                        updatedRecord.hours = hours
-                        updatedRecord.observation = observation
-                        self.timeRecords[index] = updatedRecord
-                        
-                        // También actualizar en filteredRecords si existe
-                        if let filteredIndex = self.filteredRecords.firstIndex(where: { $0.id == id && $0.type == "Salida" }) {
-                            var updatedFilteredRecord = self.filteredRecords[filteredIndex]
-                            updatedFilteredRecord.hours = hours
-                            updatedFilteredRecord.observation = observation
-                            self.filteredRecords[filteredIndex] = updatedFilteredRecord
-                        }
-                        
-                        self.updateSuccess = true
-                        self.updateMessage = "Registro actualizado correctamente"
+                if let index = timeRecords.firstIndex(where: { $0.id == id && $0.type == "Salida"}) {
+                    var updatedRecord = timeRecords[index]
+                    updatedRecord.hours = hours
+                    updatedRecord.observation = observation
+                    timeRecords[index] = updatedRecord
+                    
+                    // También actualizar en filteredRecords si existe
+                    if let filteredIndex = filteredRecords.firstIndex(where: { $0.id == id && $0.type == "Salida" }) {
+                        var updatedFilteredRecord = filteredRecords[filteredIndex]
+                        updatedFilteredRecord.hours = hours
+                        updatedFilteredRecord.observation = observation
+                        filteredRecords[filteredIndex] = updatedFilteredRecord
                     }
+                    
+                    updateSuccess = true
+                    updateMessage = "Registro actualizado correctamente"
                 }
                 return true
             } else {
@@ -243,17 +231,13 @@ class TimeRecordsViewModel: ObservableObject {
                     errorMessage = "Error del servidor: Código \(httpResponse.statusCode)"
                 }
                 
-                DispatchQueue.main.async {
-                    self.updateSuccess = false
-                    self.updateMessage = errorMessage
-                }
+                updateSuccess = false
+                updateMessage = errorMessage
                 return false
             }
         } catch {
-            DispatchQueue.main.async {
-                self.updateSuccess = false
-                self.updateMessage = "Error: \(error.localizedDescription)"
-            }
+            updateSuccess = false
+            updateMessage = "Error: \(error.localizedDescription)"
             return false
         }
     }
@@ -266,9 +250,7 @@ class TimeRecordsViewModel: ObservableObject {
                 await fetchEmployeeDetailRecords(employeeId: employeeId)
                 
                 // Después de cargar los datos detallados, aplicar los filtros de fecha y tipo
-                DispatchQueue.main.async {
-                    self.applyDateAndTypeFilters(dates: dates, type: type)
-                }
+                applyDateAndTypeFilters(dates: dates, type: type)
             }
         } else {
             // Si no hay empleado seleccionado, aplicar filtros normales
@@ -300,9 +282,7 @@ class TimeRecordsViewModel: ObservableObject {
             }
             
             // Actualizar los registros filtrados
-            DispatchQueue.main.async {
-                self.filteredRecords = filtered
-            }
+            filteredRecords = filtered
         }
     }
     
@@ -335,14 +315,12 @@ class TimeRecordsViewModel: ObservableObject {
             filtered = filtered.filter { $0.type == type }
         }
         
-        self.filteredRecords = filtered
+        filteredRecords = filtered
     }
     
     // Método para limpiar todos los filtros
     func clearFilters() {
-        DispatchQueue.main.async {
-            self.filteredRecords = self.timeRecords
-        }
+        filteredRecords = timeRecords
     }
     
     // Método auxiliar para convertir string de fecha a Date
@@ -406,25 +384,19 @@ class TimeRecordsViewModel: ObservableObject {
     
     // Método para crear un nuevo registro de tiempo
     func createTimeRecord(employeeId: Int, date: String, time: String, type: String, hours: Double?, observation: String) async -> Bool {
-        DispatchQueue.main.async {
-            self.updateSuccess = false
-            self.updateMessage = ""
-        }
+        updateSuccess = false
+        updateMessage = ""
         
         guard let token = UserManager.shared.authToken else {
-            DispatchQueue.main.async {
-                self.updateSuccess = false
-                self.updateMessage = "No hay token de autenticación"
-            }
+            updateSuccess = false
+            updateMessage = "No hay token de autenticación"
             return false
         }
         
         let urlString = EndPoints.storeRecordAdmin
         guard let url = URL(string: urlString) else {
-            DispatchQueue.main.async {
-                self.updateSuccess = false
-                self.updateMessage = "URL inválida"
-            }
+            updateSuccess = false
+            updateMessage = "URL inválida"
             return false
         }
         
@@ -461,19 +433,15 @@ class TimeRecordsViewModel: ObservableObject {
             let (data, response) = try await URLSession.shared.data(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
-                DispatchQueue.main.async {
-                    self.updateSuccess = false
-                    self.updateMessage = "Respuesta inválida del servidor"
-                }
+                updateSuccess = false
+                updateMessage = "Respuesta inválida del servidor"
                 return false
             }
             
             if httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 {
                 // Registro creado exitosamente
-                DispatchQueue.main.async {
-                    self.updateSuccess = true
-                    self.updateMessage = "Registro creado correctamente"
-                }
+                updateSuccess = true
+                updateMessage = "Registro creado correctamente"
                 return true
             } else {
                 // Intentar decodificar el mensaje de error
@@ -487,17 +455,13 @@ class TimeRecordsViewModel: ObservableObject {
                     errorMessage = "Error del servidor: Código \(httpResponse.statusCode)"
                 }
                 
-                DispatchQueue.main.async {
-                    self.updateSuccess = false
-                    self.updateMessage = errorMessage
-                }
+                updateSuccess = false
+                updateMessage = errorMessage
                 return false
             }
         } catch {
-            DispatchQueue.main.async {
-                self.updateSuccess = false
-                self.updateMessage = "Error: \(error.localizedDescription)"
-            }
+            updateSuccess = false
+            updateMessage = "Error: \(error.localizedDescription)"
             return false
         }
     }

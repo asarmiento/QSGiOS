@@ -792,17 +792,15 @@ struct AddTimeRecordView: View {
                 observation: observation
             )
             
-            DispatchQueue.main.async {
-                isLoading = false
-                isSuccess = success
-                alertMessage = viewModel.updateMessage
-                showAlert = true
-                
-                if success {
-                    // Recargar los registros después de crear uno nuevo
-                    Task {
-                        await viewModel.fetchTimeRecords()
-                    }
+            isLoading = false
+            isSuccess = success
+            alertMessage = viewModel.updateMessage
+            showAlert = true
+            
+            if success {
+                // Recargar los registros después de crear uno nuevo
+                Task {
+                    viewModel.fetchTimeRecords()
                 }
             }
         }

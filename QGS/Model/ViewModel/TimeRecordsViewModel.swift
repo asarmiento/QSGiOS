@@ -20,7 +20,7 @@ class TimeRecordsViewModel: ObservableObject {
             return
         }
         
-        let url = URL(string: "https://api.friendlypayroll.net/api/colaboradores/time-records")!
+        let url = URL(string: "https://api.friendlypayroll.net/api/projects/list-time-works")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -117,9 +117,24 @@ class TimeRecordsViewModel: ObservableObject {
     
     // Método auxiliar para convertir string de fecha a Date
     private func dateFromString(_ dateString: String) -> Date? {
+        // Primero intentamos con el formato dd/MM/yyyy (formato que viene del API)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
-        return dateFormatter.date(from: dateString)
+        if let date = dateFormatter.date(from: dateString) {
+            return date
+        }
+        
+        // Si falla, intentamos con el formato yyyy-MM-dd (formato alternativo)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        if let date = dateFormatter.date(from: dateString) {
+            return date
+        }
+        
+        // Si ambos fallan, intentamos con el formato del sistema
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        return formatter.date(from: dateString)
     }
     
     // Método para filtrar registros por múltiples fechas (para compatibilidad con código existente)

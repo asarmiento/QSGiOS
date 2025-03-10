@@ -1,4 +1,3 @@
-
 import Foundation
 import SwiftUI
 import FirebaseAnalytics
@@ -242,8 +241,7 @@ struct SelectedDatesView: View {
     
     private func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.locale = Locale(identifier: "es")
+        formatter.dateFormat = "dd/MM/yyyy" // Formato consistente con el API
         return formatter.string(from: date)
     }
 }

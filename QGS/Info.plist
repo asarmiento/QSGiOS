@@ -19,13 +19,8 @@
 	<true/>
 	<key>FirebaseMessagingAutoInitEnabled</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Esta aplicación solicita acceso al identificador de tu dispositivo para mejorar la experiencia del usuario y proporcionar análisis más precisos.</string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
@@ -51,15 +46,15 @@
 	<key>aps-environment</key>
 	<string>development</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Esta aplicación necesita acceso a la cámara para escanear códigos QR y tomar fotos de documentos.</string>
+	<string>Necesitamos acceso a tu cámara para que puedas tomar fotos para tu perfil o documentos.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Esta aplicación necesita acceso a tu ubicación para mostrar la posición de los empleados en el mapa.</string>
+	<string>Necesitamos acceso a tu ubicación para registrar correctamente tus entradas y salidas.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Esta aplicación necesita acceso a tu ubicación para mostrar la posición de los empleados en el mapa, incluso cuando la app está en segundo plano.</string>
+	<string>Necesitamos acceso a tu ubicación para registrar correctamente tus entradas y salidas incluso cuando la aplicación está en segundo plano.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Esta aplicación necesita acceso al micrófono para grabar notas de voz.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Esta aplicación necesita acceso a tu biblioteca de fotos para seleccionar imágenes.</string>
+	<string>Necesitamos acceso a tu biblioteca de fotos para que puedas seleccionar imágenes para tu perfil o documentos.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Esta aplicación necesita acceso a tus contactos para facilitar la comunicación con los empleados.</string>
 	<key>NSCalendarsUsageDescription</key>

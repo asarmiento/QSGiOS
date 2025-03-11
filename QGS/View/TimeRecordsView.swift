@@ -8,31 +8,71 @@ struct TimeRecordsView: View {
     @State private var selectedEmployeeId: Int?
     @State private var selectedDates: Set<DateComponents> = []
     @State private var selectedType: String = "Entrada"
-    
+    @State private var hasAccess: Bool = false
+    // Función estática para verificar si el usuario tiene acceso
+    static func userHasAccess() -> Bool {
+        // Verificar si el tipo de usuario no es "employee"
+        if let userType = UserManager.shared.userType {
+            return userType != "employee"
+        }
+        return false
+    }
     let oneMonthAgo: Date = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
     
     var body: some View {
         NavigationStack {
             GeometryReader { proxy in
-                VStack(spacing: 0) {
-                    // Sección de Filtros
-                    FilterSection(
-                        proxy: proxy,
-                        viewModel: viewModel,
-                        selectedEmployeeId: $selectedEmployeeId,
-                        selectedDates: $selectedDates,
-                        selectedType: $selectedType,
-                        oneMonthAgo: oneMonthAgo
-                    )
-                    
-                    // Sección de Lista
-                    RecordListSection(
-                        proxy: proxy,
-                        viewModel: viewModel
-                    )
-                }
+              
+                    VStack(spacing: 0) {
+                        if hasAccess {
+                        // Sección de Filtros
+                        FilterSection(
+                            proxy: proxy,
+                            viewModel: viewModel,
+                            selectedEmployeeId: $selectedEmployeeId,
+                            selectedDates: $selectedDates,
+                            selectedType: $selectedType,
+                            oneMonthAgo: oneMonthAgo
+                        )
+                        
+                        // Sección de Lista
+                        RecordListSection(
+                            proxy: proxy,
+                            viewModel: viewModel
+                        )
+                        } else {
+                            ZStack {
+                                // Marca de agua
+                                Image("QGS-Branding-01")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .opacity(0.1)
+                                
+                                // Mensaje de acceso denegado
+                                VStack(spacing: 20) {
+                                    Image(systemName: "exclamationmark.shield")
+                                        .font(.system(size: 60))
+                                        .foregroundColor(.red)
+                                    
+                                    Text("Acceso Denegado")
+                                        .font(.title)
+                                        .fontWeight(.bold)
+                                    
+                                    Text("No tienes permisos para acceder a esta sección.")
+                                        .multilineTextAlignment(.center)
+                                        .padding()
+                                }
+                                .padding()
+                            }
+                            .frame(width: proxy.size.width, height: proxy.size.height)
+                        }
+                    }
+              
             }
             .onAppear {
+                // Verificar si el usuario tiene acceso
+                checkUserAccess()
+                hasAccess = TimeRecordsView.userHasAccess()
                 if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                     appDelegate.logScreenView(
                         screenName: "TimeRecords",
@@ -40,9 +80,21 @@ struct TimeRecordsView: View {
                     )
                 }
                 
-                viewModel.fetchTimeRecords()
-                viewModel.fetchEmployees()
+                if hasAccess {
+                    viewModel.fetchTimeRecords()
+                    viewModel.fetchEmployees()
+                }
             }
+        }
+    }
+    
+    private func checkUserAccess() {
+        // Verificar el tipo de usuario desde UserManager
+        if let userType = UserManager.shared.userType {
+            // Si el usuario es administrador o supervisor, tiene acceso
+            hasAccess = userType.lowercased() != "empleado"
+        } else {
+            hasAccess = false
         }
     }
 }

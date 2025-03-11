@@ -10,7 +10,16 @@ struct EmployeeMessagingView: View {
     @State private var confirmationMessage = ""
     @State private var isSuccess = false
     @State private var searchText = ""
+    @State private var hasAccess: Bool = false
     
+    // Función estática para verificar si el usuario tiene acceso
+    static func userHasAccess() -> Bool {
+        // Verificar si el tipo de usuario no es "employee"
+        if let userType = UserManager.shared.userType {
+            return userType != "employee"
+        }
+        return false
+    }
     var filteredEmployees: [EmployeeCodable] {
         if searchText.isEmpty {
             return viewModel.employees
@@ -26,90 +35,119 @@ struct EmployeeMessagingView: View {
     var body: some View {
         NavigationView {
             VStack {
-                if viewModel.isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(1.5)
-                        .padding()
-                } else if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .padding()
-                } else {
-                    // Área de búsqueda
-                    SearchBar(text: $searchText)
-                    
-                    // Selector para todos los empleados
-                    HStack {
-                        Toggle("Seleccionar todos", isOn: $viewModel.selectAll)
-                            .onChange(of: viewModel.selectAll) { _, newValue in
-                                viewModel.toggleSelectAll(newValue)
-                            }
-                            .toggleStyle(SwitchToggleStyle(tint: .blue))
-                        
-                        Spacer()
-                        
-                        Text("\(viewModel.selectedEmployees.count) seleccionados")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                    }
-                    .padding(.horizontal)
-                    
-                    // Lista de empleados
-                    List {
-                        ForEach(filteredEmployees) { employee in
-                            EmployeeSelectionRow(
-                                employee: employee,
-                                isSelected: viewModel.isSelected(employee),
-                                onToggle: { viewModel.toggleSelection(for: employee) }
-                            )
-                        }
-                    }
-                    .listStyle(PlainListStyle())
-                    
-                    // Área de mensaje
-                    VStack(alignment: .leading) {
-                        Text("Mensaje")
-                            .font(.headline)
-                            .padding(.horizontal)
-                        
-                        TextEditor(text: $messageText)
-                            .frame(minHeight: 100)
-                            .padding(4)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                            )
-                            .padding(.horizontal)
-                        
-                        // Botón de enviar
-                        Button(action: sendMessage) {
-                            HStack {
-                                Spacer()
-                                if viewModel.isSending {
-                                    ProgressView()
-                                        .progressViewStyle(CircularProgressViewStyle())
-                                        .foregroundColor(.white)
-                                } else {
-                                    Text("Enviar Mensaje")
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                }
-                                Spacer()
-                            }
+                if hasAccess {
+                    if viewModel.isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(1.5)
                             .padding()
-                            .background(viewModel.canSendMessage ? Color.blue : Color.gray)
-                            .cornerRadius(10)
-                            .padding(.horizontal)
+                    } else if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .padding()
+                    } else {
+                        // Área de búsqueda
+                        SearchBar(text: $searchText)
+                        
+                        // Selector para todos los empleados
+                        HStack {
+                            Toggle("Seleccionar todos", isOn: $viewModel.selectAll)
+                                .onChange(of: viewModel.selectAll) { _, newValue in
+                                    viewModel.toggleSelectAll(newValue)
+                                }
+                                .toggleStyle(SwitchToggleStyle(tint: .blue))
+                            
+                            Spacer()
+                            
+                            Text("\(viewModel.selectedEmployees.count) seleccionados")
+                                .font(.caption)
+                                .foregroundColor(.gray)
                         }
-                        .disabled(!viewModel.canSendMessage)
+                        .padding(.horizontal)
+                        
+                        // Lista de empleados
+                        List {
+                            ForEach(filteredEmployees) { employee in
+                                EmployeeSelectionRow(
+                                    employee: employee,
+                                    isSelected: viewModel.isSelected(employee),
+                                    onToggle: { viewModel.toggleSelection(for: employee) }
+                                )
+                            }
+                        }
+                        .listStyle(PlainListStyle())
+                        
+                        // Área de mensaje
+                        VStack(alignment: .leading) {
+                            Text("Mensaje")
+                                .font(.headline)
+                                .padding(.horizontal)
+                            
+                            TextEditor(text: $messageText)
+                                .frame(minHeight: 100)
+                                .padding(4)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                                )
+                                .padding(.horizontal)
+                            
+                            // Botón de enviar
+                            Button(action: sendMessage) {
+                                HStack {
+                                    Spacer()
+                                    if viewModel.isSending {
+                                        ProgressView()
+                                            .progressViewStyle(CircularProgressViewStyle())
+                                            .foregroundColor(.white)
+                                    } else {
+                                        Text("Enviar Mensaje")
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                    }
+                                    Spacer()
+                                }
+                                .padding()
+                                .background(viewModel.canSendMessage ? Color.blue : Color.gray)
+                                .cornerRadius(10)
+                                .padding(.horizontal)
+                            }
+                            .disabled(!viewModel.canSendMessage)
+                        }
+                        .padding(.bottom)
                     }
-                    .padding(.bottom)
+                } else {
+                    ZStack {
+                        // Marca de agua
+                        Image("QGS-Branding-01")
+                            .resizable()
+                            .scaledToFit()
+                            .opacity(0.1)
+                        
+                        // Mensaje de acceso denegado
+                        VStack(spacing: 20) {
+                            Image(systemName: "exclamationmark.shield")
+                                .font(.system(size: 60))
+                                .foregroundColor(.red)
+                            
+                            Text("Acceso Denegado")
+                                .font(.title)
+                                .fontWeight(.bold)
+                            
+                            Text("No tienes permisos para acceder a esta sección.")
+                                .multilineTextAlignment(.center)
+                                .padding()
+                        }
+                        .padding()
+                    }
                 }
             }
             .navigationTitle("Mensajes a Empleados")
             .onAppear {
-                if viewModel.employees.isEmpty {
+                // Verificar si el usuario tiene acceso
+                checkUserAccess()
+                hasAccess = EmployeeMessagingView.userHasAccess()
+                if hasAccess && viewModel.employees.isEmpty {
                     Task {
                         await viewModel.fetchEmployees()
                     }
@@ -122,6 +160,16 @@ struct EmployeeMessagingView: View {
                     dismissButton: .default(Text("Aceptar"))
                 )
             }
+        }
+    }
+    
+    private func checkUserAccess() {
+        // Verificar el tipo de usuario desde UserManager
+        if let userType = UserManager.shared.userType {
+            // Si el usuario es administrador o supervisor, tiene acceso
+            hasAccess = userType.lowercased() != "empleado"
+        } else {
+            hasAccess = false
         }
     }
     

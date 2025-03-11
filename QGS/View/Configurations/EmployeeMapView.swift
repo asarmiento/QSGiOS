@@ -9,81 +9,115 @@ struct EmployeeMapView: View {
     @State private var selectedEmployee: EmployeeLocation?
     @State private var showingEmployeeInfo = false
     @State private var position: MapCameraPosition = .automatic
+    @State private var hasAccess: Bool = false
     
-
+    // Función estática para verificar si el usuario tiene acceso
+    static func userHasAccess() -> Bool {
+        // Verificar si el tipo de usuario no es "employee"
+        if let userType = UserManager.shared.userType {
+            return userType != "employee"
+        }
+        return false
+    }
     
     var body: some View {
         NavigationView {
             ZStack {
-                if #available(iOS 17.0, *) {
-                    // Usamos una propiedad de estado local que se actualiza con la región del ViewModel
-                    Map(position: $position) {
-                        ForEach(viewModel.employeeLocations) { location in
-                            Annotation(location.employeeName, coordinate: location.coordinate) {
-                                Button(action: {
-                                    selectedEmployee = location
-                                    showingEmployeeInfo = true
-                                }) {
-                                    VStack {
-                                        Image(systemName: "person.circle.fill")
-                                            .font(.title)
-                                            .foregroundColor(.blue)
-                                        
-                                        Text(location.employeeName)
-                                            .font(.caption)
-                                            .padding(4)
-                                            .background(Color.white.opacity(0.8))
-                                            .cornerRadius(4)
+                if hasAccess {
+                    if #available(iOS 17.0, *) {
+                        // Usamos una propiedad de estado local que se actualiza con la región del ViewModel
+                        Map(position: $position) {
+                            ForEach(viewModel.employeeLocations) { location in
+                                Annotation(location.employeeName, coordinate: location.coordinate) {
+                                    Button(action: {
+                                        selectedEmployee = location
+                                        showingEmployeeInfo = true
+                                    }) {
+                                        VStack {
+                                            Image(systemName: "person.circle.fill")
+                                                .font(.title)
+                                                .foregroundColor(.blue)
+                                            
+                                            Text(location.employeeName)
+                                                .font(.caption)
+                                                .padding(4)
+                                                .background(Color.white.opacity(0.8))
+                                                .cornerRadius(4)
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    .onAppear {
-                        // Actualizar la posición cuando cambia la región
-                        position = viewModel.mapCameraPosition
-                    }
-                    .onChange(of: "\(viewModel.region.center.latitude),\(viewModel.region.center.longitude)") { _, _ in
-                        position = viewModel.mapCameraPosition
-                    }
-                } else {
-                    Map(coordinateRegion: $viewModel.region,
-                        annotationItems: viewModel.employeeLocations) { location in
-                        MapAnnotation(coordinate: location.coordinate) {
-                            VStack {
-                                Image(systemName: "person.circle.fill")
-                                    .font(.title)
-                                    .foregroundColor(.blue)
-                                    .onTapGesture {
-                                        selectedEmployee = location
-                                        showingEmployeeInfo = true
-                                    }
-                                
-                                Text(location.employeeName)
-                                    .font(.caption)
-                                    .padding(4)
-                                    .background(Color.white.opacity(0.8))
-                                    .cornerRadius(4)
+                        .onAppear {
+                            // Actualizar la posición cuando cambia la región
+                            position = viewModel.mapCameraPosition
+                        }
+                        .onChange(of: "\(viewModel.region.center.latitude),\(viewModel.region.center.longitude)") { _, _ in
+                            position = viewModel.mapCameraPosition
+                        }
+                    } else {
+                        Map(coordinateRegion: $viewModel.region,
+                            annotationItems: viewModel.employeeLocations) { location in
+                            MapAnnotation(coordinate: location.coordinate) {
+                                VStack {
+                                    Image(systemName: "person.circle.fill")
+                                        .font(.title)
+                                        .foregroundColor(.blue)
+                                        .onTapGesture {
+                                            selectedEmployee = location
+                                            showingEmployeeInfo = true
+                                        }
+                                    
+                                    Text(location.employeeName)
+                                        .font(.caption)
+                                        .padding(4)
+                                        .background(Color.white.opacity(0.8))
+                                        .cornerRadius(4)
+                                }
                             }
                         }
                     }
-                }
-                
-                if viewModel.isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(1.5)
+                    
+                    if viewModel.isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(1.5)
+                            .padding()
+                            .background(Color.white.opacity(0.8))
+                            .cornerRadius(10)
+                    }
+                    
+                    if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .padding()
+                            .background(Color.white.opacity(0.8))
+                            .cornerRadius(10)
+                    }
+                } else {
+                    ZStack {
+                        // Marca de agua
+                        Image("QGS-Branding-01")
+                            .resizable()
+                            .scaledToFit()
+                            .opacity(0.1)
+                        
+                        // Mensaje de acceso denegado
+                        VStack(spacing: 20) {
+                            Image(systemName: "exclamationmark.shield")
+                                .font(.system(size: 60))
+                                .foregroundColor(.red)
+                            
+                            Text("Acceso Denegado")
+                                .font(.title)
+                                .fontWeight(.bold)
+                            
+                            Text("No tienes permisos para acceder a esta sección.")
+                                .multilineTextAlignment(.center)
+                                .padding()
+                        }
                         .padding()
-                        .background(Color.white.opacity(0.8))
-                        .cornerRadius(10)
-                }
-                
-                if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .padding()
-                        .background(Color.white.opacity(0.8))
-                        .cornerRadius(10)
+                    }
                 }
             }
             .navigationTitle("Ubicación de Empleados")
@@ -93,13 +127,30 @@ struct EmployeeMapView: View {
                 }
             }
             .onAppear {
-                Task {
-                    await viewModel.fetchEmployeeLocations()
+                // Verificar si el usuario tiene acceso
+                checkUserAccess()
+                hasAccess = EmployeeMapView.userHasAccess()
+                if hasAccess {
+                    Task {
+                        await viewModel.fetchEmployeeLocations()
+                    }
                 }
             }
             .refreshable {
-                await viewModel.fetchEmployeeLocations()
+                if hasAccess {
+                    await viewModel.fetchEmployeeLocations()
+                }
             }
+        }
+    }
+    
+    private func checkUserAccess() {
+        // Verificar el tipo de usuario desde UserManager
+        if let userType = UserManager.shared.userType {
+            // Si el usuario es administrador o supervisor, tiene acceso
+            hasAccess = userType.lowercased() != "empleado"
+        } else {
+            hasAccess = false
         }
     }
 }

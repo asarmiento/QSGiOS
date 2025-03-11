@@ -5,6 +5,7 @@ import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
 import FirebaseAnalytics
+import AppTrackingTransparency
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -14,8 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configura Firebase
         FirebaseApp.configure()
         
-        // Configurar Analytics
-        Analytics.setAnalyticsCollectionEnabled(true)
+        // Desactivar completamente Analytics
+        Analytics.setAnalyticsCollectionEnabled(false)
+        
+        // Desactivar el seguimiento de usuarios
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                // No hacemos nada con el resultado, solo cumplimos con el requisito
+            }
+        }
         
         // Configurar Messaging
         Messaging.messaging().delegate = self
@@ -23,15 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configurar notificaciones
         UNUserNotificationCenter.current().delegate = self
         
-        
         // Solicitar permisos para notificaciones
         requestNotificationPermissions()
         
         // Registra para recibir notificaciones remotas
         application.registerForRemoteNotifications()
         
-        // enviar el token a firebase
-      //  NotificationManager.shared.registerForPushNotifications()
         // Imprimir estado actual
         if let token = Messaging.messaging().fcmToken {
             print("✅ Token FCM existente: \(token)")
@@ -58,11 +63,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    // Agregar función para registrar pantallas en Analytics
+    // Reemplazar la función de Analytics con una versión vacía
     func logScreenView(screenName: String, screenClass: String) {
-        Analytics.logEvent(AnalyticsEventScreenView,
-                         parameters: [AnalyticsParameterScreenName: screenName,
-                                    AnalyticsParameterScreenClass: screenClass])
+        // No hacemos nada, para evitar el seguimiento
+        print("Intento de registro de pantalla ignorado: \(screenName)")
     }
 
     func refreshFCMToken() {
@@ -107,11 +111,8 @@ extension AppDelegate {
                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        // Registrar evento de notificación recibida
-        Analytics.logEvent("notification_received", parameters: [
-            "type": userInfo["type"] as? String ?? "unknown",
-            "background": UIApplication.shared.applicationState != .active
-        ])
+        // Eliminar el registro de eventos de Analytics
+        print("Notificación recibida en estado: \(UIApplication.shared.applicationState != .active ? "background" : "foreground")")
         
         completionHandler(.newData)
     }
@@ -151,12 +152,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let userInfo = response.notification.request.content.userInfo
         print("Notificación recibida: \(userInfo)")
 
-        // Verifica si se incluye el parámetro de evento
+        // Eliminar el registro de eventos en Analytics
         if let event = userInfo["event"] as? String {
-            // Registra el evento en Firebase Analytics
-            Analytics.logEvent(event, parameters: [
-                "category": userInfo["category"] as? String ?? "unknown"
-            ])
+            print("Evento de notificación recibido: \(event)")
         }
 
         completionHandler()

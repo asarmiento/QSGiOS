@@ -31,7 +31,7 @@ struct ConfigurationView: View {
             MenuItem(icon: "NewProject2", title: "Gestión Proyectos", destination: nil),
             MenuItem(icon: "Projects", title: "Proyectos", destination: AnyView(ProjectsListView())),
             MenuItem(icon: "Projects2", title: "Ubicación de Empleados", destination: AnyView(EmployeeMapView())),
-            MenuItem(icon: "WorkHours", title: "Horas Trabajo", destination: AnyView(PDFView()))
+            MenuItem(icon: "WorkHours", title: "Horas Trabajo", destination: AnyView(PDFViewContainer()))
         ]
     }
     

@@ -27,8 +27,8 @@ struct ConfigurationView: View {
             MenuItem(icon: "Message1", title: "Reportes", destination: AnyView(TimeRecordsView())),
             MenuItem(icon: "Message2", title: "Calendario", destination: nil),
             MenuItem(icon: "Message3", title: "Mensaje", destination: AnyView(EmployeeMessagingView())),
-            MenuItem(icon: "NewProject", title: "Nuevo Proyecto", destination: nil),
-            MenuItem(icon: "NewProject2", title: "Gestión Proyectos", destination: nil),
+            MenuItem(icon: "NewProject", title: "Nuevo Proyecto", destination: AnyView(ProjectListView())),
+            MenuItem(icon: "NewProject2", title: "Compras Proyectos", destination: nil),
             MenuItem(icon: "Projects", title: "Proyectos", destination: AnyView(ProjectsListView())),
             MenuItem(icon: "Projects2", title: "Ubicación de Empleados", destination: AnyView(EmployeeMapView())),
             MenuItem(icon: "WorkHours", title: "Horas Trabajo", destination: AnyView(PDFViewContainer()))

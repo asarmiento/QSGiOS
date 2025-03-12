@@ -13,7 +13,6 @@ class ProjectsViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     func fetchProjects() {
-
         isLoading = true
         errorMessage = nil
 
@@ -46,23 +45,20 @@ class ProjectsViewModel: ObservableObject {
                     }
                 }
 
-
                 // Imprimir la respuesta para depuración
-//                if let jsonString = String(data: data, encoding: .utf8) {
-//                    print("JSON recibido: \(jsonString.prefix(200))...")
-//                }
+                if let jsonString = String(data: data, encoding: .utf8) {
+                    print("JSON recibido (primeros 200 caracteres): \(jsonString.prefix(200))...")
+                }
                 
                 // Intentar decodificar manualmente primero para verificar la estructura
                 if let json = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]],
                    let firstProject = json.first {
                     print("Claves del primer proyecto: \(firstProject.keys)")
+                    print("Tipo de budget: \(type(of: firstProject["budget"] ?? "desconocido"))")
                 }
                 
-                // Decodificar los proyectos
+                // Decodificar los proyectos directamente con el modelo actualizado
                 let decoder = JSONDecoder()
-                
-                // Configurar el decodificador para manejar claves en snake_case
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 do {
                     self.projects = try decoder.decode([Project].self, from: data)
@@ -70,46 +66,56 @@ class ProjectsViewModel: ObservableObject {
                 } catch let decodingError {
                     print("Error de decodificación: \(decodingError)")
                     
-                    // Intentar una decodificación alternativa
-                    let alternativeDecoder = JSONDecoder()
-                    // Sin estrategia de conversión de claves
-                    
-                    do {
-                        // Definir un modelo alternativo para la decodificación
-                        struct ProjectDTO: Codable {
-                            let id: Int
-                            let name: String
-                            let address: String
-                            let altitude: String
-                            let longitude: String
-                            let status: Int
-                            let created_at: String
-                            let updated_at: String
-                            let hours: String?
-                            let month: String?
-                        }
+                    // Si falla la decodificación directa, intentar procesar manualmente
+                    if let json = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
+                        var newProjects: [Project] = []
                         
-                        let dtos = try alternativeDecoder.decode([ProjectDTO].self, from: data)
-                        
-                        // Convertir DTOs a modelos Project
-                        self.projects = dtos.map { dto in
-                            Project(
-                                id: dto.id,
-                                name: dto.name,
-                                address: dto.address,
-                                altitude: dto.altitude,
-                                longitude: dto.longitude,
-                                status: dto.status,
-                                createdAt: dto.created_at,
-                                updatedAt: dto.updated_at,
-                                hours: dto.hours,
-                                month: dto.month
+                        for projectData in json {
+                            let id = projectData["id"] as? Int ?? 0
+                            let name = projectData["name"] as? String ?? ""
+                            let address = projectData["address"] as? String ?? ""
+                            let altitude = projectData["altitude"] as? String ?? ""
+                            let longitude = projectData["longitude"] as? String ?? ""
+                            let status = projectData["status"] as? Int ?? 0
+                            
+                            // Manejar el budget que puede ser String o Double
+                            var budget: Double = 0.0
+                            if let budgetDouble = projectData["budget"] as? Double {
+                                budget = budgetDouble
+                            } else if let budgetString = projectData["budget"] as? String,
+                                      let budgetValue = Double(budgetString) {
+                                budget = budgetValue
+                            }
+                            
+                            let createdAt = projectData["created_at"] as? String
+                            let updatedAt = projectData["updated_at"] as? String
+                            let hours = projectData["hours"] as? String
+                            let month = projectData["month"] as? String
+                            let year = projectData["year"] as? String
+                            let sysconfId = projectData["sysconf_id"] as? Int
+                            
+                            let project = Project(
+                                id: id,
+                                name: name,
+                                address: address,
+                                altitude: altitude,
+                                longitude: longitude,
+                                status: status,
+                                budget: budget,
+                                createdAt: createdAt,
+                                updatedAt: updatedAt,
+                                hours: hours,
+                                month: month,
+                                year: year,
+                                sysconfId: sysconfId
                             )
+                            
+                            newProjects.append(project)
                         }
                         
-                        print("Proyectos cargados con método alternativo: \(self.projects.count)")
-                    } catch let alternativeError {
-                        print("Error en decodificación alternativa: \(alternativeError)")
+                        self.projects = newProjects
+                        print("Proyectos cargados manualmente: \(self.projects.count)")
+                    } else {
                         throw decodingError
                     }
                 }
@@ -124,7 +130,5 @@ class ProjectsViewModel: ObservableObject {
             
             isLoading = false
         }
-      
     }
-  
 }

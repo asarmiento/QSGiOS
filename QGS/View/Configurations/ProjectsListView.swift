@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ProjectsListView: View {
     @StateObject private var viewModel = ProjectsViewModel()
+    @State private var showingAddProject = false
 
     var body: some View {
         ZStack {
@@ -27,6 +28,23 @@ struct ProjectsListView: View {
             }
         }
         .navigationTitle(NSLocalizedString("Proyectos", comment: ""))
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if let user = UserManager.shared.getUser(), user.type != "employee" {
+                    Button(action: {
+                        showingAddProject = true
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(Color.myPrimary)
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $showingAddProject) {
+            AddProjectView(isPresented: $showingAddProject, onProjectAdded: {
+                viewModel.fetchProjects()
+            })
+        }
         .onAppear {
             viewModel.fetchProjects()
         }
@@ -137,6 +155,3 @@ struct ErrorView: View {
     }
 }
 
-#Preview {
-    ProjectsListView()
-}

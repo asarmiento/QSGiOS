@@ -176,13 +176,12 @@ struct PDFViewContainer: View {
                 checkUserAccess()
                 hasAccess = PDFViewContainer.userHasAccess()
                 if hasAccess {
-                    Task {
-                        await loadPDFData()
-                    }
+                    loadPDFData()
                 }
-            }.refreshable {
+            }
+            .refreshable {
                 if hasAccess {
-                    await loadPDFData()
+                    loadPDFData()
                 }
             }
         }

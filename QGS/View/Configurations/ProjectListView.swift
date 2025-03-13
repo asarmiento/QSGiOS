@@ -589,6 +589,7 @@ struct MapContentView: View {
     @Binding var selectedProject: Project?
     @Binding var showingEditProject: Bool
     @Binding var mapType: MKMapType
+    @State private var mapTypeChanged = false
     let centerMapOnProjects: () -> Void
     let dismiss: DismissAction
     
@@ -631,15 +632,50 @@ struct MapContentView: View {
     
     // Mapa base
     private var mapView: some View {
-        Map(coordinateRegion: $region, 
-            showsUserLocation: false,
+        #if swift(>=5.9) && canImport(MapKit) && os(iOS)
+        if #available(iOS 17.0, *) {
+            return Map {
+                ForEach(validProjects) { project in
+                    if let latitude = Double(project.altitude), 
+                       let longitude = Double(project.longitude) {
+                        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                        Marker(project.name, coordinate: coordinate)
+                            .tint(project.status == 1 ? .green : .red)
+                    }
+                }
+            }
+            .mapStyle(mapType == .standard ? .standard : .hybrid)
+            .mapControls {
+                MapCompass()
+                MapScaleView()
+            }
+            .edgesIgnoringSafeArea(.all)
+        } else {
+            return Map(coordinateRegion: $region,
+                interactionModes: .all,
+                showsUserLocation: true,
+                userTrackingMode: .none,
+                annotationItems: validProjects) { project in
+                MapMarker(coordinate: CLLocationCoordinate2D(
+                    latitude: Double(project.altitude) ?? 0.0,
+                    longitude: Double(project.longitude) ?? 0.0
+                ), tint: project.status == 1 ? .green : .red)
+            }
+            .edgesIgnoringSafeArea(.all)
+        }
+        #else
+        return Map(coordinateRegion: $region,
+            interactionModes: .all,
+            showsUserLocation: true,
+            userTrackingMode: .none,
             annotationItems: validProjects) { project in
-            // Usar un marcador estándar para evitar problemas de compatibilidad
-            MapMarker(coordinate: project.coordinate, tint: .red)
+            MapMarker(coordinate: CLLocationCoordinate2D(
+                latitude: Double(project.altitude) ?? 0.0,
+                longitude: Double(project.longitude) ?? 0.0
+            ), tint: project.status == 1 ? .green : .red)
         }
         .edgesIgnoringSafeArea(.all)
-        // Añadir un ID para forzar la recarga del mapa cuando cambia el tipo
-        .id(mapType)
+        #endif
     }
     
     // Etiquetas de proyectos
@@ -654,25 +690,49 @@ struct MapContentView: View {
     
     // Etiqueta individual para un proyecto
     private func projectLabel(for project: Project) -> some View {
-        ZStack {
-            // Fondo de la etiqueta
-            RoundedRectangle(cornerRadius: 5)
-                .fill(Color.white.opacity(0.8))
-                .shadow(radius: 1)
-                .frame(width: CGFloat(project.name.count) * 7 + 10, height: 24)
-            
-            // Texto de la etiqueta con fuente del sistema
-            Text(project.name)
-                .font(.system(size: 12, weight: .bold))
-                .foregroundColor(.black)
+        // Obtener la posición válida (si existe)
+        let validPosition = getValidPosition(for: project)
+        
+        // Crear una vista condicional
+        return ZStack {
+            // Solo mostrar el contenido si las coordenadas son válidas
+            if validPosition != nil {
+                // Fondo de la etiqueta
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(Color.white.opacity(0.8))
+                    .shadow(radius: 1)
+                    .frame(width: CGFloat(project.name.count) * 7 + 10, height: 24)
+                
+                // Texto de la etiqueta con fuente del sistema específica (no variable)
+                Text(project.name)
+                    .font(.system(size: 12, weight: .medium, design: .default))
+                    .foregroundColor(.black)
+            }
         }
         .position(
-            x: region.getOffsetX(for: project.coordinate),
-            y: region.getOffsetY(for: project.coordinate) + 180
+            x: validPosition?.x ?? 0,
+            y: (validPosition?.y ?? 0) + 180
         )
+        .opacity(validPosition != nil ? 1 : 0) // Ocultar si no hay posición válida
         .onTapGesture {
-            selectedProject = project
+            if validPosition != nil {
+                selectedProject = project
+            }
         }
+    }
+    
+    // Función auxiliar para obtener una posición válida
+    private func getValidPosition(for project: Project) -> CGPoint? {
+        let xOffset = region.getOffsetX(for: project.coordinate)
+        let yOffset = region.getOffsetY(for: project.coordinate)
+        
+        // Verificar si las coordenadas son válidas
+        guard !xOffset.isNaN && !yOffset.isNaN && 
+              xOffset.isFinite && yOffset.isFinite else {
+            return nil
+        }
+        
+        return CGPoint(x: xOffset, y: yOffset)
     }
     
     // Controles y tarjeta de información
@@ -692,25 +752,41 @@ struct MapContentView: View {
     
     // Selector de tipo de mapa
     private var mapTypeSelector: some View {
-        HStack {
-            Picker("Tipo de Mapa", selection: $mapType) {
-                Text("Estándar").tag(MKMapType.standard)
-                Text("Satélite").tag(MKMapType.satellite)
-                Text("Híbrido").tag(MKMapType.hybrid)
+        let picker = Picker("Tipo de Mapa", selection: $mapType) {
+            Text("Estándar").tag(MKMapType.standard)
+            Text("Satélite").tag(MKMapType.satellite)
+            Text("Híbrido").tag(MKMapType.hybrid)
+        }
+        .pickerStyle(SegmentedPickerStyle())
+        .padding(8)
+        .background(Color.white.opacity(0.8))
+        .cornerRadius(8)
+        
+        // Aplicar el onChange según la versión de iOS
+        #if swift(>=5.9) && canImport(SwiftUI) && os(iOS)
+        if #available(iOS 17.0, *) {
+            return picker.onChange(of: mapType) { _, _ in
+                // Forzar recarga del mapa cuando cambia el tipo
+                withAnimation {
+                    mapTypeChanged.toggle()
+                }
             }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding(8)
-            .background(Color.white.opacity(0.8))
-            .cornerRadius(8)
-            // Añadir un pequeño retraso para evitar problemas de carga de recursos
-            .onChange(of: mapType) { _ in
-                // Retrasar ligeramente la actualización del mapa
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    // No es necesario hacer nada aquí, el cambio de ID forzará la recarga
+        } else {
+            return picker.onChange(of: mapType) { newValue in
+                // Forzar recarga del mapa cuando cambia el tipo
+                withAnimation {
+                    mapTypeChanged.toggle()
                 }
             }
         }
-        .padding()
+        #else
+        return picker.onChange(of: mapType) { newValue in
+            // Forzar recarga del mapa cuando cambia el tipo
+            withAnimation {
+                mapTypeChanged.toggle()
+            }
+        }
+        #endif
     }
     
     // Tarjeta de información del proyecto
@@ -719,7 +795,7 @@ struct MapContentView: View {
             // Encabezado con nombre y estado
             HStack {
                 Text(project.name)
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.system(size: 16, weight: .medium, design: .default))
                 
                 Spacer()
                 
@@ -730,24 +806,24 @@ struct MapContentView: View {
                         .frame(width: 12, height: 12)
                     
                     Text(project.status != 0 ? "Activo" : "Inactivo")
-                        .font(.system(size: 12))
+                        .font(.system(size: 12, weight: .regular, design: .default))
                         .foregroundColor(project.status != 0 ? .green : .red)
                 }
             }
             
             // Dirección
             Text(project.address)
-                .font(.system(size: 14))
+                .font(.system(size: 14, weight: .regular, design: .default))
                 .foregroundColor(.secondary)
             
             // Presupuesto
             HStack {
                 Text("Presupuesto:")
-                    .font(.system(size: 12))
+                    .font(.system(size: 12, weight: .regular, design: .default))
                     .foregroundColor(.secondary)
                 
                 Text("$\(String(format: "%.2f", project.budget))")
-                    .font(.system(size: 12, weight: .semibold))
+                    .font(.system(size: 12, weight: .medium, design: .default))
             }
             
             // Botones de acción
@@ -757,6 +833,7 @@ struct MapContentView: View {
                 HStack {
                     Image(systemName: "pencil")
                     Text("Editar Proyecto")
+                        .font(.system(size: 14, weight: .medium, design: .default))
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
@@ -771,6 +848,7 @@ struct MapContentView: View {
                 HStack {
                     Image(systemName: "xmark")
                     Text("Cerrar")
+                        .font(.system(size: 14, weight: .medium, design: .default))
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
@@ -802,16 +880,30 @@ extension MKCoordinateRegion {
         let spanX = span.longitudeDelta
         let centerX = center.longitude
         
+        // Protección contra división por cero
+        guard spanX > 0 else { return 0 }
+        
         let offsetRatio = (coordinate.longitude - (centerX - spanX/2)) / spanX
-        return CGFloat(offsetRatio) * UIScreen.main.bounds.width
+        
+        // Limitar el valor dentro de un rango válido
+        let clampedRatio = max(0, min(1, offsetRatio))
+        
+        return CGFloat(clampedRatio) * (UIScreen.main.bounds.width - 20) + 10
     }
     
     func getOffsetY(for coordinate: CLLocationCoordinate2D) -> CGFloat {
         let spanY = span.latitudeDelta
         let centerY = center.latitude
         
+        // Protección contra división por cero
+        guard spanY > 0 else { return 0 }
+        
         let offsetRatio = 1 - (coordinate.latitude - (centerY - spanY/2)) / spanY
-        return CGFloat(offsetRatio) * UIScreen.main.bounds.height
+        
+        // Limitar el valor dentro de un rango válido
+        let clampedRatio = max(0, min(1, offsetRatio))
+        
+        return CGFloat(clampedRatio) * (UIScreen.main.bounds.height - 20) + 10
     }
 }
 

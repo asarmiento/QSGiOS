@@ -31,6 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configurar notificaciones
         UNUserNotificationCenter.current().delegate = self
         
+        // Configura App Check
+         // AppCheck.appCheck()
+        
+            
+        
         // Solicitar permisos para notificaciones
         requestNotificationPermissions()
         

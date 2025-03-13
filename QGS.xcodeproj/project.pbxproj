@@ -284,24 +284,11 @@
 				EB1763FE2D7B924C0016A8C1 /* FirebaseFirestore in Frameworks */,
 				EBBEB4832D68AD78005B9AEA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				EBBEB4812D68AD78005B9AEA /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				D3FB7D120E85C1FBE627B4F0 /* Pods_QGS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EBBC93182C512EBC00F3C8CD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EBBC93222C512EBC00F3C8CD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EBD531A22D71F941007BF316 /* Frameworks */ = {
+EBD531A22D71F941007BF316 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -318,6 +305,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27D9A0143057463167FC45B9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1F05317B387098FB13A4CE71 /* Pods_QGS.framework */,
+				74102B7CDB4E9A1983887911 /* Pods_QGS_QGSUITests.framework */,
+				C5D26A06ACF8EB99FAC0D92D /* Pods_QGSTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		EB3666462D15F1C800810713 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -404,23 +401,17 @@
 			path = Utilits;
 			sourceTree = "<group>";
 		};
-		EB84DB8B2D68E52A0062D13B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		EBBC93022C512EBB00F3C8CD = {
 			isa = PBXGroup;
 			children = (
 				EBBC930D2C512EBB00F3C8CD /* QGS */,
 				EBBC931E2C512EBC00F3C8CD /* QGSTests */,
 				EBBC93282C512EBC00F3C8CD /* QGSUITests */,
-				EB84DB8B2D68E52A0062D13B /* Frameworks */,
 				EBD531B72D71F943007BF316 /* FriendlyCheckInOut-Info.plist */,
 				EBBEB4882D68B3A6005B9AEA /* GoogleService-Info.plist */,
 				EBBC930C2C512EBB00F3C8CD /* Products */,
+				F2B7A14D6B17BE702C1DD43F /* Pods */,
+				27D9A0143057463167FC45B9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -529,6 +520,19 @@
 			path = Configurations;
 			sourceTree = "<group>";
 		};
+		F2B7A14D6B17BE702C1DD43F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DA7BB2CA73DE991FDB0B0ED8 /* Pods-QGS.debug.xcconfig */,
+				6BC0BCC05BA3257A0622EDC2 /* Pods-QGS.release.xcconfig */,
+				7DCCE3EBFD893A16C8008900 /* Pods-QGS-QGSUITests.debug.xcconfig */,
+				615E6286849EA3F074A6BBF5 /* Pods-QGS-QGSUITests.release.xcconfig */,
+				4EC76BB8567DA12F7C025269 /* Pods-QGSTests.debug.xcconfig */,
+				454AC7C0A56216C907C36F08 /* Pods-QGSTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -570,6 +574,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EBBC93322C512EBC00F3C8CD /* Build configuration list for PBXNativeTarget "QGSTests" */;
 			buildPhases = (
+				1C053031950ADCF2BE9A97B2 /* [CP] Check Pods Manifest.lock */,
 				EBBC93172C512EBC00F3C8CD /* Sources */,
 				EBBC93182C512EBC00F3C8CD /* Frameworks */,
 				EBBC93192C512EBC00F3C8CD /* Resources */,
@@ -588,9 +593,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EBBC93352C512EBC00F3C8CD /* Build configuration list for PBXNativeTarget "QGSUITests" */;
 			buildPhases = (
+				A7180CAA022FDDD5E963C89C /* [CP] Check Pods Manifest.lock */,
 				EBBC93212C512EBC00F3C8CD /* Sources */,
 				EBBC93222C512EBC00F3C8CD /* Frameworks */,
 				EBBC93232C512EBC00F3C8CD /* Resources */,
+				3CE682719395A6B852121D75 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -718,6 +725,70 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1C053031950ADCF2BE9A97B2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QGSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3CE682719395A6B852121D75 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QGS-QGSUITests/Pods-QGS-QGSUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QGS-QGSUITests/Pods-QGS-QGSUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-QGS-QGSUITests/Pods-QGS-QGSUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A7180CAA022FDDD5E963C89C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QGS-QGSUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EBBC93072C512EBB00F3C8CD /* Sources */ = {
@@ -1007,6 +1078,7 @@
 		};
 		EBBC93302C512EBC00F3C8CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA7BB2CA73DE991FDB0B0ED8 /* Pods-QGS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1014,7 +1086,7 @@
 				CODE_SIGN_ENTITLEMENTS = QGS/QGS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
 				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
@@ -1036,7 +1108,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.4;
+				MARKETING_VERSION = 1.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1052,6 +1124,7 @@
 		};
 		EBBC93312C512EBC00F3C8CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6BC0BCC05BA3257A0622EDC2 /* Pods-QGS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1059,7 +1132,7 @@
 				CODE_SIGN_ENTITLEMENTS = QGS/QGS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
 				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
@@ -1081,7 +1154,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.4;
+				MARKETING_VERSION = 1.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1097,6 +1170,7 @@
 		};
 		EBBC93332C512EBC00F3C8CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4EC76BB8567DA12F7C025269 /* Pods-QGSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1123,6 +1197,7 @@
 		};
 		EBBC93342C512EBC00F3C8CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 454AC7C0A56216C907C36F08 /* Pods-QGSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Manual;
@@ -1147,6 +1222,7 @@
 		};
 		EBBC93362C512EBC00F3C8CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7DCCE3EBFD893A16C8008900 /* Pods-QGS-QGSUITests.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1165,6 +1241,7 @@
 		};
 		EBBC93372C512EBC00F3C8CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 615E6286849EA3F074A6BBF5 /* Pods-QGS-QGSUITests.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;

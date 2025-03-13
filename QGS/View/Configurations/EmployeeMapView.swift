@@ -62,7 +62,7 @@ struct EmployeeMapView: View {
     static func userHasAccess() -> Bool {
         // Verificar si el tipo de usuario no es "employee"
         if let userType = UserManager.shared.userType {
-            return userType.lowercased() != "empleado"
+            return userType.lowercased() != "employee"
         }
         return false
     }
@@ -79,7 +79,8 @@ struct EmployeeMapView: View {
                         mapContentView
                     }
                 } else {
-                    accessDeniedView
+                    
+                        accessDeniedView
                 }
             }
             .navigationTitle("Ubicación de Empleados")

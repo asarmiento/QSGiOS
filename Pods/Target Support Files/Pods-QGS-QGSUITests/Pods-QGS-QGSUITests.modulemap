@@ -1,0 +1,6 @@
+framework module Pods_QGS_QGSUITests {
+  umbrella header "Pods-QGS-QGSUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

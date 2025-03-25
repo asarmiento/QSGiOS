@@ -1,25 +1,30 @@
 # Especificar la plataforma iOS y la versión mínima requerida
 platform :ios, '17.6'
 
-# Si estás utilizando frameworks dinámicos, habilítalo
+# Habilitar frameworks dinámicos si es necesario
 use_frameworks!
 
-# Definir los targets de tu proyecto
-target 'QGS' do
-  # Aquí puedes agregar los pods necesarios para tu aplicación
-  pod 'Firebase/Messaging'
-  # Otros pods pueden ir aquí si los necesitas, por ejemplo:
-  # pod 'Firebase/Core'
-   pod 'Firebase/Analytics'
+# Definir una instalación global de CocoaPods
+install! 'cocoapods', :disable_input_output_paths => true
 
-  # Definir los targets de pruebas
+# Lista de dependencias compartidas
+def common_pods
+  pod 'Firebase/Messaging'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Database'
+end
+
+target 'QGS' do
+  common_pods
+
   target 'QGSTests' do
     inherit! :search_paths
-    # Agrega pods necesarios para las pruebas si los tienes
   end
 
   target 'QGSUITests' do
-    # Agrega pods necesarios para las pruebas UI si los tienes
   end
 end
 
+target 'FriendlyCheckInOut' do
+  common_pods
+end

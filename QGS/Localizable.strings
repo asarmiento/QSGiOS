@@ -233,4 +233,103 @@
 "Satélite"="Satélite";
 "Estándar"="Estándar";
 
+// Botones generales
+"Cancelar" = "Cancelar";
+"Aceptar" = "Aceptar";
+"Abrir Configuración" = "Abrir Configuración";
+
+// Alertas de ubicación
+"Permiso de Localización" = "Permiso de Localización";
+"La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida. Por favor, otorga los permisos en Configuración." = "La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida. Por favor, otorga los permisos en Configuración.";
+
+// Mensajes de error
+"Error not found" = "Error no encontrado";
+"Error" = "Error";
+"Unknown error" = "Error desconocido";
+
+// Autenticación
+"Login" = "Iniciar Sesión";
+"Email" = "Correo electrónico";
+"Password" = "Contraseña";
+"Invalid credentials" = "Credenciales inválidas";
+"Authentication error" = "Error de autenticación";
+
+// Validación
+"INVALID_EMAIL" = "El correo electrónico no es válido";
+"INVALID_PASSWORD" = "La contraseña debe tener al menos 8 caracteres";
+"INVALID_FIELD" = "El campo %@ no es válido";
+
+// Estados de carga
+"Loading" = "Cargando...";
+"Please wait" = "Por favor espere";
+"Retry" = "Reintentar";
+"Cancel" = "Cancelar";
+
+// Navegación
+"Back" = "Atrás";
+"Next" = "Siguiente";
+"Done" = "Hecho";
+
+// Mensajes de ubicación
+"Location access required" = "Se requiere acceso a la ubicación";
+"Please enable location services" = "Por favor, active los servicios de ubicación";
+"Open Settings" = "Abrir Configuración";
+
+// Títulos
+"Welcome" = "Bienvenido";
+"Home" = "Inicio";
+"Profile" = "Perfil";
+
+// Botones
+"Sign In" = "Iniciar Sesión";
+"Sign Out" = "Cerrar Sesión";
+"Save" = "Guardar";
+
+// Mensajes de éxito
+"Success" = "Éxito";
+"Operation completed" = "Operación completada";
+
+// Mensajes de error específicos
+"Network error" = "Error de red";
+"Connection failed" = "Falló la conexión";
+"Try again later" = "Intente más tarde";
+
+// Validación de campos
+"Required field" = "Campo requerido";
+"Invalid format" = "Formato inválido";
+
+// Estados de la aplicación
+"No data available" = "No hay datos disponibles";
+"Updated successfully" = "Actualizado con éxito";
+"Update failed" = "Falló la actualización";
+
+// Mensajes de confirmación
+"Are you sure?" = "¿Está seguro?";
+"This action cannot be undone" = "Esta acción no se puede deshacer";
+"Confirm" = "Confirmar";
+
+// Tiempo y fecha
+"Today" = "Hoy";
+"Yesterday" = "Ayer";
+"Tomorrow" = "Mañana";
+
+// Mensajes específicos de la app
+"Quality Group Services" = "Quality Group Services";
+"Check In" = "Entrada";
+"Check Out" = "Salida";
+"Daily Hours" = "Horas Diarias";
+"Weekly Hours" = "Horas Semanales";
+"Location" = "Ubicación";
+"Records" = "Registros";
+"Settings" = "Configuración";
+
+// Títulos de navegación
+"Proyectos" = "Proyectos";
+
+// Estados de carga
+"Cargando proyectos..." = "Cargando proyectos...";
+
+// Etiquetas de proyectos
+"Horas Quincenales" = "Horas Quincenales";
+"Horas Mensuales" = "Horas Mensuales";
 

@@ -1,0 +1,6 @@
+framework module Pods_QGS {
+  umbrella header "Pods-QGS-umbrella.h"
+
+  export *
+  module * { export * }
+}

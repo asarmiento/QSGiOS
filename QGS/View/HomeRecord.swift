@@ -19,7 +19,8 @@ struct HomeRecord: View {
     @StateObject private var locationManager = LocationViewController.shared
     @State private var showLocationAlert = false
     @State private var isLoading: Bool = false
-
+    @State private var showAlert = false
+       @State private var alertMessage = ""
      // Indicador de carga
     @State private var errorMessage: String?  // Para manejar errores
     // Variables de pantalla
@@ -135,6 +136,20 @@ struct HomeRecord: View {
                     LocationManager.shared.stopUpdatingLocation()
                     showLocationAlert = true
                 }
+            }.onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("NewMessageReceived"))) { notif in
+                if let userInfo = notif.userInfo as? [String: Any],
+                   let message = userInfo["message"] as? String {
+                    
+                    alertMessage = message
+                    showAlert = true
+                }
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Nuevo mensaje"),
+                    message: Text(alertMessage),
+                    dismissButton: .default(Text("OK"))
+                )
             }
            
         }

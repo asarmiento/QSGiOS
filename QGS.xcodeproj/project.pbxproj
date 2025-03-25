@@ -15,6 +15,8 @@
 		EB0FA7692D91E3CF00264A5E /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0FA7632D91E3CF00264A5E /* UserManager.swift */; };
 		EB0FA79A2D91E50400264A5E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0FA7962D91E50400264A5E /* LocationManager.swift */; };
 		EB0FA79C2D91E50400264A5E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0FA7962D91E50400264A5E /* LocationManager.swift */; };
+		EB0FA7B42D92592100264A5E /* MessagesListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0FA7B32D92591E00264A5E /* MessagesListener.swift */; };
+		EB0FA7B52D92592100264A5E /* MessagesListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0FA7B32D92591E00264A5E /* MessagesListener.swift */; };
 		EB126FE32D6CE23500FC1BE6 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB126FE22D6CE23500FC1BE6 /* NotificationScheduler.swift */; };
 		EB126FE72D6CF3D200FC1BE6 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB126FE42D6CF3D200FC1BE6 /* ConfigurationView.swift */; };
 		EB1763FB2D7B86430016A8C1 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1763FA2D7B863C0016A8C1 /* NotificationManager.swift */; };
@@ -177,6 +179,7 @@
 		EB0FA7622D91E3CF00264A5E /* RecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordManager.swift; sourceTree = "<group>"; };
 		EB0FA7632D91E3CF00264A5E /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		EB0FA7962D91E50400264A5E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		EB0FA7B32D92591E00264A5E /* MessagesListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesListener.swift; sourceTree = "<group>"; };
 		EB126FE22D6CE23500FC1BE6 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
 		EB126FE42D6CF3D200FC1BE6 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		EB1763FA2D7B863C0016A8C1 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -454,6 +457,7 @@
 		EB6D31C72CECCCC7000E02E7 /* Utilits */ = {
 			isa = PBXGroup;
 			children = (
+				EB0FA7B32D92591E00264A5E /* MessagesListener.swift */,
 				EBDAF1202D7019630099D03C /* HeadSecondary.swift */,
 				EBDAF11E2D7018F80099D03C /* BoxGPS.swift */,
 				EB345D242CF79E07001A62C8 /* Buttons */,
@@ -902,6 +906,7 @@
 				EB3665FF2D08000600810713 /* EmployeeCodable.swift in Sources */,
 				EBBEB46F2D67A24E005B9AEA /* LocationError.swift in Sources */,
 				EBBEB4702D67A24E005B9AEA /* APIError.swift in Sources */,
+				EB0FA7B42D92592100264A5E /* MessagesListener.swift in Sources */,
 				EBDAF11F2D7018F80099D03C /* BoxGPS.swift in Sources */,
 				EBBEB4712D67A24E005B9AEA /* NetworkLocalizedError.swift in Sources */,
 				EBBEB4722D67A24E005B9AEA /* APITimeRecords.swift in Sources */,
@@ -987,6 +992,7 @@
 				EBD531952D71F941007BF316 /* EmployeeCodable.swift in Sources */,
 				EBD531962D71F941007BF316 /* LocationError.swift in Sources */,
 				EBD531972D71F941007BF316 /* APIError.swift in Sources */,
+				EB0FA7B52D92592100264A5E /* MessagesListener.swift in Sources */,
 				EBD531982D71F941007BF316 /* BoxGPS.swift in Sources */,
 				EBD531992D71F941007BF316 /* NetworkLocalizedError.swift in Sources */,
 				EBD5319A2D71F941007BF316 /* APITimeRecords.swift in Sources */,

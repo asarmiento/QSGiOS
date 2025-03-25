@@ -13,37 +13,34 @@ import UserNotifications
 @main
 struct QGSApp: App {
     let modelContainer: ModelContainer
+    @Environment(\.scenePhase) private var scenePhase
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
+    
     @StateObject private var notificationManager = NotificationManager.shared
+    @StateObject private var recordViewModel = RecordViewModel()
     
     init() {
-        // Configurar Firebase
-       // FirebaseApp.configure()
-       
+        // Configuración de SwiftData, UserManager, etc...
         do {
-            // Configurar el esquema
             let schema = Schema([
                 UserModel.self,
                 RecordModel.self
             ])
-            
-            // Configurar el contenedor
             let modelConfiguration = ModelConfiguration(schema: schema)
             modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
             
-            // Configurar UserManager con el contexto
             UserManager.shared.configure(with: modelContainer.mainContext)
             RecordManager.shared.configure(with: modelContainer.mainContext)
         } catch {
-            fatalError("No se pudo configurar el contenedor SwiftData: \(error)")
+            fatalError("No se pudo configurar SwiftData: \(error)")
         }
 
-        // Solicitar permisos para notificaciones
+        // Solicitar permiso para notificaciones
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
                 DispatchQueue.main.async {
                     UIApplication.shared.registerForRemoteNotifications()
-                    NotificationScheduler.scheduleDailyNotifications()
+                    NotificationScheduler.scheduleWorkdaysNotifications()
                 }
             } else {
                 print("Permisos de notificaciones denegados: \(String(describing: error))")
@@ -55,20 +52,14 @@ struct QGSApp: App {
         WindowGroup {
             SplashScreen()
                 .environmentObject(notificationManager)
-                .onAppear {
-                    // Registrar para notificaciones push
-                    notificationManager.registerForPushNotifications()
-                    
-             
-                }
+                .environmentObject(recordViewModel)
         }
         .modelContainer(modelContainer)
+        // Aquí usamos la nueva forma de iOS 17 para 'onChange'
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                recordViewModel.checkIfNewDay()
+            }
+        }
     }
-    
-
 }
-
-
-
-
-

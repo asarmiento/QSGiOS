@@ -3,46 +3,55 @@ import SwiftData
 import Firebase
 import FirebaseCore
 import FirebaseMessaging
-import UserNotifications
 import FirebaseAnalytics
+import FirebaseFirestore    // <-- Import necesario para Firestore
+//import FirebaseFirestoreSwift // Opcional si decodificas con Codable
+import UserNotifications
 import AppTrackingTransparency
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    
+    // Necesitas 'import FirebaseFirestore' para reconocer ListenerRegistration
+    var listener: ListenerRegistration?
+    
+    // Variable estática para compartir el último mensaje en la app
+    static var lastMessage: String?
 
-    func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
         // Configura Firebase
         FirebaseApp.configure()
         
-        // Desactivar completamente Analytics
+        // Desactivar Analytics si lo deseas
         Analytics.setAnalyticsCollectionEnabled(false)
         
-        // Desactivar el seguimiento de usuarios
+        // Solicitar tracking
         if #available(iOS 14, *) {
             ATTrackingManager.requestTrackingAuthorization { status in
-                // No hacemos nada con el resultado, solo cumplimos con el requisito
+                // No hacemos nada especial
             }
         }
         
-        // Configurar Messaging
+        // Configurar delegado de mensajería
         Messaging.messaging().delegate = self
         
-        // Configurar notificaciones
+        // Configurar UserNotificationCenter
         UNUserNotificationCenter.current().delegate = self
         
-        // Configura App Check
-         // AppCheck.appCheck()
+        // Si el usuario está logueado, inicia escucha de Firestore
+        if let employeeId = UserManager.shared.employeeId {
+            startListeningForMessages(employeeId: employeeId)
+        }
         
-            
-        
-        // Solicitar permisos para notificaciones
+        // Solicitar permiso para notificaciones
         requestNotificationPermissions()
         
-        // Registra para recibir notificaciones remotas
+        // Registrar APNs
         application.registerForRemoteNotifications()
         
-        // Imprimir estado actual
         if let token = Messaging.messaging().fcmToken {
             print("✅ Token FCM existente: \(token)")
         } else {
@@ -51,7 +60,70 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-
+    
+    // MARK: - Escucha de Firestore
+    func startListeningForMessages(employeeId: String) {
+        let db = Firestore.firestore() // <-- Usa Firestore
+        // Escucha en la subcolección "recipients" de todos los documentos
+        // Ajusta la ruta según tu estructura
+        listener = db.collectionGroup("recipients")
+            .whereField("recipientId", isEqualTo: employeeId)
+            .addSnapshotListener { [weak self] querySnapshot, error in
+                guard let self = self else { return }
+                
+                if let error = error {
+                    print("Error escuchando recipients: \(error)")
+                    return
+                }
+                guard let snapshot = querySnapshot else { return }
+                
+                for change in snapshot.documentChanges where change.type == .added {
+                    let data = change.document.data()
+                    let message = data["message"] as? String ?? "Mensaje sin texto"
+                    let senderId = data["senderId"] as? String ?? "Desconocido"
+                    
+                    // Evitar notificar si es el mismo user
+                    if senderId != employeeId {
+                        AppDelegate.lastMessage = message
+                        
+                        // Opcional: Notificación interna
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name("NewMessageReceived"),
+                            object: nil,
+                            userInfo: ["message": message]
+                        )
+                        
+                        // Opcional: Notificación local si está en segundo plano
+                        // DispatchQueue.main.async {
+                        //     self.showLocalNotification(message: message)
+                        // }
+                    }
+                }
+            }
+    }
+    
+    func stopListening() {
+        listener?.remove()
+        listener = nil
+    }
+    
+    // MARK: - Notificación local inmediata
+    func showLocalNotification(message: String) {
+        let content = UNMutableNotificationContent()
+        content.title = "Nuevo Mensaje"
+        content.body = message
+        content.sound = .default
+        
+        // 'nil' requiere tipo explícito o un trigger real
+        let trigger: UNNotificationTrigger? = nil // Noti inmediata
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: trigger
+        )
+        UNUserNotificationCenter.current().add(request)
+    }
+    
     private func requestNotificationPermissions() {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
@@ -67,13 +139,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
-    // Reemplazar la función de Analytics con una versión vacía
+    
+    // MARK: - Desactivar Analytics manualmente (si lo deseas)
     func logScreenView(screenName: String, screenClass: String) {
-        // No hacemos nada, para evitar el seguimiento
         print("Intento de registro de pantalla ignorado: \(screenName)")
     }
-
+    
     func refreshFCMToken() {
         Messaging.messaging().token { token, error in
             if let error = error {
@@ -94,10 +165,10 @@ extension AppDelegate {
         let token = tokenParts.joined()
         print("APNs token: \(token)")
         
-        // Registra el token con Firebase
+        // Vincular APNs token con Firebase
         Messaging.messaging().apnsToken = deviceToken
         
-        // Obtén el token de FCM
+        // Intentar obtener token FCM
         Messaging.messaging().token { token, error in
             if let error = error {
                 print("❌ Error al obtener token FCM: \(error.localizedDescription)")
@@ -108,17 +179,15 @@ extension AppDelegate {
     }
     
     func application(_ application: UIApplication,
-                    didFailToRegisterForRemoteNotificationsWithError error: Error) {
+                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("❌ Error al registrar para notificaciones remotas: \(error.localizedDescription)")
     }
     
     func application(_ application: UIApplication,
-                    didReceiveRemoteNotification userInfo: [AnyHashable : Any],
-                    fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        // Eliminar el registro de eventos de Analytics
         print("Notificación recibida en estado: \(UIApplication.shared.applicationState != .active ? "background" : "foreground")")
-        
         completionHandler(.newData)
     }
 }
@@ -130,7 +199,7 @@ extension AppDelegate: MessagingDelegate {
         if let token = fcmToken {
             print("✅ Token FCM recibido: \(token)")
             
-            // Guarda el token localmente si lo necesitas
+            // Guarda token local si lo necesitas
             UserDefaults.standard.set(token, forKey: "FCMToken")
             
             // Notifica a la app que el token fue actualizado
@@ -153,22 +222,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
-        // Maneja la notificación cuando el usuario la toca
         let userInfo = response.notification.request.content.userInfo
         print("Notificación recibida: \(userInfo)")
-
-        // Eliminar el registro de eventos en Analytics
-        if let event = userInfo["event"] as? String {
-            print("Evento de notificación recibido: \(event)")
-        }
-
         completionHandler()
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        // Muestra la notificación mientras la app está en primer plano
         completionHandler([.banner, .badge, .sound])
     }
 }

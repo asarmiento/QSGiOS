@@ -7,23 +7,49 @@
 import SwiftUI
 import SwiftData
 
+import SwiftUI
+import SwiftData
+
 class RecordViewModel: ObservableObject {
+    // Variables existentes
     @Published var isEntradaEnabled: Bool = true
     @Published var isSalidaEnabled: Bool = false
     @Published var hasEntradaDeHoy: Bool = false
     @Published var showSuccessAlert: Bool = false
     
+    // Agregamos un almacenamiento para la fecha verificada por última vez
+    private var lastCheckDate: String {
+        get { UserDefaults.standard.string(forKey: "LastCheckDate") ?? "" }
+        set { UserDefaults.standard.set(newValue, forKey: "LastCheckDate") }
+    }
+
+    // MARK: - Actualizar estados
     func updateButtonStates() {
+        // Lógica existente para saber si hay registro de "Entrada" o "Salida"
         let entradaExists = RecordManager.shared.getRecordExists(for: "Entrada")
         let salidaExists = RecordManager.shared.getRecordExists(for: "Salida")
         
         DispatchQueue.main.async {
-            // Entrada habilitada si no existe, salida habilitada si ya existe entrada pero no salida
+            // Entrada habilitada si no existe “Entrada”
             self.isEntradaEnabled = (entradaExists == 0)
+            // Salida habilitada si “Entrada” existe pero “Salida” no
             self.isSalidaEnabled = (entradaExists > 0 && salidaExists == 0)
+            
+            // Guardar la fecha de hoy como verificada
+            self.lastCheckDate = self.todayString()
         }
     }
     
+    // MARK: - Verificar si cambió el día
+    func checkIfNewDay() {
+        let today = todayString()
+        // Si la fecha actual difiere de la guardada, recargamos estados
+        if today != lastCheckDate {
+            updateButtonStates()
+        }
+    }
+    
+    // MARK: - Registrar entrada/salida
     func record(type: String, params: [String: Any], completion: @escaping (Bool) -> Void) {
         guard let url = URL(string: EndPoints.storeRecord) else {
             print("URL inválida")
@@ -93,6 +119,7 @@ class RecordViewModel: ObservableObject {
         }.resume()
     }
     
+    // MARK: - Actualizar estados tras un registro
     private func updateButtonStatesAfterRecord(type: String) {
         if type == "e" {
             isEntradaEnabled = false
@@ -101,5 +128,12 @@ class RecordViewModel: ObservableObject {
             isEntradaEnabled = false
             isSalidaEnabled = false
         }
+    }
+    
+    // MARK: - Helpers
+    private func todayString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: Date())
     }
 }

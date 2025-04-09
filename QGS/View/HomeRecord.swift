@@ -5,6 +5,7 @@
 //  Created by Anwar Sarmiento on 7/31/24.
 //
 
+
 import Foundation
 import SwiftUI
 import SwiftData
@@ -14,53 +15,52 @@ import FirebaseAnalytics
 // import Managers
 
 struct HomeRecord: View {
-
+    
     @Environment(\.modelContext) private var context: ModelContext
     @StateObject private var locationManager = LocationViewController.shared
     @State private var showLocationAlert = false
     @State private var isLoading: Bool = false
-    @State private var showAlert = false
-       @State private var alertMessage = ""
-     // Indicador de carga
+    
+    // Indicador de carga
     @State private var errorMessage: String?  // Para manejar errores
     // Variables de pantalla
-   // @StateObject private var creaturesVM = RecordHttpPost()
+    // @StateObject private var creaturesVM = RecordHttpPost()
     
     @State private var isButtonDisabled = false
     @State private var hasCheckedLocation = false
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 // Fondo y diseño general
                 Color(.white).edgesIgnoringSafeArea(.all)
                 // Encabezado
-              //  Text(\(getUser))
-                    
+                //  Text(\(getUser))
+                
                 if let user = getUser {
-                   
+                    
                     HeadSecondary(title: "Bienvenido(a): \(user.name)")
-                   
+                    
                 } else {
                     HeadSecondary(title: "Entrada o Salida")
                     
                 }
                 
                 VStack {
-                             // Mensaje informativo
-                             Text(NSLocalizedString("Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo",
-                                                    comment: "Mensaje para indicar al usuario qué hacer"))
-                                 .font(.system(size: 18))
-                                 .font(.title3)
-                                 .foregroundColor(Color.myPrimary)
-                                 .padding()
-                                 .multilineTextAlignment(.center)
-                                 .frame(width: 370, height: 200, alignment: .center)
-                             
-                             // Contenido principal
-                             VStack {
-                                 BoxGPS()
-                       
+                    // Mensaje informativo
+                    Text(NSLocalizedString("Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo",
+                                           comment: "Mensaje para indicar al usuario qué hacer"))
+                    .font(.system(size: 18))
+                    .font(.title3)
+                    .foregroundColor(Color("myPrimaries"))
+                    .padding()
+                    .multilineTextAlignment(.center)
+                    .frame(width: 370, height: 200, alignment: .center)
+                    
+                    // Contenido principal
+                    VStack {
+                        BoxGPS()
+                        
                         
                         // Botones de acción
                         HStack {
@@ -72,7 +72,7 @@ struct HomeRecord: View {
                                     logCheckInEvent(type: "check_in")
                                 }
                         }
-                       
+                        
                     }
                     .frame(maxWidth: .infinity)
                     .padding(-10)
@@ -93,7 +93,7 @@ struct HomeRecord: View {
                             .padding(.top, 50)
                     }
                     
-                   
+                    
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center).offset(y:90)
                 .alert(isPresented: $showLocationAlert) {
@@ -109,26 +109,31 @@ struct HomeRecord: View {
                     )
                 }
                 VStack {
-                   
+                    #if QGS_TARGET
                     Text(String(format: NSLocalizedString("Quality Group Services v%@", comment: ""), version()))
                         .font(.system(size: 12))
-
+                        #elseif FRIENDLY_TARGET
+                    Text(String(format: NSLocalizedString("Friendly Systems Group v%@", comment: ""), version()))
+                        .font(.system(size: 12))
+                    #elseif MCS_TARGET
+                    Text(String(format: NSLocalizedString("Martinez Cleaning Service v%@", comment: ""), version()))
+                        .font(.system(size: 12))
+                    #endif
                     
                 }.foregroundStyle(Color.gray).offset(y:400)
-
-            
+                
+                
             }
             .onAppear {
                 logScreenView()
-                   RecordManager.shared.configure(with: context) // <-- Configura el contexto aquí
-                   if !hasCheckedLocation {
-                       LocationManager.shared.checkAuthorizationStatus()
-                       hasCheckedLocation = true
-                   }
-                   if locationManager.isAuthorized {
-                       LocationManager.shared.startUpdatingLocation()
-                   }
-                LogScreen.shared.logScreenView(screenName: "Home Screen")
+                RecordManager.shared.configure(with: context) // <-- Configura el contexto aquí
+                if !hasCheckedLocation {
+                    LocationManager.shared.checkAuthorizationStatus()
+                    hasCheckedLocation = true
+                }
+                if locationManager.isAuthorized {
+                    LocationManager.shared.startUpdatingLocation()
+                }
             }.onChange(of: locationManager.isAuthorized) { oldValue, newValue in
                 if newValue {
                     LocationManager.shared.startUpdatingLocation()
@@ -136,30 +141,16 @@ struct HomeRecord: View {
                     LocationManager.shared.stopUpdatingLocation()
                     showLocationAlert = true
                 }
-            }.onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("NewMessageReceived"))) { notif in
-                if let userInfo = notif.userInfo as? [String: Any],
-                   let message = userInfo["message"] as? String {
-                    
-                    alertMessage = message
-                    showAlert = true
-                }
             }
-            .alert(isPresented: $showAlert) {
-                Alert(
-                    title: Text("Nuevo mensaje"),
-                    message: Text(alertMessage),
-                    dismissButton: .default(Text("OK"))
-                )
-            }
-           
+            
         }
-    
+        
     }
-
+    
     
     func version() -> String {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "N/A"
-     //   let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "N/A"
+        //   let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "N/A"
         return "\(version) "//(\(build))
     }
     private var currentDateString: String {
@@ -168,7 +159,7 @@ struct HomeRecord: View {
         return formatter.string(from: Date())
     }
     private var authToken: String? {
-      return  UserManager.shared.authToken
+        return  UserManager.shared.getAuthToken
     }
     private var getUser: UserModel? {
         return  UserManager.shared.getUser()
@@ -176,13 +167,13 @@ struct HomeRecord: View {
     
     private var employeeId: String? {
         
-        return UserManager.shared.employeeId
+        return UserManager.shared.getEmployeeId
     }
     
     private func logCheckInEvent(type: String) {
         Analytics.logEvent("employee_check", parameters: [
             "type": type,
-            "employee_id": UserManager.shared.employeeId ?? "",
+            "employee_id": UserManager.shared.getEmployeeId ?? "",
             "timestamp": Date().timeIntervalSince1970
         ])
     }
@@ -192,7 +183,7 @@ struct HomeRecord: View {
         Analytics.logEvent(AnalyticsEventScreenView, parameters: [
             AnalyticsParameterScreenName: "Home",
             AnalyticsParameterScreenClass: "HomeRecord",
-            "user_id": UserManager.shared.employeeId ?? "unknown",
+            "user_id": UserManager.shared.getEmployeeId ?? "unknown",
             "user_name": user?.name ?? "unknown",
             "has_user": user != nil ? "yes" : "no"
         ])

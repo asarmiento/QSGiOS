@@ -38,12 +38,28 @@ struct ConfigurationView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+#if QGS_TARGET
                 // Marca de agua
-                Image("QGS-Branding-01")
+                Image("Logo")
+                    .resizable()
+                    .scaledToFit()
+                    .opacity(0.1) // Ajusta la opacidad según necesites
+#elseif FRIENDLY_TARGET
+                
+                // Marca de agua
+                Image("Logo")
+                    .resizable()
+                    .scaledToFit()
+                    .opacity(0.1) // Ajusta la opacidad según necesites
+                #elseif MCS_TARGET
+                
+                // Marca de agua
+                Image("Logo")
                     .resizable()
                     .scaledToFit()
                     .opacity(0.1) // Ajusta la opacidad según necesites
                 
+                #endif
                 ScrollView {
                     VStack(spacing: 20) {
                                 // Grid de iconos

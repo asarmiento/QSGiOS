@@ -101,7 +101,7 @@ class NetworkListDetails: ObservableObject {
    
 
     private var authToken: String? {
-      return  UserManager.shared.authToken
+      return  UserManager.shared.getAuthToken
     }
     private var getUser: UserModel? {
         return  UserManager.shared.getUser()
@@ -109,7 +109,7 @@ class NetworkListDetails: ObservableObject {
     
     private var employeeId: String? {
         
-        return UserManager.shared.employeeId
+        return UserManager.shared.getEmployeeId
     }
 }
 

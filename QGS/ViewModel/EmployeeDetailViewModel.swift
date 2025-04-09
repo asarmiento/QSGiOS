@@ -64,7 +64,7 @@ class EmployeeDetailViewModel: ObservableObject {
                 request.httpMethod = "PUT"
                 
                 // Obtener el token de autenticación
-                if let token = UserManager.shared.authToken {
+                if let token = UserManager.shared.getAuthToken {
                     request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
                 } else {
                     throw EmployeeUpdateError.networkError(NSLocalizedString("No hay token de autenticación", comment: ""))

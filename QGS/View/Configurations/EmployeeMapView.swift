@@ -61,7 +61,7 @@ struct EmployeeMapView: View {
     // Función estática para verificar si el usuario tiene acceso
     static func userHasAccess() -> Bool {
         // Verificar si el tipo de usuario no es "employee"
-        if let userType = UserManager.shared.userType {
+        if let userType = UserManager.shared.getUserType {
             return userType.lowercased() != "employee"
         }
         return false
@@ -243,7 +243,7 @@ struct EmployeeMapView: View {
     private var accessDeniedView: some View {
         ZStack {
             // Marca de agua
-            Image("QGS-Branding-01")
+            Image("Logo")
                 .resizable()
                 .scaledToFit()
                 .opacity(0.1)
@@ -288,7 +288,7 @@ struct EmployeeMapView: View {
     
     private func checkUserAccess() {
         // Verificar el tipo de usuario desde UserManager
-        if let userType = UserManager.shared.userType {
+        if let userType = UserManager.shared.getUserType {
             // Si el usuario es administrador o supervisor, tiene acceso
             hasAccess = userType.lowercased() != "empleado"
         } else {

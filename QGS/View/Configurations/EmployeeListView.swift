@@ -17,7 +17,7 @@ struct EmployeeListView: View {
     // Función estática para verificar si el usuario tiene acceso
     static func userHasAccess() -> Bool {
         // Verificar si el tipo de usuario no es "employee"
-        if let userType = UserManager.shared.userType {
+        if let userType = UserManager.shared.getUserType {
             return userType != "employee"
         }
         return false
@@ -41,7 +41,7 @@ struct EmployeeListView: View {
                 if !hasAccess {
                     ZStack {
                         // Marca de agua
-                        Image("QGS-Branding-01")
+                        Image("Logo")
                             .resizable()
                             .scaledToFit()
                             .opacity(0.1)

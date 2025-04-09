@@ -78,7 +78,7 @@ struct PDFViewContainer: View {
     
     static func userHasAccess() -> Bool {
         // Verificar si el tipo de usuario no es "employee"
-        if let userType = UserManager.shared.userType {
+        if let userType = UserManager.shared.getUserType {
             return userType != "employee"
         }
         return false
@@ -134,7 +134,7 @@ struct PDFViewContainer: View {
                 } else {
                     ZStack {
                         // Marca de agua
-                        Image("QGS-Branding-01")
+                        Image("Logo")
                             .resizable()
                             .scaledToFit()
                             .opacity(0.1)
@@ -189,7 +189,7 @@ struct PDFViewContainer: View {
     
     private func checkUserAccess() {
         // Verificar el tipo de usuario desde UserManager
-        if let userType = UserManager.shared.userType {
+        if let userType = UserManager.shared.getUserType {
             // Si el usuario es administrador o supervisor, tiene acceso
             hasAccess = userType.lowercased() != "empleado"
         } else {
@@ -533,7 +533,7 @@ struct PDFView: View {
                 } else {
                     ZStack {
                         // Marca de agua
-                        Image("QGS-Branding-01")
+                        Image("Logo")
                             .resizable()
                             .scaledToFit()
                             .opacity(0.1)
@@ -588,7 +588,7 @@ struct PDFView: View {
     
     private func checkUserAccess() {
         // Verificar el tipo de usuario desde UserManager
-        if let userType = UserManager.shared.userType {
+        if let userType = UserManager.shared.getUserType {
             // Si el usuario es administrador o supervisor, tiene acceso
             hasAccess = userType.lowercased() != "empleado"
         } else {

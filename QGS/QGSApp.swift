@@ -2,7 +2,7 @@
 //  QGSApp.swift
 //  QGS
 //
-//  Created by Edin Martinez on 7/24/24.
+//  Created by Anwar Sarmiento on 7/24/24.
 //
 import SwiftUI
 import SwiftData
@@ -55,9 +55,8 @@ struct QGSApp: App {
                 .environmentObject(recordViewModel)
         }
         .modelContainer(modelContainer)
-        // Aquí usamos la nueva forma de iOS 17 para 'onChange'
-        .onChange(of: scenePhase) { newPhase in
-            if newPhase == .active {
+        .onChange(of: scenePhase) {
+            if $0 == .active {
                 recordViewModel.checkIfNewDay()
             }
         }

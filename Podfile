@@ -6,6 +6,17 @@ use_frameworks!
 
 # Definir una instalación global de CocoaPods
 install! 'cocoapods', :disable_input_output_paths => true
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      # Fuerza la generación de dSYM en Release
+      if config.name == 'Release'
+        config.build_settings['DEBUG_INFORMATION_FORMAT'] = 'dwarf-with-dsym'
+      end
+    end
+  end
+end
+
 
 # Lista de dependencias compartidas
 def common_pods

@@ -3,11 +3,11 @@ import Foundation
 struct LoginResponse: Codable {
     let status: Bool
     let message: String
-    let user: UserResponse
-    let name: String
-    let sysconf: Int
-    let email: String
-    let token: String
+    let user: UserResponse?
+    let name: String?
+    let sysconf: Int?
+    let email: String?
+    let token: String?
     
     struct UserResponse: Codable {
         let id: Int
@@ -20,6 +20,26 @@ struct LoginResponse: Codable {
         let updated_at: String
         let employee: EmployeeResponse
         let sysconfs: [SysconfResponse]
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            id = try container.decode(Int.self, forKey: .id)
+            name = try container.decode(String.self, forKey: .name)
+            type = try container.decode(String.self, forKey: .type)
+            sysconf_id = try container.decode(Int.self, forKey: .sysconf_id)
+            email = try container.decode(String.self, forKey: .email)
+            created_at = try container.decode(String.self, forKey: .created_at)
+            updated_at = try container.decode(String.self, forKey: .updated_at)
+            employee = try container.decode(EmployeeResponse.self, forKey: .employee)
+            sysconfs = try container.decode([SysconfResponse].self, forKey: .sysconfs)
+            
+            // Maneja 'code' tanto como Int o String
+            if let codeInt = try? container.decode(Int.self, forKey: .code) {
+                code = String(codeInt)
+            } else {
+                code = try container.decode(String.self, forKey: .code)
+            }
+        }
         
         struct EmployeeResponse: Codable {
             let id: Int

@@ -11,9 +11,9 @@ struct HeadLogin: View {
     var title: String = ""
     var body: some View {
         VStack(spacing: 0){
-            Color.myPrimary.frame(width: 1000, height: 270).contentMargins(.zero)
+            Color("myPrimaries").frame(width: 1000, height: 270).contentMargins(.zero)
             
-            Image("QGS-Branding-01")
+            Image("Logo")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 220)

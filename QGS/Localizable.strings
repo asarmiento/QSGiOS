@@ -4,10 +4,17 @@
 //
 //  Created by Edin Martinez on 12/8/24.
 //
+/*
+ HomeRecord
+ */
+"message_info_home" = "Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo";
+"msg_welcome" = "Bienvenido(a):";
+"msg_latitude" = "Latitude";
+"msg_longitude" = "Longitude";
 
-"Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo" = "Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo";
-"LATITUDE" = "Latitude";
-"LONGITUDE" = "Longitude";
+
+
+
 "Entrada" = "Entrada";
 "Salida" = "Salida";
 "Horas Diarias" = "Horas Diarias";

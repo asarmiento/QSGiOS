@@ -18,7 +18,7 @@ struct CustomTF : View {
     var body: some View {
         HStack(alignment: .top, spacing: 2, content: {
             Image(systemName: sfIcon)
-                .foregroundStyle(iconTint).foregroundColor(Color.myPrimary)
+                .foregroundStyle(iconTint).foregroundColor(Color("myPrimaries"))
                 .frame(width: 30)
             VStack(alignment: .leading,spacing: 8, content: {
                 if isPassword {

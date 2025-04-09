@@ -21,7 +21,7 @@ class EmployeesViewModel: ObservableObject {
         }
         
         do {
-            guard let token = UserManager.shared.authToken else {
+            guard let token = UserManager.shared.getAuthToken else {
                 DispatchQueue.main.async {
                     self.errorMessage = "No hay token de autenticación"
                     self.isLoading = false

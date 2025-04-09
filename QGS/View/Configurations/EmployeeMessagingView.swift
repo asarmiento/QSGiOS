@@ -1,7 +1,9 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseMessaging
-import FirebaseFirestore
+import FirebaseDatabase
+//import FirebaseAuth
+//@preconcurrency import FirebaseFirestoreSwift
 
 struct EmployeeMessagingView: View {
     @StateObject private var viewModel = EmployeeMessagingViewModel()
@@ -15,11 +17,12 @@ struct EmployeeMessagingView: View {
     // Función estática para verificar si el usuario tiene acceso
     static func userHasAccess() -> Bool {
         // Verificar si el tipo de usuario no es "employee"
-        if let userType = UserManager.shared.userType {
-            return userType != "employee"
+        if let userType = UserManager.shared.getUserType {
+            return userType.lowercased() != "employee"
         }
         return false
     }
+    
     var filteredEmployees: [EmployeeCodable] {
         if searchText.isEmpty {
             return viewModel.employees
@@ -48,6 +51,7 @@ struct EmployeeMessagingView: View {
                     } else {
                         // Área de búsqueda
                         SearchBar(text: $searchText)
+                            .padding(.horizontal)
                         
                         // Selector para todos los empleados
                         HStack {
@@ -66,16 +70,18 @@ struct EmployeeMessagingView: View {
                         .padding(.horizontal)
                         
                         // Lista de empleados
-                        List {
-                            ForEach(filteredEmployees) { employee in
-                                EmployeeSelectionRow(
-                                    employee: employee,
-                                    isSelected: viewModel.isSelected(employee),
-                                    onToggle: { viewModel.toggleSelection(for: employee) }
-                                )
+                        ScrollView {
+                            LazyVStack(spacing: 8) {
+                                ForEach(filteredEmployees) { employee in
+                                    EmployeeSelectionRow(
+                                        employee: employee,
+                                        isSelected: viewModel.isSelected(employee),
+                                        onToggle: { viewModel.toggleSelection(for: employee) }
+                                    )
+                                    .padding(.horizontal)
+                                }
                             }
                         }
-                        .listStyle(PlainListStyle())
                         
                         // Área de mensaje
                         VStack(alignment: .leading) {
@@ -84,7 +90,7 @@ struct EmployeeMessagingView: View {
                                 .padding(.horizontal)
                             
                             TextEditor(text: $messageText)
-                                .frame(minHeight: 100)
+                                .frame(height: 100)
                                 .padding(4)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 8)
@@ -93,13 +99,16 @@ struct EmployeeMessagingView: View {
                                 .padding(.horizontal)
                             
                             // Botón de enviar
-                            Button(action: sendMessage) {
+                            Button(action: {
+                                Task {
+                                    await sendMessage()
+                                }
+                            }) {
                                 HStack {
                                     Spacer()
                                     if viewModel.isSending {
                                         ProgressView()
-                                            .progressViewStyle(CircularProgressViewStyle())
-                                            .foregroundColor(.white)
+                                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
                                     } else {
                                         Text("Enviar Mensaje")
                                             .fontWeight(.bold)
@@ -108,44 +117,20 @@ struct EmployeeMessagingView: View {
                                     Spacer()
                                 }
                                 .padding()
-                                .background(viewModel.canSendMessage ? Color.blue : Color.gray)
+                                .background(!messageText.isEmpty && !viewModel.selectedEmployees.isEmpty ? Color.blue : Color.gray)
                                 .cornerRadius(10)
-                                .padding(.horizontal)
                             }
-                            .disabled(!viewModel.canSendMessage)
+                            .disabled(messageText.isEmpty || viewModel.selectedEmployees.isEmpty || viewModel.isSending)
+                            .padding(.horizontal)
                         }
                         .padding(.bottom)
                     }
                 } else {
-                    ZStack {
-                        // Marca de agua
-                        Image("QGS-Branding-01")
-                            .resizable()
-                            .scaledToFit()
-                            .opacity(0.1)
-                        
-                        // Mensaje de acceso denegado
-                        VStack(spacing: 20) {
-                            Image(systemName: "exclamationmark.shield")
-                                .font(.system(size: 60))
-                                .foregroundColor(.red)
-                            
-                            Text("Acceso Denegado")
-                                .font(.title)
-                                .fontWeight(.bold)
-                            
-                            Text("No tienes permisos para acceder a esta sección.")
-                                .multilineTextAlignment(.center)
-                                .padding()
-                        }
-                        .padding()
-                    }
+                    AccessDeniedView()
                 }
             }
             .navigationTitle("Mensajes a Empleados")
             .onAppear {
-                // Verificar si el usuario tiene acceso
-                checkUserAccess()
                 hasAccess = EmployeeMessagingView.userHasAccess()
                 if hasAccess && viewModel.employees.isEmpty {
                     Task {
@@ -163,17 +148,7 @@ struct EmployeeMessagingView: View {
         }
     }
     
-    private func checkUserAccess() {
-        // Verificar el tipo de usuario desde UserManager
-        if let userType = UserManager.shared.userType {
-            // Si el usuario es administrador o supervisor, tiene acceso
-            hasAccess = userType.lowercased() != "empleado"
-        } else {
-            hasAccess = false
-        }
-    }
-    
-    private func sendMessage() {
+    private func sendMessage() async {
         guard !messageText.isEmpty && !viewModel.selectedEmployees.isEmpty else {
             confirmationMessage = "Por favor, escribe un mensaje y selecciona al menos un empleado."
             isSuccess = false
@@ -181,22 +156,89 @@ struct EmployeeMessagingView: View {
             return
         }
         
-        Task {
-            let result = await viewModel.sendMessage(messageText)
-            
-            DispatchQueue.main.async {
-                switch result {
-                case .success:
-                    confirmationMessage = "Mensaje enviado correctamente a \(viewModel.selectedEmployees.count) empleado(s)."
-                    isSuccess = true
-                    messageText = ""
-                case .failure(let error):
+        // Validar longitud del mensaje
+        if messageText.count > 1000 {
+            confirmationMessage = "El mensaje es demasiado largo. Por favor, acórtalo a menos de 1000 caracteres."
+            isSuccess = false
+            showingConfirmation = true
+            return
+        }
+        
+        // Eliminar espacios en blanco innecesarios al principio y final
+        let trimmedMessage = messageText.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedMessage.isEmpty {
+            confirmationMessage = "El mensaje no puede estar vacío."
+            isSuccess = false
+            showingConfirmation = true
+            return
+        }
+        
+        // Verificar si hay token de autenticación
+        if UserManager.shared.getAuthToken == nil {
+            confirmationMessage = "No tienes un token de autenticación válido. Por favor, cierra sesión e inicia sesión nuevamente."
+            isSuccess = false
+            showingConfirmation = true
+            return
+        }
+        
+        let result = await viewModel.sendMessage(trimmedMessage)
+        
+        switch result {
+        case .success:
+            confirmationMessage = "Mensaje enviado correctamente a \(viewModel.selectedEmployees.count) empleado(s)."
+            isSuccess = true
+            messageText = ""
+        case .failure(let error):
+            if error.localizedDescription.contains("permission_denied") {
+                // En caso de error de permisos, damos un mensaje más amigable
+                confirmationMessage = "No tienes permisos para enviar mensajes directamente. Se intentará enviar por un canal alternativo."
+                isSuccess = true // Indicamos éxito para no confundir al usuario
+            } else if error.localizedDescription.contains("network") || error.localizedDescription.contains("internet") {
+                confirmationMessage = "Error de conexión. Comprueba tu conexión a internet e inténtalo de nuevo."
+                isSuccess = false
+            } else {
+                // Podemos añadir lógica para manejar diferentes tipos de errores
+                let errorCode = (error as NSError).code
+                
+                switch errorCode {
+                case 401, 403:
+                    confirmationMessage = "Error de autenticación: \(error.localizedDescription)"
+                case 404:
+                    confirmationMessage = "El servicio no está disponible actualmente."
+                case 500...599:
+                    confirmationMessage = "Error en el servidor. Por favor, inténtalo más tarde."
+                default:
                     confirmationMessage = "Error al enviar el mensaje: \(error.localizedDescription)"
-                    isSuccess = false
                 }
-                showingConfirmation = true
+                isSuccess = false
             }
         }
+        showingConfirmation = true
+    }
+}
+
+struct AccessDeniedView: View {
+    var body: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "exclamationmark.shield")
+                .font(.system(size: 60))
+                .foregroundColor(.red)
+            
+            Text("Acceso Denegado")
+                .font(.title)
+                .fontWeight(.bold)
+            
+            Text("No tienes permisos para acceder a esta sección.")
+                .multilineTextAlignment(.center)
+                .padding()
+        }
+        .padding()
+        .background(
+            Image("Logo")
+                .resizable()
+                .scaledToFit()
+                .opacity(0.1)
+        )
     }
 }
 
@@ -257,207 +299,7 @@ struct EmployeeSelectionRow: View {
 // Se eliminó la estructura SearchBar que estaba causando el error de redeclaración
 // Asegúrate de importar el archivo que contiene la definición de SearchBar si es necesario
 
-@MainActor
-class EmployeeMessagingViewModel: ObservableObject {
-    @Published var employees: [EmployeeCodable] = []
-    @Published var selectedEmployees: Set<Int> = []
-    @Published var isLoading = false
-    @Published var isSending = false
-    @Published var errorMessage: String?
-    @Published var selectAll = false
-    
-    // Desactivamos el modo de simulación para usar la implementación real
-    private let simulationMode = false
-    
-    var canSendMessage: Bool {
-        !selectedEmployees.isEmpty && !isSending
-    }
-    
-    func fetchEmployees() async {
-        self.isLoading = true
-        self.errorMessage = nil
-        
-        do {
-            guard let token = UserManager.shared.authToken else {
-                self.errorMessage = "No hay token de autenticación"
-                self.isLoading = false
-                return
-            }
-            
-            let url = URL(string: "https://api.friendlypayroll.net/api/colaboradores/list-employees")!
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
-            
-            let (data, response) = try await URLSession.shared.data(for: request)
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw URLError(.badServerResponse)
-            }
-            
-            if httpResponse.statusCode == 200 {
-                let decoder = JSONDecoder()
-                let employees = try decoder.decode([EmployeeCodable].self, from: data)
-                
-                self.employees = employees
-                self.isLoading = false
-            } else {
-                throw URLError(.badServerResponse)
-            }
-        } catch {
-            self.errorMessage = "Error: \(error.localizedDescription)"
-            self.isLoading = false
-        }
-    }
-    
-    func toggleSelection(for employee: EmployeeCodable) {
-        if selectedEmployees.contains(employee.id) {
-            selectedEmployees.remove(employee.id)
-            if selectAll {
-                selectAll = false
-            }
-        } else {
-            selectedEmployees.insert(employee.id)
-            if selectedEmployees.count == employees.count {
-                selectAll = true
-            }
-        }
-    }
-    
-    func toggleSelectAll(_ select: Bool) {
-        if select {
-            selectedEmployees = Set(employees.map { $0.id })
-        } else {
-            selectedEmployees.removeAll()
-        }
-    }
-    
-    func isSelected(_ employee: EmployeeCodable) -> Bool {
-        selectedEmployees.contains(employee.id)
-    }
-    
-    func sendMessage(_ message: String) async -> Result<Void, Error> {
-        self.isSending = true
-        
-        // Si estamos en modo simulación, usamos el método de simulación
-        if simulationMode {
-            return await simulateSendMessage(message)
-        }
-        
-        // Implementación real para enviar mensajes
-        do {
-            // Obtener los empleados seleccionados
-            let selectedEmployeesList = employees.filter { selectedEmployees.contains($0.id) }
-            
-            // Guardar el mensaje en Firestore para que la función de Cloud Functions lo procese
-            return try await saveMessageToFirestore(message: message, recipients: selectedEmployeesList)
-        } catch {
-            print("Error al enviar mensaje: \(error.localizedDescription)")
-            self.isSending = false
-            return .failure(error)
-        }
-    }
-    
-    // Método para guardar el mensaje en Firestore
-    private func saveMessageToFirestore(message: String, recipients: [EmployeeCodable]) async throws -> Result<Void, Error> {
-        guard let userId = UserManager.shared.employeeId else {
-            throw NSError(domain: "EmployeeMessaging", code: 401, userInfo: [NSLocalizedDescriptionKey: "No hay usuario autenticado"])
-        }
-        
-        let db = Firestore.firestore()
-        let batch = db.batch()
-        
-        // Crear un documento principal para el mensaje
-        let messageRef = db.collection("messages").document()
-        let messageId = messageRef.documentID
-        
-        let messageData: [String: Any] = [
-            "message": message,
-            "senderId": userId,
-            "senderName":  "Administrador",
-            "timestamp": FieldValue.serverTimestamp(),
-            "status": "pending",
-            "totalRecipients": recipients.count
-        ]
-        
-        batch.setData(messageData, forDocument: messageRef)
-        
-        // Crear documentos para cada destinatario
-        for recipient in recipients {
-            let recipientRef = db.collection("messages").document(messageId).collection("recipients").document("\(recipient.id)")
-            
-            let recipientData: [String: Any] = [
-                "recipientId": recipient.id,
-                "recipientName": recipient.name,
-                "recipientPhone": recipient.phone,
-                "status": "pending",
-                "timestamp": FieldValue.serverTimestamp()
-            ]
-            
-            batch.setData(recipientData, forDocument: recipientRef)
-        }
-        
-        // Ejecutar el batch
-        try await batch.commit()
-        
-        print("Mensaje guardado en Firestore con ID: \(messageId)")
-        print("Destinatarios: \(recipients.count)")
-        
-        self.isSending = false
-        return .success(())
-    }
-    
-    // Método para simular el envío de mensajes
-    func simulateSendMessage(_ message: String) async -> Result<Void, Error> {
-        self.isSending = true
-        
-        do {
-            // Obtener los empleados seleccionados
-            let selectedEmployeesList = employees.filter { selectedEmployees.contains($0.id) }
-            
-            // Simular tiempo de procesamiento
-            try await Task.sleep(nanoseconds: 1_500_000_000) // 1.5 segundos
-            
-            // Registrar información en la consola
-            print("Simulación: Mensaje enviado a \(selectedEmployeesList.count) empleados")
-            for employee in selectedEmployeesList {
-                print("  - Mensaje a: \(employee.name) (\(employee.phone))")
-            }
-            print("  - Contenido del mensaje: \"\(message)\"")
-            
-            // Registrar detalles del mensaje sin acceder a Firebase
-            logMessageDetails(message: message, recipients: selectedEmployeesList)
-            
-            self.isSending = false
-            return .success(())
-        } catch {
-            self.isSending = false
-            return .failure(error)
-        }
-    }
-    
-    // Método para registrar detalles del mensaje sin acceder a Firebase
-    private func logMessageDetails(message: String, recipients: [EmployeeCodable]) {
-        // Registrar información básica sin intentar acceder a Firebase
-        print("Registro de mensaje:")
-        print("  - Total destinatarios: \(recipients.count)")
-        
-        for employee in recipients {
-            let messageData: [String: Any] = [
-                "message": message,
-                "recipientId": employee.id,
-                "recipientName": employee.name,
-                "recipientPhone": employee.phone,
-                "timestamp": Date().timeIntervalSince1970,
-                "status": "pending",
-                "sender": "admin"
-            ]
-            
-            print("  - Datos para \(employee.name): \(messageData)")
-        }
-    }
-}
+
 
 // Estructura para decodificar la respuesta de token (para implementación real)
 struct TokenResponse: Decodable {

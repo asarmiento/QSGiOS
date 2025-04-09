@@ -15,10 +15,42 @@ class UserManager {
     
     @Published private(set) var loadingState: LoadingState = .idle
     
+    // Propiedades para almacenar datos del usuario
+    private var userId: String?
+    private var userName: String?
+    private var userEmail: String?
+    private var authToken: String?
+    private var employeeId: String?
+    private var sysconfId: Int?
+    private var userType: String?
+    
     private var user: UserModel?
     private var context: ModelContext?
     
-    private init() { }
+    private init() {
+        // Cargar datos guardados de UserDefaults
+        let defaults = UserDefaults.standard
+        self.userId = defaults.string(forKey: "userId")
+        self.userName = defaults.string(forKey: "userName")
+        self.userEmail = defaults.string(forKey: "userEmail")
+        self.authToken = defaults.string(forKey: "authToken")
+        self.employeeId = defaults.string(forKey: "employeeId")
+        self.sysconfId = defaults.integer(forKey: "sysconfId")
+        self.userType = defaults.string(forKey: "userType")
+    }
+    
+    // Getters públicos
+    var getAuthToken: String? {
+        return authToken
+    }
+    
+    var getUserType: String? {
+        return userType
+    }
+    
+    var getEmployeeId: String? {
+        return employeeId
+    }
     
     func configure(with context: ModelContext) {
         self.context = context
@@ -42,18 +74,6 @@ class UserManager {
         return user
     }
     
-    var authToken: String? {
-        user?.token
-    }
-    
-    var userType: String? {
-        user?.type
-    }
-    
-    var employeeId: String? {
-        guard let id = user?.employeeId else { return nil }
-        return String(id)
-    }
     func userExists(completion: @escaping (Bool) -> Void) {
         guard let context = context else {
             logger.error("Error: ModelContext no está configurado.")
@@ -70,38 +90,62 @@ class UserManager {
             completion(false) // En caso de error, asumimos que el usuario no existe
         }
     }
+    
     func refreshUser() {
         loadUser()
     }
     
     func saveUser(from response: LoginResponse) {
-        guard let context = context else {
-            logger.error("Error: ModelContext no está configurado.")
+        guard let user = response.user else {
+            logger.error("Error: No se encontraron datos de usuario en la respuesta")
             return
         }
         
-        do {
-            let newUser = UserModel(
-                name: response.user.name,
-                email: response.user.email,
-                token: response.token,
-                employeeId: response.user.employee.id,
-                sysconf: String(response.sysconf),
-                type: response.user.type
-            )
-            
-            // Eliminar usuarios previos
-            let existingUsers = try context.fetch(FetchDescriptor<UserModel>())
-            for existingUser in existingUsers {
-                context.delete(existingUser)
+        // Guardar datos del usuario
+        self.userId = String(user.id)
+        self.userName = user.name
+        self.userEmail = user.email
+        self.authToken = response.token ?? ""
+        self.employeeId = String(user.employee.id)
+        self.sysconfId = user.sysconf_id
+        self.userType = user.type
+        
+        // Guardar en UserDefaults
+        let defaults = UserDefaults.standard
+        defaults.set(self.userId, forKey: "userId")
+        defaults.set(self.userName, forKey: "userName")
+        defaults.set(self.userEmail, forKey: "userEmail")
+        defaults.set(self.authToken, forKey: "authToken")
+        defaults.set(self.employeeId, forKey: "employeeId")
+        defaults.set(self.sysconfId, forKey: "sysconfId")
+        defaults.set(self.userType, forKey: "userType")
+        defaults.synchronize()
+        
+        // Actualizar el modelo SwiftData si está disponible
+        if let context = self.context {
+            do {
+                let newUser = UserModel(
+                    name: user.name,
+                    email: user.email,
+                    token: self.authToken ?? "",
+                    employeeId: user.employee.id,
+                    sysconf: String(user.sysconf_id),
+                    type: user.type
+                )
+                
+                // Eliminar usuarios previos
+                let existingUsers = try context.fetch(FetchDescriptor<UserModel>())
+                for existingUser in existingUsers {
+                    context.delete(existingUser)
+                }
+                
+                context.insert(newUser)
+                try context.save()
+                self.user = newUser
+                logger.info("Usuario guardado exitosamente en SwiftData")
+            } catch {
+                logger.error("Error al guardar el usuario en SwiftData: \(error.localizedDescription)")
             }
-            
-            context.insert(newUser)
-            try context.save()
-            user = newUser
-            logger.info("Usuario guardado exitosamente")
-        } catch {
-            logger.error("Error al guardar el usuario: \(error.localizedDescription)")
         }
     }
     

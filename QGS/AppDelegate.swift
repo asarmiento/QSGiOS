@@ -8,6 +8,7 @@ import FirebaseFirestore    // <-- Import necesario para Firestore
 //import FirebaseFirestoreSwift // Opcional si decodificas con Codable
 import UserNotifications
 import AppTrackingTransparency
+import FirebaseAppCheck  // Asegurarse de que esto esté importado
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -24,6 +25,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         // Configura Firebase
         FirebaseApp.configure()
+        
+        // Configurar AppCheck para mejorar la seguridad
+        #if DEBUG
+        // En entorno de desarrollo, usar proveedor de depuración
+        let providerFactory = AppCheckDebugProviderFactory()
+        #else
+        // En producción, usar providerFactory basado en DeviceCheck
+        let providerFactory = DeviceCheckProviderFactory()
+        #endif
+        
+        AppCheck.setAppCheckProviderFactory(providerFactory)
         
         // Desactivar Analytics si lo deseas
         Analytics.setAnalyticsCollectionEnabled(false)
@@ -42,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().delegate = self
         
         // Si el usuario está logueado, inicia escucha de Firestore
-        if let employeeId = UserManager.shared.employeeId {
+        if let employeeId = UserManager.shared.getEmployeeId {
             startListeningForMessages(employeeId: employeeId)
         }
         
@@ -66,11 +78,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let db = Firestore.firestore() // <-- Usa Firestore
         // Escucha en la subcolección "recipients" de todos los documentos
         // Ajusta la ruta según tu estructura
-        listener = db.collectionGroup("recipients")
-            .whereField("recipientId", isEqualTo: employeeId)
-            .addSnapshotListener { [weak self] querySnapshot, error in
-                guard let self = self else { return }
-                
+        listener = db.collectionGroup("messages")
+            .whereField("senderId", isEqualTo: employeeId)
+            .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     print("Error escuchando recipients: \(error)")
                     return

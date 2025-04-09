@@ -18,7 +18,7 @@ class ProjectsViewModel: ObservableObject {
 
         Task {
             do {
-                guard let accessToken = UserManager.shared.authToken, !accessToken.isEmpty else {
+                guard let accessToken = UserManager.shared.getAuthToken, !accessToken.isEmpty else {
                     print("Token de autenticación no válido o vacío.")
                     self.errorMessage = "Token no válido o ausente."
                     return

@@ -65,7 +65,7 @@ class ProjectListViewModel: NSObject, ObservableObject, URLSessionTaskDelegate, 
         projects = []
         
         do {
-            guard let token = UserManager.shared.authToken else {
+            guard let token = UserManager.shared.getAuthToken else {
                 throw NSError(domain: "ProjectList", code: 401, userInfo: [NSLocalizedDescriptionKey: "No hay token de autenticación"])
             }
             
@@ -343,7 +343,7 @@ struct ProjectListView: View {
                 } else {
                     ZStack {
                         // Marca de agua
-                        Image("QGS-Branding-01")
+                        Image("Logo")
                             .resizable()
                             .scaledToFit()
                             .opacity(0.1)

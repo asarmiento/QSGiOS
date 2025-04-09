@@ -286,7 +286,7 @@ struct AddProjectView: View {
                 } else {
                     ZStack {
                         // Marca de agua
-                        Image("QGS-Branding-01")
+                        Image("Logo")
                             .resizable()
                             .scaledToFit()
                             .opacity(0.1)
@@ -584,7 +584,7 @@ class AddProjectViewModel: NSObject, ObservableObject, URLSessionTaskDelegate, U
         isLoading = true
         
         do {
-            guard let token = UserManager.shared.authToken else {
+            guard let token = UserManager.shared.getAuthToken else {
                 throw NSError(domain: "AddProject", code: 401, userInfo: [NSLocalizedDescriptionKey: "No hay token de autenticación"])
             }
             

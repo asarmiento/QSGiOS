@@ -27,7 +27,7 @@ import SwiftData
      }
 
      func fetchTimeRecords() async throws -> [TimeRecord] {
-         guard let accessToken = UserManager.shared.authToken else {
+         guard let accessToken = UserManager.shared.getAuthToken else {
              throw NetworkLocalizedError.unauthorized
          }
          
@@ -92,7 +92,7 @@ import SwiftData
 
      func fetchRecordsFromAPI() async throws -> [TimeRecord] {
          let url = "https://api.friendlypayroll.net/api/projects/list-time-works"
-         guard let accessToken = UserManager.shared.authToken else {
+         guard let accessToken = UserManager.shared.getAuthToken else {
            //  print("No se pudo obtener el usuario o el token. \(UserManager.shared.getUser())")
              throw NetworkError.unauthorized
          //return Login()
@@ -133,7 +133,7 @@ import SwiftData
      }
 
      func fetchEmployeesFromAPI() async throws -> [EmployeeCodable] {
-         guard let accessToken = UserManager.shared.authToken else {
+         guard let accessToken = UserManager.shared.getAuthToken else {
              throw NetworkLocalizedError.unauthorized
          }
          

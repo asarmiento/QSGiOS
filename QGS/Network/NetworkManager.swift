@@ -27,7 +27,7 @@ class NetworkManager {
         var request = URLRequest(url: url)
         request.httpMethod = method
         
-        if let token = UserManager.shared.authToken {
+        if let token = UserManager.shared.getAuthToken {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         

@@ -18,7 +18,7 @@ class APIServiceRecord {
             return
         }
         
-        guard let accessToken = UserManager.shared.authToken else {
+        guard let accessToken = UserManager.shared.getAuthToken else {
             print("No se pudo obtener el usuario o el token.")
             completion(.failure(NetworkError.unauthorized))
             return

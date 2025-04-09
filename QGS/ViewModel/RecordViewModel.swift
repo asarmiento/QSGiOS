@@ -61,7 +61,7 @@ class RecordViewModel: ObservableObject {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        if let token = UserManager.shared.authToken {
+        if let token = UserManager.shared.getAuthToken {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         

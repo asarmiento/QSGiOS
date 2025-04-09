@@ -15,7 +15,7 @@ struct SplashView: View {
     @State private var opacity = 0.0 // Comenzamos completamente transparente
     @State private var y = 50.0 // Para el efecto de movimiento vertical
     
-    let accessToken = UserManager.shared.authToken
+    let accessToken = UserManager.shared.getAuthToken
     let datecreatAt = UserDefaults.standard.string(forKey: "createdAt")
  //  let persistenceController = PersistenceController.shared
     
@@ -23,7 +23,7 @@ struct SplashView: View {
         
         if isActive {
             if currentUser != nil {
-                HomeRecord()
+                MainTabView()
                     .navigationBarBackButtonHidden(false)
                     .onAppear {
                         UserManager.shared.configure(with: modelContext)
@@ -41,11 +41,11 @@ struct SplashView: View {
                 Color(.white).edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 20) {
-                    Image("QGS-Branding-01")
+                    Image("Logo")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 300, height: 200)
-                        .foregroundColor(.MyPrimary)
+                        .foregroundColor(Color("myPrimaries"))
                         .scaleEffect(size)
                         .opacity(opacity)
                         .offset(y: y)
@@ -84,13 +84,8 @@ struct SplashView: View {
     }
     
     private var currentUser: String? {
-        return UserManager.shared.authToken
+        return UserManager.shared.getAuthToken
     }
-}
-
-// Extensión para colores personalizados
-extension Color {
-    static let MyPrimary = Color("MyPrimary") // Asegúrate de tener este color en tus assets
 }
 
 #Preview {

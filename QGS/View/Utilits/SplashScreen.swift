@@ -22,7 +22,7 @@ struct SplashScreen: View {
             }
         } else {
             VStack {
-                Image("QGS-Branding-01")
+                Image("Logo")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 300, height: 200)
@@ -51,4 +51,6 @@ struct SplashScreen: View {
             }
         }
     }
+ 
+        
 }

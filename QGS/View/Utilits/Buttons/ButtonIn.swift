@@ -80,7 +80,7 @@ struct ButtonIn: View {
             "latitude": locationManager.latitude,
             "longitude": locationManager.longitude,
             "address": locationManager.address,
-            "employee_id": UserManager.shared.employeeId ?? ""
+            "employee_id": UserManager.shared.getEmployeeId ?? ""
         ]
         
         viewModel.record(type: type, params: params) { success in

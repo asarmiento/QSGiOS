@@ -96,11 +96,11 @@ class NetworkListTotal: ObservableObject {
     }
     
     private var authToken: String? {
-        UserManager.shared.authToken
+        UserManager.shared.getAuthToken
     }
 
     private var employeeId: String? {
-        UserManager.shared.employeeId
+        UserManager.shared.getEmployeeId
     }
 }
 

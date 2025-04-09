@@ -35,7 +35,7 @@ class NotificationManager: NSObject, ObservableObject {
     }
     private var employeeId: String? {
         
-        return UserManager.shared.employeeId
+        return UserManager.shared.getEmployeeId
     }
     
     func saveTokenToFirestore(token: String) {

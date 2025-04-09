@@ -7,7 +7,7 @@ struct ProjectsListView: View {
     var body: some View {
         ZStack {
             // Marca de agua
-            Image("QGS-Branding-01")
+            Image("Logo")
                 .resizable()
                 .scaledToFit()
                 .opacity(0.1)
@@ -35,7 +35,7 @@ struct ProjectsListView: View {
                         showingAddProject = true
                     }) {
                         Image(systemName: "plus.circle.fill")
-                            .foregroundColor(Color.myPrimary)
+                            .foregroundColor(Color("myPrimaries"))
                     }
                 }
             }
@@ -71,7 +71,7 @@ struct ProjectRow: View {
                     openMap()
                 }) {
                     Image(systemName: "location.fill")
-                        .foregroundColor(Color.myPrimary)
+                        .foregroundColor(Color("myPrimaries"))
                         .font(.system(size: 20))
                 }
             }

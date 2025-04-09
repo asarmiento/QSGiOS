@@ -17,7 +17,7 @@ class TimeRecordsViewModel: ObservableObject, @unchecked Sendable {
         isLoading = true
         errorMessage = nil
         
-        guard let token = UserManager.shared.authToken else {
+        guard let token = UserManager.shared.getAuthToken else {
             self.errorMessage = "No hay token de autenticación"
             self.isLoading = false
             return
@@ -81,7 +81,7 @@ class TimeRecordsViewModel: ObservableObject, @unchecked Sendable {
         errorMessage = nil
         
         do {
-            guard let token = UserManager.shared.authToken else {
+            guard let token = UserManager.shared.getAuthToken else {
                 errorMessage = "No hay token de autenticación"
                 isLoading = false
                 return
@@ -134,7 +134,7 @@ class TimeRecordsViewModel: ObservableObject, @unchecked Sendable {
     }
     
     func fetchEmployees() {
-        guard let token = UserManager.shared.authToken else {
+        guard let token = UserManager.shared.getAuthToken else {
             return
         }
         
@@ -163,7 +163,7 @@ class TimeRecordsViewModel: ObservableObject, @unchecked Sendable {
         updateSuccess = false
         updateMessage = ""
         
-        guard let token = UserManager.shared.authToken else {
+        guard let token = UserManager.shared.getAuthToken else {
             updateSuccess = false
             updateMessage = "No hay token de autenticación"
             return false
@@ -387,7 +387,7 @@ class TimeRecordsViewModel: ObservableObject, @unchecked Sendable {
         updateSuccess = false
         updateMessage = ""
         
-        guard let token = UserManager.shared.authToken else {
+        guard let token = UserManager.shared.getAuthToken else {
             updateSuccess = false
             updateMessage = "No hay token de autenticación"
             return false

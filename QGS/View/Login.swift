@@ -1,11 +1,20 @@
 /*
- *
+ * Login.swift
+ * QGS
+ * 
+ * Vista principal de login para todos los targets
+ * Incluye funcionalidad de registro solo para FRIENDLY_TARGET
  */
 
 import SwiftUI
 import UIKit
 import CoreData
 import CoreLocation
+
+#if FRIENDLY_TARGET
+// Aseguramos que SignupView esté disponible para este target
+// (Si SignupView está en otro módulo, podría necesitar un import específico)
+#endif
 
 struct Login: View {
     
@@ -20,81 +29,104 @@ struct Login: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                
-                Color.myPrimary.ignoresSafeArea()
-                
-                Image("QGS-Branding-02")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 370)
-                    .offset(y:-300)
-                
-                ZStack{
-                    Color.white.frame( height: 760)
-                        .shadow(radius: 40)
-                        .clipShape(RoundedRectangle(cornerRadius: 70).offset(y: 80))
-                        .frame(width: 400, height: 660)
-                        .offset(y:140)
-                        .edgesIgnoringSafeArea(.horizontal)
+            GeometryReader { geometry in
+                ZStack() {
                     
+                    Color("myPrimaries").ignoresSafeArea()
                     
-                    VStack(alignment: .center, spacing:40) {
+                    // Logo ajustado más arriba
+                    Image("Logo-White")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: min(geometry.size.width * 0.8, 300))
+                        .offset(y: -geometry.size.height * 0.35)
+                   
+                    // Caja blanca ajustada más abajo
+                    ZStack {
+                        Color.white
+                            .shadow(radius: 40)
+                            .clipShape(RoundedRectangle(cornerRadius: 30))
+                            .frame(width: min(geometry.size.width * 0.95, 400))
+                            .frame(height: min(geometry.size.height * 0.5, 300))
+                            .offset(y: geometry.size.height * 0.15)
+                            .edgesIgnoringSafeArea(.horizontal)
                         
-                        VStack(spacing: 25) {
-                            
-                            Group{
-                                // Email and Password fields
-                                CustomTF(sfIcon: "at", hint: "Email", value: $email)
-                                
-                                CustomTF(sfIcon: "lock", hint: "Password", isPassword: true, value: $password)
-                                    .padding(.top, 5)
-                                
-                            }
-                            .padding(12)
-                            .frame(width: 350, height: 60)
-                            .background(Color.black.opacity(0.05))
-                            .foregroundColor(Color.black)
-                            .cornerRadius(10)
-                            
-                            Button(action: {
-                                errorMessage = ""
-                                isLoading.toggle()
-                                login()
-                            },label  : {
-                                Text("Iniciar Sesión").foregroundStyle(.white)
-                                
-                            }).disabled(isLoading)
-                                .frame(width: 250, height: 60)
-                                .background(Color.myPrimary).border(Color.myPrimary, width:1 )
-                                .cornerRadius(10)
-                                .fullScreenCover(isPresented: $isLoginSuccessful){
-                                    // dismiss()
-                                    HomeRecord()
+                        VStack(alignment: .center, spacing: geometry.size.height * 0.03) {
+                            VStack(spacing: geometry.size.height * 0.02) {
+                                Group {
+                                    CustomTF(sfIcon: "at", hint: "Email", value: $email)
+                                    
+                                    CustomTF(sfIcon: "lock", hint: "Password", isPassword: true, value: $password)
+                                        .padding(.top, 5)
                                 }
-                            
-                            if let errorMessage = errorMessage {
-                                //  print(" linea 72 errorMessage")
-                                Text(errorMessage)
-                                    .foregroundStyle(.red)
+                                .padding(12)
+                                .frame(width: min(geometry.size.width * 0.85, 350))
+                                .frame(height: min(geometry.size.height * 0.07, 50))
+                                .background(Color.black.opacity(0.05))
+                                .foregroundColor(Color.black)
+                                .cornerRadius(10)
+                                
+                                Button(action: {
+                                    errorMessage = ""
+                                    isLoading.toggle()
+                                    login()
+                                }, label: {
+                                    Text("Iniciar Sesión")
+                                        .foregroundStyle(.white)
+                                })
+                                .disabled(isLoading)
+                                .frame(width: min(geometry.size.width * 0.65, 250))
+                                .frame(height: min(geometry.size.height * 0.07, 50))
+                                .background(Color("myPrimaries"))
+                                .cornerRadius(10)
+                                .fullScreenCover(isPresented: $isLoginSuccessful) {
+                                    MainTabView()
+                                }
+                                
+                                if let errorMessage = errorMessage {
+                                    Text(errorMessage)
+                                        .foregroundStyle(.red)
+                                        .font(.system(size: min(geometry.size.width * 0.04, 14)))
+                                }
+                                
+                                if isLoading {
+                                    ProgressView()
+                                        .progressViewStyle(CircularProgressViewStyle())
+                                        .scaleEffect(1.5)
+                                        .padding(.top, 20)
+                                }
+                                
+                                #if FRIENDLY_TARGET
+                                Button(action: {
+                                    navigateToSignUp()
+                                }) {
+                                    Text("¿Eres nuevo? Regístrate aquí")
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.myPrimary)
+                                        .padding(.top, 10)
+                                }
+                                #endif
                             }
-                            if isLoading {
-                                ProgressView()
-                                    .progressViewStyle(CircularProgressViewStyle())
-                                    .scaleEffect(2)
-                                    .padding(.top, 50)
-                            }
-                        }.offset(y:100).ignoresSafeArea()
-                        VStack {
-                           
-                            Text("Quality Group Services v\(version())").font(.system(size: 12))
                             
-                        }.offset(y:230).foregroundStyle(Color.gray)
+                            // Versión ajustada al fondo de la caja blanca
+                            VStack {
+                                #if QGS_TARGET
+                                Text("Quality Group Services In v\(version())")
+                                    .font(.system(size: min(geometry.size.width * 0.03, 12)))
+                                #elseif FRIENDLY_TARGET
+                                Text("Friendly Check In v\(version())")
+                                    .font(.system(size: min(geometry.size.width * 0.03, 12)))
+                                #elseif MCS_TARGET
+                                Text("Martinez Cleaning Service In v\(version())")
+                                    .font(.system(size: min(geometry.size.width * 0.03, 12)))
+                                #endif
+                            }
+                            .foregroundStyle(Color.gray)
+                            .padding(.top, 10)
+                        }
+                        .offset(y: geometry.size.height * 0.15)
                     }
-                }.shadow(radius: 20)
-                    .clipShape(RoundedRectangle(cornerRadius: 20).offset(y: 80))
-                    .frame(width: 400, height: 600)
-                
+                }
             }
             .navigationBarHidden(false)
             .alert("Error", isPresented: $showError) {
@@ -103,8 +135,25 @@ struct Login: View {
                 Text(errorMessage ?? "")
             }
             .navigationDestination(isPresented: $isLoginSuccessful) {
-                HomeRecord()
+                MainTabView()
             }
+            
+            #if FRIENDLY_TARGET
+            .sheet(isPresented: $showSignUp) {
+                /*
+                 * Usando esta estructura para evitar tener que importar SignupView
+                 * si hay problemas de accesibilidad entre targets
+                 */
+                NavigationView {
+                    SignupView()
+                }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("LoginSuccessful"))) { _ in
+                // Cuando recibimos la notificación de registro exitoso, actualizamos el estado
+                self.isLoginSuccessful = true
+                self.showSignUp = false
+            }
+            #endif
         }
     }
     func version() -> String {
@@ -116,33 +165,54 @@ struct Login: View {
         isLoading = true
         
         APIService.shared.login(email: email, password: password) { result in
-            isLoading = false
-            
-            switch result {
-            case .success(let response):
-                if response.status {
-                    UserManager.shared.configure(with: modelContext)
-                    UserManager.shared.saveUser(from: response)
-                    DispatchQueue.main.async {
-                        self.isLoginSuccessful = true
-                        self.navigateToWelcomeScreen()
+            DispatchQueue.main.async {
+                self.isLoading = false
+                
+                switch result {
+                case .success(let response):
+                    if response.status {
+                        if let user = response.user {
+                            print("Login exitoso, configurando UserManager")
+                            UserManager.shared.configure(with: self.modelContext)
+                            UserManager.shared.saveUser(from: response)
+                            
+                            // Añadir un pequeño retraso para permitir que se complete la configuración
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                print("Activando la navegación a la pantalla principal")
+                                self.isLoginSuccessful = true
+                            }
+                        } else {
+                            self.errorMessage = "Error al obtener datos del usuario"
+                            self.showError = true
+                        }
+                    } else {
+                        self.errorMessage = response.message
+                        self.showError = true
                     }
-                } else {
-                    errorMessage = response.message
-                    showError = true
+                case .failure(let error):
+                    if case NetworkError.apiError(let message) = error {
+                        self.errorMessage = message
+                    } else {
+                        self.errorMessage = error.localizedDescription
+                    }
+                    self.showError = true
                 }
-            case .failure(let error):
-                errorMessage = error.localizedDescription
-                showError = true
             }
         }
     }
     
     func navigateToWelcomeScreen() {
-        isLoginSuccessful = true
+        // Esta función ya no es necesaria, pero la dejamos por compatibilidad
+        // isLoginSuccessful = true
     }
     
+    #if FRIENDLY_TARGET
+    @State private var showSignUp = false
     
+    func navigateToSignUp() {
+        showSignUp = true
+    }
+    #endif
 }
 
 //#Preview {

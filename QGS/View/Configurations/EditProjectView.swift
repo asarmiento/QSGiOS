@@ -63,7 +63,7 @@ class EditProjectViewModel: NSObject, ObservableObject, URLSessionTaskDelegate, 
         isLoading = true
         
         do {
-            guard let token = UserManager.shared.authToken else {
+            guard let token = UserManager.shared.getAuthToken else {
                 throw NSError(domain: "EditProject", code: 401, userInfo: [NSLocalizedDescriptionKey: "No hay token de autenticación"])
             }
             
@@ -136,7 +136,7 @@ class EditProjectViewModel: NSObject, ObservableObject, URLSessionTaskDelegate, 
         isLoading = true
         
         do {
-            guard let token = UserManager.shared.authToken else {
+            guard let token = UserManager.shared.getAuthToken else {
                 throw NSError(domain: "EditProject", code: 401, userInfo: [NSLocalizedDescriptionKey: "No hay token de autenticación"])
             }
             
@@ -312,7 +312,7 @@ struct EditProjectView: View {
                 } else {
                     ZStack {
                         // Marca de agua
-                        Image("QGS-Branding-01")
+                        Image("Logo")
                             .resizable()
                             .scaledToFit()
                             .opacity(0.1)

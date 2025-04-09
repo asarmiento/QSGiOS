@@ -7,12 +7,17 @@
 		<key>FriendlyCheckInOut.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>1</integer>
+		</dict>
+		<key>MCS.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>Promises (Playground).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<key>QGS.xcscheme_^#shared#^_</key>
 		<dict>
@@ -22,6 +27,21 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>EB72DD5D2D96C6BE00ADE37B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EB72DD6E2D96C6BF00ADE37B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EB72DD782D96C6BF00ADE37B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>EBBC930A2C512EBB00F3C8CD</key>
 		<dict>
 			<key>primary</key>

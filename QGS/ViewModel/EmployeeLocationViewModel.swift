@@ -34,46 +34,71 @@ class EmployeeLocationViewModel: NSObject, ObservableObject, MKLocalSearchComple
     }
     
     func fetchEmployeeLocations() async {
-        isLoading = true
-        errorMessage = nil
+        await MainActor.run {
+            self.isLoading = true
+            self.errorMessage = nil
+        }
         
         do {
-            // Simulamos una carga de datos
-            try await Task.sleep(nanoseconds: 1_000_000_000)
+            // Verificar si hay un token de autenticación disponible
+            guard let accessToken = UserManager.shared.getAuthToken, !accessToken.isEmpty else {
+                throw NSError(domain: "Error de autenticación", code: 401, userInfo: [NSLocalizedDescriptionKey: "No hay un token de autenticación válido"])
+            }
             
-            // Datos de ejemplo
-            let exampleLocations = [
-                EmployeeLocationData(
-                    id: "1",
-                    employeeName: "Juan Pérez",
-                    projectName: "Proyecto A",
-                    entryTime: "08:30 AM",
-                    latitude: "9.9281",
-                    longitude: "-84.0907"
-                ),
-                EmployeeLocationData(
-                    id: "2",
-                    employeeName: "María López",
-                    projectName: "Proyecto B",
-                    entryTime: "09:15 AM",
-                    latitude: "9.9350",
-                    longitude: "-84.0850"
-                ),
-                EmployeeLocationData(
-                    id: "3",
-                    employeeName: "Carlos Rodríguez",
-                    projectName: "Proyecto C",
-                    entryTime: "08:45 AM",
-                    latitude: "9.9200",
-                    longitude: "-84.0950"
-                )
-            ]
+            // Crear la URL para la petición
+            guard let url = URL(string: EndPoints.getLocationEmployees) else {
+                throw NSError(domain: "URL inválida", code: 400, userInfo: nil)
+            }
             
+            // Crear la solicitud
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+            
+            print("Realizando petición a: \(url)")
+            print("Headers: \(request.allHTTPHeaderFields ?? [:])")
+            
+            // Realizar la solicitud a la API
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NSError(domain: "Error en la respuesta", code: 500, userInfo: nil)
+            }
+            
+            print("Código de estado HTTP: \(httpResponse.statusCode)")
+            
+            // Verificar el código de estado HTTP
+            guard (200...299).contains(httpResponse.statusCode) else {
+                let responseBody = String(data: data, encoding: .utf8) ?? "No se pudo leer el cuerpo de la respuesta"
+                print("Cuerpo de respuesta de error: \(responseBody)")
+                throw NSError(domain: "Error del servidor", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "Error del servidor: código \(httpResponse.statusCode)"])
+            }
+            
+            // Imprimir respuesta para depuración
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("Respuesta recibida: \(jsonString)")
+            }
+            
+            // Decodificar la respuesta
+            let locations = try JSONDecoder().decode([EmployeeLocation].self, from: data)
+            
+            // Convertir a EmployeeLocationData y actualizar la UI
             await MainActor.run {
-                self.employeeLocations = exampleLocations
+                self.employeeLocations = locations.enumerated().map { index, location in
+                    EmployeeLocationData(
+                        id: String(index + 1),
+                        employeeName: location.employeeName,
+                        projectName: location.projectName,
+                        entryTime: location.entryTime,
+                        latitude: location.latitude,
+                        longitude: location.longitude
+                    )
+                }
                 
                 // Centrar el mapa en la primera ubicación si hay alguna
-                if let firstLocation = employeeLocations.first {
+                if let firstLocation = self.employeeLocations.first {
                     let latitude = Double(firstLocation.latitude) ?? 9.9281
                     let longitude = Double(firstLocation.longitude) ?? -84.0907
                     
@@ -89,6 +114,7 @@ class EmployeeLocationViewModel: NSObject, ObservableObject, MKLocalSearchComple
             await MainActor.run {
                 self.isLoading = false
                 self.errorMessage = "Error al cargar las ubicaciones: \(error.localizedDescription)"
+                print("Error en fetchEmployeeLocations: \(error)")
             }
         }
     }

@@ -240,8 +240,18 @@
 		EBE7D3512DA4B7BD0081F524 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D3502DA4B7BD0081F524 /* SignupView.swift */; };
 		EBE7D3532DA4B88B0081F524 /* RegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D3522DA4B88B0081F524 /* RegisterResponse.swift */; };
 		EBE7D3552DA4DA4E0081F524 /* Info-friendly.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBE7D3542DA4DA4E0081F524 /* Info-friendly.plist */; };
-		EBE7D3562DA4DA710081F524 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBE6149B2C5AFC8300197660 /* Info.plist */; };
-		EBE7D3572DA4DA710081F524 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBE6149B2C5AFC8300197660 /* Info.plist */; };
+		EBE7D3562DA4DA710081F524 /* Info-QGS.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBE6149B2C5AFC8300197660 /* Info-QGS.plist */; };
+		EBE7D4052DA6337A0081F524 /* RegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D3522DA4B88B0081F524 /* RegisterResponse.swift */; };
+		EBE7D4062DA6337A0081F524 /* RegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D3522DA4B88B0081F524 /* RegisterResponse.swift */; };
+		EBE7D40A2DA7F7BF0081F524 /* ImportHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D4072DA7F7BF0081F524 /* ImportHelper.swift */; };
+		EBE7D40B2DA7F7BF0081F524 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D4082DA7F7BF0081F524 /* KeychainManager.swift */; };
+		EBE7D40C2DA7F7BF0081F524 /* MigrationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D4092DA7F7BF0081F524 /* MigrationHelper.swift */; };
+		EBE7D40D2DA7F7BF0081F524 /* ImportHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D4072DA7F7BF0081F524 /* ImportHelper.swift */; };
+		EBE7D40E2DA7F7BF0081F524 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D4082DA7F7BF0081F524 /* KeychainManager.swift */; };
+		EBE7D40F2DA7F7BF0081F524 /* MigrationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D4092DA7F7BF0081F524 /* MigrationHelper.swift */; };
+		EBE7D4102DA7F7BF0081F524 /* ImportHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D4072DA7F7BF0081F524 /* ImportHelper.swift */; };
+		EBE7D4112DA7F7BF0081F524 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D4082DA7F7BF0081F524 /* KeychainManager.swift */; };
+		EBE7D4122DA7F7BF0081F524 /* MigrationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE7D4092DA7F7BF0081F524 /* MigrationHelper.swift */; };
 		EBF9DF9D2CED8E30002D7FA1 /* ListRecordDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9DF9C2CED8E1D002D7FA1 /* ListRecordDetails.swift */; };
 		EBF9DF9F2CED8E4C002D7FA1 /* ListRecordTotals.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF9DF9E2CED8E38002D7FA1 /* ListRecordTotals.swift */; };
 /* End PBXBuildFile section */
@@ -370,12 +380,15 @@
 		EBDAF1202D7019630099D03C /* HeadSecondary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadSecondary.swift; sourceTree = "<group>"; };
 		EBE614972C5AE4FA00197660 /* HomeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecord.swift; sourceTree = "<group>"; };
 		EBE614992C5AFA5D00197660 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
-		EBE6149B2C5AFC8300197660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBE6149B2C5AFC8300197660 /* Info-QGS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-QGS.plist"; sourceTree = "<group>"; };
 		EBE7D3492DA4AD7E0081F524 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EBE7D34B2DA4AD9C0081F524 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EBE7D3502DA4B7BD0081F524 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		EBE7D3522DA4B88B0081F524 /* RegisterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterResponse.swift; sourceTree = "<group>"; };
 		EBE7D3542DA4DA4E0081F524 /* Info-friendly.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-friendly.plist"; sourceTree = "<group>"; };
+		EBE7D4072DA7F7BF0081F524 /* ImportHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportHelper.swift; sourceTree = "<group>"; };
+		EBE7D4082DA7F7BF0081F524 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		EBE7D4092DA7F7BF0081F524 /* MigrationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationHelper.swift; sourceTree = "<group>"; };
 		EBF9DF9C2CED8E1D002D7FA1 /* ListRecordDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRecordDetails.swift; sourceTree = "<group>"; };
 		EBF9DF9E2CED8E38002D7FA1 /* ListRecordTotals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRecordTotals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -746,7 +759,7 @@
 				EB4B26B42C5998F80083397F /* Network */,
 				EBBC933D2C515F9E00F3C8CD /* Helpers */,
 				EBBC933A2C515E7E00F3C8CD /* View */,
-				EBE6149B2C5AFC8300197660 /* Info.plist */,
+				EBE6149B2C5AFC8300197660 /* Info-QGS.plist */,
 				EB86403C2C66400A0072534E /* QGS.entitlements */,
 				EBBC930E2C512EBB00F3C8CD /* QGSApp.swift */,
 				EB72DE8B2DA33DA300ADE37B /* Color.swift */,
@@ -804,6 +817,9 @@
 		EBBC933D2C515F9E00F3C8CD /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				EBE7D4072DA7F7BF0081F524 /* ImportHelper.swift */,
+				EBE7D4082DA7F7BF0081F524 /* KeychainManager.swift */,
+				EBE7D4092DA7F7BF0081F524 /* MigrationHelper.swift */,
 				EBA23F9B2D7786BC00DAB27D /* LogScreen.swift */,
 				EB126FE22D6CE23500FC1BE6 /* NotificationScheduler.swift */,
 				EB345D172CF6DB9F001A62C8 /* JsonServices.swift */,
@@ -1095,7 +1111,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB72DE792D9C229000ADE37B /* Localizable.strings in Resources */,
-				EBE7D3572DA4DA710081F524 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1120,7 +1135,7 @@
 				EBBC93162C512EBC00F3C8CD /* Preview Assets.xcassets in Resources */,
 				EBE7D34C2DA4AD9C0081F524 /* GoogleService-Info.plist in Resources */,
 				EB72DE182D96EB2400ADE37B /* Assets.xcassets in Resources */,
-				EBE7D3562DA4DA710081F524 /* Info.plist in Resources */,
+				EBE7D3562DA4DA710081F524 /* Info-QGS.plist in Resources */,
 				EB3665F12D066DCE00810713 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1248,6 +1263,9 @@
 				EB72DDD02D96CDCB00ADE37B /* RecordData.swift in Sources */,
 				EB72DDD12D96CDCB00ADE37B /* LoadingState.swift in Sources */,
 				EB72DDD22D96CDCB00ADE37B /* Employee.swift in Sources */,
+				EBE7D4102DA7F7BF0081F524 /* ImportHelper.swift in Sources */,
+				EBE7D4112DA7F7BF0081F524 /* KeychainManager.swift in Sources */,
+				EBE7D4122DA7F7BF0081F524 /* MigrationHelper.swift in Sources */,
 				EB72DDDB2D96CE2200ADE37B /* LoginResponse.swift in Sources */,
 				EB72DDDC2D96CE2200ADE37B /* EmployeeLocation.swift in Sources */,
 				EB72DDDD2D96CE2200ADE37B /* APIServiceRecord.swift in Sources */,
@@ -1257,6 +1275,7 @@
 				EB72DDE12D96CE2200ADE37B /* WorkTimeResponse.swift in Sources */,
 				EB72DDE22D96CE2200ADE37B /* APIService.swift in Sources */,
 				EB72DDF92D96CE8000ADE37B /* MainTabView.swift in Sources */,
+				EBE7D4062DA6337A0081F524 /* RegisterResponse.swift in Sources */,
 				EB72DDFA2D96CE8000ADE37B /* SplashScreen.swift in Sources */,
 				EB72DDE32D96CE2200ADE37B /* DeviceLocations.swift in Sources */,
 				EB72DDE42D96CE2200ADE37B /* NetworkListDetails.swift in Sources */,
@@ -1333,12 +1352,16 @@
 				EBADECB32D71347A00B56617 /* EmployeesViewModel.swift in Sources */,
 				EB44DB5B2CFECF170070B827 /* DeviceLocations.swift in Sources */,
 				EB44DB652CFF427F0070B827 /* Sysconf.swift in Sources */,
+				EBE7D40A2DA7F7BF0081F524 /* ImportHelper.swift in Sources */,
+				EBE7D40B2DA7F7BF0081F524 /* KeychainManager.swift in Sources */,
+				EBE7D40C2DA7F7BF0081F524 /* MigrationHelper.swift in Sources */,
 				EB3666362D15E81000810713 /* APIService.swift in Sources */,
 				EB126FE32D6CE23500FC1BE6 /* NotificationScheduler.swift in Sources */,
 				EBBC933C2C515E9400F3C8CD /* Login.swift in Sources */,
 				EB0FA7672D91E3CF00264A5E /* DataManager.swift in Sources */,
 				EB0FA7BD2D938B9300264A5E /* EmployeeMessagingViewModel.swift in Sources */,
 				EB0FA7682D91E3CF00264A5E /* RecordManager.swift in Sources */,
+				EBE7D4052DA6337A0081F524 /* RegisterResponse.swift in Sources */,
 				EB0FA7692D91E3CF00264A5E /* UserManager.swift in Sources */,
 				EB44DB692CFF6F080070B827 /* TotalWorkEntry.swift in Sources */,
 				EB6F03A22CEE172500190C0E /* Endpoints.swift in Sources */,
@@ -1417,6 +1440,9 @@
 				EBD5317D2D71F941007BF316 /* Utils.swift in Sources */,
 				EBD5317E2D71F941007BF316 /* CustomTF.swift in Sources */,
 				EBD5317F2D71F941007BF316 /* HeadSecondary.swift in Sources */,
+				EBE7D40D2DA7F7BF0081F524 /* ImportHelper.swift in Sources */,
+				EBE7D40E2DA7F7BF0081F524 /* KeychainManager.swift in Sources */,
+				EBE7D40F2DA7F7BF0081F524 /* MigrationHelper.swift in Sources */,
 				EBD531802D71F941007BF316 /* QGSApp.swift in Sources */,
 				EB72DCF52D9501AD00ADE37B /* VersionCheckService.swift in Sources */,
 				EBD531812D71F941007BF316 /* EmployeesViewModel.swift in Sources */,
@@ -1503,7 +1529,7 @@
 				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QGS/Info.plist;
+				INFOPLIST_FILE = "MCS/Info-MCS.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = MCS;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Esta aplicación necesita acceso a tu calendario para programar eventos relacionados con los empleados.";
@@ -1525,7 +1551,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_SWIFT_FLAGS = "-DMCS_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.MCS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1553,7 +1579,7 @@
 				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QGS/Info.plist;
+				INFOPLIST_FILE = "MCS/Info-MCS.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = MCS;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Esta aplicación necesita acceso a tu calendario para programar eventos relacionados con los empleados.";
@@ -1575,7 +1601,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_SWIFT_FLAGS = "-DMCS_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.MCS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1800,7 +1826,7 @@
 				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QGS/Info.plist;
+				INFOPLIST_FILE = "QGS/Info-QGS.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = QGS;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida";
@@ -1817,7 +1843,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.6;
+				MARKETING_VERSION = 1.4.8;
 				OTHER_SWIFT_FLAGS = "-DQGS_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1846,7 +1872,7 @@
 				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QGS/Info.plist;
+				INFOPLIST_FILE = "QGS/Info-QGS.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = QGS;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "La aplicación necesita acceso a tu ubicación para registrar tu entrada/salida";
@@ -1863,7 +1889,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.6;
+				MARKETING_VERSION = 1.4.8;
 				OTHER_SWIFT_FLAGS = "-DQGS_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.CheckInQGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1997,7 +2023,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_SWIFT_FLAGS = "-DFRIENDLY_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.FriendlyCheckInOut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2046,7 +2072,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_SWIFT_FLAGS = "-DFRIENDLY_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = com.friendlysystemgroup.FriendlyCheckInOut;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -16,6 +16,7 @@ import CoreLocation
 // (Si SignupView está en otro módulo, podría necesitar un import específico)
 #endif
 
+@MainActor
 struct Login: View {
     
     @State private var isLoginSuccessful = false
@@ -26,6 +27,7 @@ struct Login: View {
     @State private var errorMessage: String? = nil
     @State private var showError = false
     @Environment(\.modelContext) private var modelContext
+    @State private var hasCheckedSession = false
     
     var body: some View {
         NavigationStack {
@@ -154,6 +156,12 @@ struct Login: View {
                 self.showSignUp = false
             }
             #endif
+            .onAppear {
+                if !hasCheckedSession {
+                    checkExistingSession()
+                    hasCheckedSession = true
+                }
+            }
         }
     }
     func version() -> String {
@@ -213,6 +221,36 @@ struct Login: View {
         showSignUp = true
     }
     #endif
+    
+    private func checkExistingSession() {
+        // Verificar si hay token directamente desde UserManager
+        if let token = UserManager.shared.getAuthToken, !token.isEmpty {
+            print("Token encontrado en UserManager: \(token.prefix(10))...")
+            
+            // Verificar que tenemos los datos necesarios para la sesión
+            if let employeeId = UserManager.shared.getEmployeeId,
+               let userType = UserManager.shared.getUserType,
+               !employeeId.isEmpty {
+                print("Restaurando sesión con employeeId: \(employeeId), userType: \(userType)")
+                
+                // Si tenemos todos los datos, activar la sesión
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.isLoginSuccessful = true
+                }
+            } else {
+                print("Token válido pero faltan datos de usuario, requiere inicio de sesión")
+            }
+        } else {
+            // Verificar también en UserDefaults como respaldo
+            let defaults = UserDefaults.standard
+            if let token = defaults.string(forKey: "authToken"), !token.isEmpty {
+                print("Token encontrado en UserDefaults pero no en UserManager, restaurando...")
+                // Podríamos intentar restaurar los datos aquí si es necesario
+            } else {
+                print("No se encontró token, requiere inicio de sesión")
+            }
+        }
+    }
 }
 
 //#Preview {

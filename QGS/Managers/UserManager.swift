@@ -37,6 +37,49 @@ class UserManager {
         self.employeeId = defaults.string(forKey: "employeeId")
         self.sysconfId = defaults.integer(forKey: "sysconfId")
         self.userType = defaults.string(forKey: "userType")
+        
+        // Verificar integridad
+        if let token = self.authToken, !token.isEmpty {
+            print("Token cargado desde UserDefaults: \(token.prefix(10))...")
+            
+            // Intentar guardar en Keychain (si está disponible)
+            do {
+                if let keychainManager = try? getKeychainManager() {
+                    try keychainManager.save(key: "authToken", string: token)
+                    print("Token respaldado en Keychain")
+                }
+            } catch {
+                print("Error al respaldar token en Keychain: \(error)")
+            }
+        } else {
+            // Intentar restaurar desde Keychain si está disponible
+            do {
+                if let keychainManager = try? getKeychainManager(),
+                   let tokenFromKeychain = try? keychainManager.readString(key: "authToken"),
+                   !tokenFromKeychain.isEmpty {
+                    self.authToken = tokenFromKeychain
+                    
+                    // Guardar de vuelta en UserDefaults para mantener sincronización
+                    defaults.set(tokenFromKeychain, forKey: "authToken")
+                    defaults.synchronize()
+                    
+                    print("Token restaurado desde Keychain: \(tokenFromKeychain.prefix(10))...")
+                }
+            } catch {
+                print("Error al intentar restaurar token desde Keychain: \(error)")
+            }
+        }
+    }
+    
+    // Método para obtener una instancia del KeychainManager de forma segura
+    private func getKeychainManager() throws -> KeychainManager? {
+        // Verificar si podemos acceder al KeychainManager
+        if let keychainClass = NSClassFromString("QGS.KeychainManager") as? KeychainManager.Type {
+            return keychainClass.shared
+        }
+        
+        // Si la clase no está disponible, intentar con otro enfoque
+        return KeychainManager.shared
     }
     
     // Getters públicos
@@ -110,7 +153,19 @@ class UserManager {
         self.sysconfId = user.sysconf_id
         self.userType = user.type
         
-        // Guardar en UserDefaults
+        // Guardar token en Keychain (si está disponible)
+        if let token = response.token, !token.isEmpty {
+            do {
+                if let keychainManager = try? getKeychainManager() {
+                    try keychainManager.save(key: "authToken", string: token)
+                    print("Token guardado en Keychain exitosamente")
+                }
+            } catch {
+                logger.error("Error al guardar token en Keychain: \(error.localizedDescription)")
+            }
+        }
+        
+        // Guardar datos en UserDefaults (fuente principal)
         let defaults = UserDefaults.standard
         defaults.set(self.userId, forKey: "userId")
         defaults.set(self.userName, forKey: "userName")
@@ -188,6 +243,81 @@ class UserManager {
         let passwordRegEx = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"
         let passwordPred = NSPredicate(format:"SELF MATCHES %@", passwordRegEx)
         return passwordPred.evaluate(with: password)
+    }
+    
+    // Agregar un método para limpiar los datos de sesión
+    func logout() {
+        // Limpiar datos de memoria
+        self.userId = nil
+        self.userName = nil
+        self.userEmail = nil
+        self.authToken = nil
+        self.employeeId = nil
+        self.sysconfId = nil
+        self.userType = nil
+        self.user = nil
+        
+        // Limpiar UserDefaults
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "userId")
+        defaults.removeObject(forKey: "userName")
+        defaults.removeObject(forKey: "userEmail")
+        defaults.removeObject(forKey: "authToken")
+        defaults.removeObject(forKey: "employeeId")
+        defaults.removeObject(forKey: "sysconfId")
+        defaults.removeObject(forKey: "userType")
+        defaults.synchronize()
+        
+        // Limpiar Keychain si está disponible
+        do {
+            if let keychainManager = try? getKeychainManager() {
+                try keychainManager.delete(key: "authToken")
+                print("Token eliminado de Keychain")
+            }
+        } catch {
+            logger.error("Error al eliminar token de Keychain: \(error.localizedDescription)")
+        }
+        
+        // Limpiar SwiftData si está disponible
+        if let context = self.context {
+            do {
+                let existingUsers = try context.fetch(FetchDescriptor<UserModel>())
+                for existingUser in existingUsers {
+                    context.delete(existingUser)
+                }
+                try context.save()
+                logger.info("Datos de usuario eliminados de SwiftData")
+            } catch {
+                logger.error("Error al eliminar datos de usuario de SwiftData: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    // Agregar función pública para ejecutar migraciones
+    func runMigrations() {
+        let defaults = UserDefaults.standard
+        
+        // Verificar si la migración a Keychain ya se ejecutó
+        if !defaults.bool(forKey: "keychain_migration_attempted") {
+            print("🔄 Ejecutando migración de tokens...")
+            
+            // Obtener token actual de UserDefaults
+            if let token = defaults.string(forKey: "authToken"), !token.isEmpty {
+                // Intentar respaldar en Keychain si es posible
+                do {
+                    if let keychainManager = try? getKeychainManager() {
+                        try keychainManager.save(key: "authToken", string: token)
+                        print("✅ Token migrado exitosamente a Keychain")
+                    }
+                } catch {
+                    print("⚠️ No se pudo migrar el token a Keychain: \(error.localizedDescription)")
+                }
+            }
+            
+            // Marcar la migración como intentada
+            defaults.set(true, forKey: "keychain_migration_attempted")
+            defaults.synchronize()
+        }
     }
 }
 

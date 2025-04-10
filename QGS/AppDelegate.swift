@@ -9,6 +9,12 @@ import FirebaseFirestore    // <-- Import necesario para Firestore
 import UserNotifications
 import AppTrackingTransparency
 import FirebaseAppCheck  // Asegurarse de que esto esté importado
+import Photos
+import Foundation
+import Security
+
+// Eliminamos la referencia directa al KeychainManager que causa problemas
+// private let keychainManager = KeychainManager.shared
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -39,6 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Desactivar Analytics si lo deseas
         Analytics.setAnalyticsCollectionEnabled(false)
+        
+        // Verificar la integridad de la sesión
+        verifyUserSession()
         
         // Solicitar tracking
         if #available(iOS 14, *) {
@@ -161,6 +170,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("❌ Error al obtener token FCM: \(error.localizedDescription)")
             } else if let token = token {
                 print("✅ Token FCM actualizado: \(token)")
+            }
+        }
+    }
+    
+    // Función para verificar la integridad de la sesión
+    private func verifyUserSession() {
+        let userManager = UserManager.shared
+        
+        // Usar UserDefaults para verificación básica
+        let defaults = UserDefaults.standard
+        if let token = defaults.string(forKey: "authToken"), !token.isEmpty {
+            print("✅ Token encontrado en UserDefaults: \(token.prefix(10))...")
+            
+            // Verificar que tengamos los datos básicos del usuario
+            if userManager.getUserType == nil || userManager.getEmployeeId == nil {
+                print("⚠️ Sesión parcialmente corrupta: token presente pero faltan datos de usuario")
+            }
+        } else {
+            print("⚠️ No se encontró token en UserDefaults")
+            
+            // Intentar restaurar token desde UserManager si está disponible
+            if let token = userManager.getAuthToken, !token.isEmpty {
+                defaults.set(token, forKey: "authToken")
+                defaults.synchronize()
+                print("✅ Token restaurado desde UserManager a UserDefaults")
             }
         }
     }

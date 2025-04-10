@@ -30,6 +30,9 @@ struct QGSApp: App {
             modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
             
             UserManager.shared.configure(with: modelContainer.mainContext)
+            // Ejecutar migraciones después de configurar UserManager
+            UserManager.shared.runMigrations()
+            
             RecordManager.shared.configure(with: modelContainer.mainContext)
         } catch {
             fatalError("No se pudo configurar SwiftData: \(error)")

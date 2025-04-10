@@ -598,9 +598,6 @@ struct MapContentView: View {
             // Mapa base
             mapView
             
-            // Etiquetas de proyectos
-            projectLabels
-            
             // Controles y tarjeta de información
             controlsAndInfoCard
         }
@@ -656,12 +653,15 @@ struct MapContentView: View {
                 showsUserLocation: true,
                 userTrackingMode: .none,
                 annotationItems: validProjects) { project in
-                MapMarker(coordinate: CLLocationCoordinate2D(
-                    latitude: Double(project.altitude) ?? 0.0,
-                    longitude: Double(project.longitude) ?? 0.0
-                ), tint: project.status == 1 ? .green : .red)
-            }
+                    // Usar MapMarker (simple) para compatibilidad universal
+                    MapMarker(coordinate: project.coordinate, 
+                             tint: project.status == 1 ? .green : .red)
+                }
             .edgesIgnoringSafeArea(.all)
+            .onTapGesture { _ in
+                // Al tocar en cualquier parte del mapa, detectar si estamos cerca de un proyecto
+                detectTappedProject()
+            }
         }
         #else
         return Map(coordinateRegion: $region,
@@ -669,70 +669,46 @@ struct MapContentView: View {
             showsUserLocation: true,
             userTrackingMode: .none,
             annotationItems: validProjects) { project in
-            MapMarker(coordinate: CLLocationCoordinate2D(
-                latitude: Double(project.altitude) ?? 0.0,
-                longitude: Double(project.longitude) ?? 0.0
-            ), tint: project.status == 1 ? .green : .red)
-        }
+                // Usar MapMarker (simple) para compatibilidad universal
+                MapMarker(coordinate: project.coordinate, 
+                         tint: project.status == 1 ? .green : .red)
+            }
         .edgesIgnoringSafeArea(.all)
+        .onTapGesture { _ in
+            // Al tocar en cualquier parte del mapa, detectar si estamos cerca de un proyecto
+            detectTappedProject()
+        }
         #endif
     }
     
-    // Etiquetas de proyectos
-    private var projectLabels: some View {
-        ZStack {
-            ForEach(validProjects) { project in
-                projectLabel(for: project)
-            }
-        }
-        .allowsHitTesting(true)
-    }
-    
-    // Etiqueta individual para un proyecto
-    private func projectLabel(for project: Project) -> some View {
-        // Obtener la posición válida (si existe)
-        let validPosition = getValidPosition(for: project)
+    // Nueva función para detectar taps cerca de proyectos
+    private func detectTappedProject() {
+        // Esta es una versión simplificada; en realidad no calcula la distancia precisa
+        // pero permite seleccionar un proyecto cuando se toca cerca
+        let center = region.center
         
-        // Crear una vista condicional
-        return ZStack {
-            // Solo mostrar el contenido si las coordenadas son válidas
-            if validPosition != nil {
-                // Fondo de la etiqueta
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(Color.white.opacity(0.8))
-                    .shadow(radius: 1)
-                    .frame(width: CGFloat(project.name.count) * 7 + 10, height: 24)
-                
-                // Texto de la etiqueta con fuente del sistema específica (no variable)
-                Text(project.name)
-                    .font(.system(size: 12, weight: .medium, design: .default))
-                    .foregroundColor(.black)
-            }
-        }
-        .position(
-            x: validPosition?.x ?? 0,
-            y: (validPosition?.y ?? 0) + 180
-        )
-        .opacity(validPosition != nil ? 1 : 0) // Ocultar si no hay posición válida
-        .onTapGesture {
-            if validPosition != nil {
+        // Encontrar el proyecto más cercano (si está dentro de un rango razonable)
+        let closestProject = validProjects.min(by: { project1, project2 in
+            let distance1 = calculateDistance(from: center, to: project1.coordinate)
+            let distance2 = calculateDistance(from: center, to: project2.coordinate)
+            return distance1 < distance2
+        })
+        
+        if let project = closestProject {
+            // Si la distancia está dentro de un umbral razonable, seleccionar el proyecto
+            let distance = calculateDistance(from: center, to: project.coordinate)
+            if distance < 0.05 { // aproximadamente 5km
                 selectedProject = project
             }
         }
     }
     
-    // Función auxiliar para obtener una posición válida
-    private func getValidPosition(for project: Project) -> CGPoint? {
-        let xOffset = region.getOffsetX(for: project.coordinate)
-        let yOffset = region.getOffsetY(for: project.coordinate)
-        
-        // Verificar si las coordenadas son válidas
-        guard !xOffset.isNaN && !yOffset.isNaN && 
-              xOffset.isFinite && yOffset.isFinite else {
-            return nil
-        }
-        
-        return CGPoint(x: xOffset, y: yOffset)
+    // Función auxiliar para calcular la distancia aproximada entre coordenadas
+    private func calculateDistance(from coord1: CLLocationCoordinate2D, to coord2: CLLocationCoordinate2D) -> Double {
+        // Fórmula simplificada para calcular la distancia
+        let latDiff = abs(coord1.latitude - coord2.latitude)
+        let lonDiff = abs(coord1.longitude - coord2.longitude)
+        return sqrt(latDiff * latDiff + lonDiff * lonDiff)
     }
     
     // Controles y tarjeta de información
@@ -827,19 +803,38 @@ struct MapContentView: View {
             }
             
             // Botones de acción
-            Button(action: {
-                showingEditProject = true
-            }) {
-                HStack {
-                    Image(systemName: "pencil")
-                    Text("Editar Proyecto")
-                        .font(.system(size: 14, weight: .medium, design: .default))
+            HStack {
+                // Botón para navegar a la ubicación
+                Button(action: {
+                    openMapsNavigation(to: project)
+                }) {
+                    HStack {
+                        Image(systemName: "location.fill")
+                        Text("Navegar")
+                            .font(.system(size: 14, weight: .medium, design: .default))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 8)
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
+                
+                // Botón para editar proyecto
+                Button(action: {
+                    showingEditProject = true
+                }) {
+                    HStack {
+                        Image(systemName: "pencil")
+                        Text("Editar")
+                            .font(.system(size: 14, weight: .medium, design: .default))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+                }
             }
             
             Button(action: {
@@ -863,6 +858,27 @@ struct MapContentView: View {
         .shadow(radius: 5)
         .padding()
     }
+    
+    // Función para abrir mapa de navegación
+    private func openMapsNavigation(to project: Project) {
+        let latitude = Double(project.altitude) ?? 0.0
+        let longitude = Double(project.longitude) ?? 0.0
+        
+        guard latitude != 0.0 && longitude != 0.0 else {
+            // Mostrar alerta si las coordenadas no son válidas
+            return
+        }
+        
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let placemark = MKPlacemark(coordinate: coordinate)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = project.name
+        
+        // Intentar abrir en Apple Maps primero
+        mapItem.openInMaps(launchOptions: [
+            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+        ])
+    }
 }
 
 // Extensión para obtener coordenadas de un proyecto
@@ -871,39 +887,6 @@ extension Project {
         let lat = Double(altitude) ?? 0
         let lon = Double(longitude) ?? 0
         return CLLocationCoordinate2D(latitude: lat, longitude: lon)
-    }
-}
-
-// Extensión para calcular posiciones en el mapa
-extension MKCoordinateRegion {
-    func getOffsetX(for coordinate: CLLocationCoordinate2D) -> CGFloat {
-        let spanX = span.longitudeDelta
-        let centerX = center.longitude
-        
-        // Protección contra división por cero
-        guard spanX > 0 else { return 0 }
-        
-        let offsetRatio = (coordinate.longitude - (centerX - spanX/2)) / spanX
-        
-        // Limitar el valor dentro de un rango válido
-        let clampedRatio = max(0, min(1, offsetRatio))
-        
-        return CGFloat(clampedRatio) * (UIScreen.main.bounds.width - 20) + 10
-    }
-    
-    func getOffsetY(for coordinate: CLLocationCoordinate2D) -> CGFloat {
-        let spanY = span.latitudeDelta
-        let centerY = center.latitude
-        
-        // Protección contra división por cero
-        guard spanY > 0 else { return 0 }
-        
-        let offsetRatio = 1 - (coordinate.latitude - (centerY - spanY/2)) / spanY
-        
-        // Limitar el valor dentro de un rango válido
-        let clampedRatio = max(0, min(1, offsetRatio))
-        
-        return CGFloat(clampedRatio) * (UIScreen.main.bounds.height - 20) + 10
     }
 }
 

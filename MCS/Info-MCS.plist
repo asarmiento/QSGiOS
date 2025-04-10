@@ -14,7 +14,7 @@
 	<key>FirebaseAnalyticsDebugEnabled</key>
 	<true/>
 	<key>FirebaseAppDelegateProxyEnabled</key>
-	<true/>
+	<false/>
 	<key>FirebaseAutomaticScreenReportingEnabled</key>
 	<true/>
 	<key>FirebaseMessagingAutoInitEnabled</key>

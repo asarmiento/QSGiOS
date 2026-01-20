@@ -82,24 +82,35 @@ class UserManager: ObservableObject {
     // MARK: - Authentication Operations
     
     func saveUser(from response: LoginResponse) {
+        // Create session FIRST - this is critical for app functionality
+        // Session creation doesn't depend on SwiftData and shouldn't be blocked by it
+        sessionManager.createSession(from: response)
+
+        logInfo("Session creation attempted", category: .authentication, metadata: [
+            "sessionActive": sessionManager.isSessionActive,
+            "hasEmployeeId": sessionManager.employeeId != nil
+        ])
+
         do {
             // Save token
             if let token = response.token {
                 try tokenManager.saveToken(token)
+                logInfo("Token saved successfully", category: .authentication)
+            } else {
+                logWarning("No token in login response", category: .authentication)
             }
-            
-            // Save user data
+
+            // Save user data to SwiftData (optional, for local persistence)
             try userDataManager.saveUser(from: response)
-            
-            // Create session
-            sessionManager.createSession(from: response)
-            
+
             logInfo("User saved successfully through facade", category: .authentication)
         } catch {
-            logError("Failed to save user through facade", category: .authentication, metadata: [
+            // Log the error but don't block - session is already created
+            logError("Failed to save user data to SwiftData (session still active)", category: .authentication, metadata: [
                 "error": error.localizedDescription
             ])
-            errorManager.handle(error, context: "Save user")
+            // Don't call errorManager.handle() here as it would show an error to user
+            // even though login was successful
         }
     }
     

@@ -114,13 +114,25 @@ class SecureNetworkManager: NSObject, ObservableObject {
         if config.requiresAuth {
             do {
                 let token = try securityManager.loadAuthToken()
-                
-                // Validate token before using
-                if !securityManager.validateJWT(token) {
-                    logWarning("Invalid JWT token detected", category: .security)
-                    throw AppNetworkError.unauthorized.toAppError()
+
+                // Only validate as JWT if token has JWT format (3 parts separated by dots)
+                // Laravel Sanctum uses simple bearer tokens, not JWTs
+                let tokenParts = token.split(separator: ".")
+                if tokenParts.count == 3 {
+                    // Token looks like a JWT, validate it
+                    if !securityManager.validateJWT(token) {
+                        logWarning("Invalid JWT token detected", category: .security)
+                        throw AppNetworkError.unauthorized.toAppError()
+                    }
+                } else {
+                    // Sanctum token - just verify it's not empty
+                    if token.isEmpty {
+                        logWarning("Empty auth token", category: .security)
+                        throw AppNetworkError.unauthorized.toAppError()
+                    }
+                    logDebug("Using Sanctum bearer token", category: .security)
                 }
-                
+
                 request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             } catch {
                 logError("Failed to load auth token", category: .security)

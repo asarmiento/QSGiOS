@@ -30,8 +30,22 @@ class NetworkListTotal: ObservableObject {
     }
     
     private func performFetch() async {
-        guard let employeeId = getEmployeeId(),
-              let authToken = getAuthToken() else {
+        // Debug logging para diagnosticar el problema de sesión
+        let employeeId = getEmployeeId()
+        let authToken = getAuthToken()
+
+        logInfo("NetworkListTotal.performFetch - Session check", category: .network, metadata: [
+            "hasEmployeeId": employeeId != nil,
+            "hasAuthToken": authToken != nil,
+            "sessionActive": SessionManager.shared.isSessionActive
+        ])
+
+        guard let employeeId = employeeId,
+              let authToken = authToken else {
+            logError("NetworkListTotal.performFetch - Missing credentials", category: .authentication, metadata: [
+                "employeeId": employeeId ?? "nil",
+                "authToken": authToken != nil ? "present" : "nil"
+            ])
             await handleError(AppNetworkError.unauthorized.toAppError())
             return
         }

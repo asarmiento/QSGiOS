@@ -161,12 +161,27 @@ final class SessionManager: ObservableObject {
     
     private func loadSession() {
         // Load session data from UserDefaults
-        guard let userId = defaults.string(forKey: Keys.userId),
-              let userName = defaults.string(forKey: Keys.userName),
-              let userEmail = defaults.string(forKey: Keys.userEmail),
-              let employeeId = defaults.string(forKey: Keys.employeeId),
-              let userType = defaults.string(forKey: Keys.userType) else {
-            logInfo("No saved session found", category: .authentication)
+        let userId = defaults.string(forKey: Keys.userId)
+        let userName = defaults.string(forKey: Keys.userName)
+        let userEmail = defaults.string(forKey: Keys.userEmail)
+        let employeeId = defaults.string(forKey: Keys.employeeId)
+        let userType = defaults.string(forKey: Keys.userType)
+
+        // Debug logging
+        logInfo("SessionManager.loadSession - Checking stored session", category: .authentication, metadata: [
+            "hasUserId": userId != nil,
+            "hasUserName": userName != nil,
+            "hasUserEmail": userEmail != nil,
+            "hasEmployeeId": employeeId != nil,
+            "hasUserType": userType != nil
+        ])
+
+        guard let userId = userId,
+              let userName = userName,
+              let userEmail = userEmail,
+              let employeeId = employeeId,
+              let userType = userType else {
+            logInfo("No saved session found - missing required fields", category: .authentication)
             return
         }
         

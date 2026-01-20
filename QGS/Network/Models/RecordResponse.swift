@@ -26,6 +26,7 @@ struct RecordResponseData: Codable {
     let date: String
     let address: String
     let type: String
+    let observation: String?
     let updated_at: String?
     let created_at: String?
     
@@ -47,6 +48,7 @@ struct RecordResponseData: Codable {
         case date
         case address
         case type
+        case observation
         case updated_at
         case created_at
     }

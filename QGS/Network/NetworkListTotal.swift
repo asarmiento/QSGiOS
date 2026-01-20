@@ -1,106 +1,119 @@
 //
-//  NetworkListDetails.swift
+//  NetworkListTotal.swift
 //  QGS
 //
 //  Created by Anwar Sarmiento on 12/2/24.
+//  Modernized and optimized for better performance and error handling
 //
 
-/**
- Lista de registro consulta a APIREST
- */
 import Foundation
 import Combine
 import SwiftData
 import SwiftUI
 
+@MainActor
 class NetworkListTotal: ObservableObject {
     @Published var totalHours = [TotalWorkEntry]()
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
+    
     private var cancellables = Set<AnyCancellable>()
-   
-     var context: ModelContext?
-     init() { }
     
+    var context: ModelContext?
     
-    func fetchWorkEntries() {
-        // Optenemos el id de empleado y el token
-        guard let id = employeeId, let token = authToken else {
-            print("No se pudo obtener el usuario o el token. ")
-               return
-           }
-        
-   
-        guard let url = URL(string: "\(EndPoints.getListTotal)\(id)") else {
-            self.errorMessage = "URL no válida"
+    init() {
+        logInfo("NetworkListTotal initialized", category: .network)
+    }
+    
+    func fetchWorkEntries() async {
+        await performFetch()
+    }
+    
+    private func performFetch() async {
+        guard let employeeId = getEmployeeId(),
+              let authToken = getAuthToken() else {
+            await handleError(AppNetworkError.unauthorized.toAppError())
             return
         }
-        print("Paso la url \(id) el token \(token)")
-        var request = URLRequest(url: url)
         
-        request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        isLoading = true
+        errorMessage = nil
         
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-                   if let error = error {
-                       DispatchQueue.main.async {
-                           self.errorMessage = error.localizedDescription
-                       }
-                       print("Error: \(error.localizedDescription)")
-                       return
-                   }
-                   
-                   guard let data = data else {
-                       DispatchQueue.main.async {
-                           self.errorMessage = "No se recibieron datos"
-                       }
-                       return
-                   }
-                   
-                   // Intentamos convertir los datos a un string para ver qué estamos recibiendo
-                   if let jsonString = String(data: data, encoding: .utf8) {
-                       print("Respuesta de la API: \(jsonString)") // Imprime la respuesta completa
-                   }
-                   
-                   // Comprobamos si hay un mensaje de error en la respuesta (e.g., "Too Many Attempts")
-                   if let httpResponse = response as? HTTPURLResponse,
-                      httpResponse.statusCode == 429 {
-                       DispatchQueue.main.async {
-                           self.errorMessage = "Demasiados intentos. Por favor, intenta más tarde."
-                       }
-                       print("Error: Too Many Attempts")
-                       return
-                   }
-                   
-                   // Intentamos decodificar el JSON en un arreglo de WorkEntry
-                   do {
-                       // Decodificamos directamente el arreglo de WorkEntry
-                       let decoder = JSONDecoder()
-                       let workEntries = try decoder.decode([TotalWorkEntry].self, from: data)
-                       
-                       DispatchQueue.main.async {
-                           self.totalHours = workEntries // Asignamos los datos a la propiedad workEntries
-                           self.errorMessage = nil // Limpiamos el mensaje de error
-                       }
-                       
-                       print(workEntries) // Imprime el arreglo de WorkEntry
-                   } catch {
-                       DispatchQueue.main.async {
-                           self.errorMessage = "Error al decodificar el JSON: \(error.localizedDescription)"
-                       }
-                       print("Error al decodificar el JSON: \(error)")
-                   }
-               }.resume()
+        do {
+            logInfo("Fetching weekly totals", category: .network, metadata: [
+                "employeeId": employeeId
+            ])
+            
+            let config = RequestConfiguration(
+                endpoint: .weeklyTotals(employeeId),
+                method: .GET,
+                requiresAuth: true
+            )
+            
+            let startTime = CFAbsoluteTimeGetCurrent()
+            
+            // TODO: Add caching support later
+            logInfo("Fetching fresh weekly totals data", category: .network)
+            
+            // Fetch fresh data
+            let response: [TotalWorkEntry] = try await SecureNetworkManager.shared.performRequest(
+                config,
+                responseType: [TotalWorkEntry].self
+            )
+            
+            let duration = CFAbsoluteTimeGetCurrent() - startTime
+            
+            totalHours = response
+            isLoading = false
+            
+            // TODO: Cache the response when caching is available
+            
+            logInfo("Weekly totals fetched successfully", category: .network, metadata: [
+                "count": response.count,
+                "duration": "\(Int(duration * 1000))ms"
+            ])
+            
+            // Analytics tracking for successful fetch
+            logInfo("Network request completed", category: .network, metadata: [
+                "endpoint": config.endpoint.rawValue,
+                "duration": "\(Int(duration * 1000))ms"
+            ])
+            
+        } catch {
+            await handleError(error)
+        }
     }
     
-    private var authToken: String? {
-        UserManager.shared.getAuthToken
+    private func handleError(_ error: Error) async {
+        isLoading = false
+        
+        // Handle the error using ErrorManager
+        ErrorManager.shared.handle(error, context: "NetworkListTotal.fetchWorkEntries")
+        
+        // Set user-friendly error message
+        errorMessage = error.localizedDescription
+        
+        logError("Failed to fetch weekly totals", category: .network, metadata: [
+            "error": error.localizedDescription
+        ])
     }
-
-    private var employeeId: String? {
-        UserManager.shared.getEmployeeId
+    
+    private func getAuthToken() -> String? {
+        return UserManager.shared.getAuthToken
+    }
+    
+    private func getEmployeeId() -> String? {
+        return UserManager.shared.getEmployeeId
+    }
+    
+    // MARK: - Manual Refresh
+    func refreshData() async {
+        await performFetch()
+    }
+    
+    // MARK: - Clear Cache (TODO: Implement when caching is available)
+    func clearCache() async {
+        logInfo("Cache clearing not implemented yet", category: .network)
     }
 }
 

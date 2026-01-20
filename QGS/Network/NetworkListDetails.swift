@@ -30,8 +30,15 @@ class NetworkListDetails: ObservableObject {
         // Optenemos el id de empleado y el token
         guard let id = employeeId, let token = authToken else {
                print("No se pudo obtener el usuario o el token.")
+               DispatchQueue.main.async {
+                   self.errorMessage = "No se pudo obtener la información del usuario. Por favor, inicie sesión nuevamente."
+                   self.isLoading = false
+               }
                return
            }
+        
+        isLoading = true
+        errorMessage = nil
         
         
         guard let url = URL(string: "\(EndPoints.getListDetail)\(id)") else {
@@ -50,6 +57,7 @@ class NetworkListDetails: ObservableObject {
             if let error = error {
                 DispatchQueue.main.async {
                     self.errorMessage = error.localizedDescription
+                    self.isLoading = false
                 }
                 print("Error: \(error.localizedDescription)")
                 return
@@ -58,6 +66,7 @@ class NetworkListDetails: ObservableObject {
             guard let data = data else {
                 DispatchQueue.main.async {
                     self.errorMessage = "No se recibieron datos"
+                    self.isLoading = false
                 }
                 return
             }
@@ -72,6 +81,7 @@ class NetworkListDetails: ObservableObject {
                httpResponse.statusCode == 429 {
                 DispatchQueue.main.async {
                     self.errorMessage = "Demasiados intentos. Por favor, intenta más tarde."
+                    self.isLoading = false
                 }
                 print("Error: Too Many Attempts")
                 return
@@ -86,12 +96,14 @@ class NetworkListDetails: ObservableObject {
                 DispatchQueue.main.async {
                     self.workEntries = workEntries // Asignamos los datos a la propiedad workEntries
                     self.errorMessage = nil // Limpiamos el mensaje de error
+                    self.isLoading = false
                 }
                 
                 print(workEntries) // Imprime el arreglo de WorkEntry
             } catch {
                 DispatchQueue.main.async {
                     self.errorMessage = "Error al decodificar el JSON: \(error.localizedDescription)"
+                    self.isLoading = false
                 }
                 print("Error al decodificar el JSON: \(error)")
             }

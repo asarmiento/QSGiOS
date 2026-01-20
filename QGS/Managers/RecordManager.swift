@@ -66,7 +66,8 @@ class RecordManager {
             employeeId: String(recordData.employee_id),
             address: recordData.address,
             distance: distance,
-            message: message
+            message: message,
+            observation: recordData.observation
         )
        
         context.insert(record)

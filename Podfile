@@ -1,5 +1,5 @@
 # Especificar la plataforma iOS y la versión mínima requerida
-platform :ios, '17.6'
+platform :ios, '17.0'
 
 # Habilitar frameworks dinámicos si es necesario
 use_frameworks!
@@ -20,9 +20,14 @@ end
 
 # Lista de dependencias compartidas
 def common_pods
-  pod 'Firebase/Messaging'
+  # Firebase via CocoaPods
+  pod 'Firebase/Core'
   pod 'Firebase/Analytics'
+  pod 'Firebase/Messaging'
   pod 'Firebase/Database'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Crashlytics'
+  pod 'Firebase/AppCheck'
 end
 
 target 'QGS' do
@@ -38,4 +43,6 @@ end
 
 target 'FriendlyCheckInOut' do
   common_pods
+
+  pod 'Google-Mobile-Ads-SDK'
 end

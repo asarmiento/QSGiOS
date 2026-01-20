@@ -3,204 +3,103 @@
 //  QGS
 //
 //  Created by Anwar Sarmiento on 12/8/24.
+//  Refactored by Assistant on 2025-08-03.
+//
+//  Purpose: Facade class that orchestrates user-related operations
+//  by delegating to specialized managers. Maintains backward compatibility
+//  while providing a cleaner architecture.
 //
 
 import Foundation
 import SwiftData
 import OSLog
+import Combine
 
-class UserManager {
+class UserManager: ObservableObject {
     static let shared = UserManager()
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "QGS", category: "UserManager")
     
+    // Specialized managers
+    private let tokenManager = TokenManager.shared
+    private let authManager = AuthenticationManager.shared
+    private let sessionManager = SessionManager.shared
+    private let userDataManager = UserDataManager.shared
+    private let errorManager = ErrorManager.shared
+    
     @Published private(set) var loadingState: LoadingState = .idle
     
-    // Propiedades para almacenar datos del usuario
-    private var userId: String?
-    private var userName: String?
-    private var userEmail: String?
-    private var authToken: String?
-    private var employeeId: String?
-    private var sysconfId: Int?
-    private var userType: String?
-    
-    private var user: UserModel?
+    // Legacy properties maintained for compatibility
     private var context: ModelContext?
     
+    // Combine subscriptions
+    private var cancellables = Set<AnyCancellable>()
+    
     private init() {
-        // Cargar datos guardados de UserDefaults
-        let defaults = UserDefaults.standard
-        self.userId = defaults.string(forKey: "userId")
-        self.userName = defaults.string(forKey: "userName")
-        self.userEmail = defaults.string(forKey: "userEmail")
-        self.authToken = defaults.string(forKey: "authToken")
-        self.employeeId = defaults.string(forKey: "employeeId")
-        self.sysconfId = defaults.integer(forKey: "sysconfId")
-        self.userType = defaults.string(forKey: "userType")
+        setupBindings()
         
-        // Verificar integridad
-        if let token = self.authToken, !token.isEmpty {
-            print("Token cargado desde UserDefaults: \(token.prefix(10))...")
-            
-            // Intentar guardar en Keychain (si está disponible)
-            do {
-                if let keychainManager = try? getKeychainManager() {
-                    try keychainManager.save(key: "authToken", string: token)
-                    print("Token respaldado en Keychain")
-                }
-            } catch {
-                print("Error al respaldar token en Keychain: \(error)")
-            }
-        } else {
-            // Intentar restaurar desde Keychain si está disponible
-            do {
-                if let keychainManager = try? getKeychainManager(),
-                   let tokenFromKeychain = try? keychainManager.readString(key: "authToken"),
-                   !tokenFromKeychain.isEmpty {
-                    self.authToken = tokenFromKeychain
-                    
-                    // Guardar de vuelta en UserDefaults para mantener sincronización
-                    defaults.set(tokenFromKeychain, forKey: "authToken")
-                    defaults.synchronize()
-                    
-                    print("Token restaurado desde Keychain: \(tokenFromKeychain.prefix(10))...")
-                }
-            } catch {
-                print("Error al intentar restaurar token desde Keychain: \(error)")
-            }
+        // Check if session exists on init
+        if sessionManager.isSessionActive {
+            logInfo("Active session found on UserManager init", category: .authentication)
         }
     }
     
-    // Método para obtener una instancia del KeychainManager de forma segura
-    private func getKeychainManager() throws -> KeychainManager? {
-        // Verificar si podemos acceder al KeychainManager
-        if let keychainClass = NSClassFromString("QGS.KeychainManager") as? KeychainManager.Type {
-            return keychainClass.shared
-        }
-        
-        // Si la clase no está disponible, intentar con otro enfoque
-        return KeychainManager.shared
-    }
+    // MARK: - Backward Compatible Properties
     
-    // Getters públicos
     var getAuthToken: String? {
-        return authToken
+        return tokenManager.loadToken()
     }
     
     var getUserType: String? {
-        return userType
+        return sessionManager.userType
     }
     
     var getEmployeeId: String? {
-        return employeeId
+        return sessionManager.employeeId
     }
+    
+    // MARK: - Configuration
     
     func configure(with context: ModelContext) {
         self.context = context
-        loadUser()
-        print("UserManager configurado con el contexto correctamente.")
+        userDataManager.configure(with: context)
+        logInfo("UserManager configured with context", category: .general)
     }
     
-    private func loadUser() {
-        guard let context = context else {
-            logger.error("Error: ModelContext no está configurado.")
-            return
-        }
-        do {
-            user = try context.fetch(FetchDescriptor<UserModel>()).first
-        } catch {
-            logger.error("Error al obtener el usuario: \(error.localizedDescription)")
-        }
-    }
+    // MARK: - User Operations
     
     func getUser() -> UserModel? {
-        return user
+        return userDataManager.currentUser
     }
     
     func userExists(completion: @escaping (Bool) -> Void) {
-        guard let context = context else {
-            logger.error("Error: ModelContext no está configurado.")
-            completion(false)
-            return
-        }
-        
-        do {
-            // Verifica si hay al menos un usuario en la base de datos
-            let userExists = try context.fetch(FetchDescriptor<UserModel>()).first != nil
-            completion(userExists)
-        } catch {
-            logger.error("Error al verificar la existencia del usuario: \(error.localizedDescription)")
-            completion(false) // En caso de error, asumimos que el usuario no existe
-        }
+        completion(userDataManager.userExists())
     }
     
     func refreshUser() {
-        loadUser()
+        userDataManager.refreshUser()
     }
     
+    // MARK: - Authentication Operations
+    
     func saveUser(from response: LoginResponse) {
-        guard let user = response.user else {
-            logger.error("Error: No se encontraron datos de usuario en la respuesta")
-            return
-        }
-        
-        // Guardar datos del usuario
-        self.userId = String(user.id)
-        self.userName = user.name
-        self.userEmail = user.email
-        self.authToken = response.token ?? ""
-        self.employeeId = String(user.employee.id)
-        self.sysconfId = user.sysconf_id
-        self.userType = user.type
-        
-        // Guardar token en Keychain (si está disponible)
-        if let token = response.token, !token.isEmpty {
-            do {
-                if let keychainManager = try? getKeychainManager() {
-                    try keychainManager.save(key: "authToken", string: token)
-                    print("Token guardado en Keychain exitosamente")
-                }
-            } catch {
-                logger.error("Error al guardar token en Keychain: \(error.localizedDescription)")
+        do {
+            // Save token
+            if let token = response.token {
+                try tokenManager.saveToken(token)
             }
-        }
-        
-        // Guardar datos en UserDefaults (fuente principal)
-        let defaults = UserDefaults.standard
-        defaults.set(self.userId, forKey: "userId")
-        defaults.set(self.userName, forKey: "userName")
-        defaults.set(self.userEmail, forKey: "userEmail")
-        defaults.set(self.authToken, forKey: "authToken")
-        defaults.set(self.employeeId, forKey: "employeeId")
-        defaults.set(self.sysconfId, forKey: "sysconfId")
-        defaults.set(self.userType, forKey: "userType")
-        defaults.synchronize()
-        
-        // Actualizar el modelo SwiftData si está disponible
-        if let context = self.context {
-            do {
-                let newUser = UserModel(
-                    name: user.name,
-                    email: user.email,
-                    token: self.authToken ?? "",
-                    employeeId: user.employee.id,
-                    sysconf: String(user.sysconf_id),
-                    type: user.type
-                )
-                
-                // Eliminar usuarios previos
-                let existingUsers = try context.fetch(FetchDescriptor<UserModel>())
-                for existingUser in existingUsers {
-                    context.delete(existingUser)
-                }
-                
-                context.insert(newUser)
-                try context.save()
-                self.user = newUser
-                logger.info("Usuario guardado exitosamente en SwiftData")
-            } catch {
-                logger.error("Error al guardar el usuario en SwiftData: \(error.localizedDescription)")
-            }
+            
+            // Save user data
+            try userDataManager.saveUser(from: response)
+            
+            // Create session
+            sessionManager.createSession(from: response)
+            
+            logInfo("User saved successfully through facade", category: .authentication)
+        } catch {
+            logError("Failed to save user through facade", category: .authentication, metadata: [
+                "error": error.localizedDescription
+            ])
+            errorManager.handle(error, context: "Save user")
         }
     }
     
@@ -208,116 +107,59 @@ class UserManager {
         loadingState = .loading
         
         guard let email = userData["email"] as? String,
-              isValidEmail(email) else {
-            loadingState = .failure(NSLocalizedString("INVALID_EMAIL", comment: ""))
-            throw ValidationError.invalidEmail
-        }
-        
-        guard let password = userData["password"] as? String,
-              isValidPassword(password) else {
-            loadingState = .failure(NSLocalizedString("INVALID_PASSWORD", comment: ""))
-            throw ValidationError.invalidPassword
+              let password = userData["password"] as? String else {
+            loadingState = .failure("Invalid input data")
+            throw ValidationError.invalidInput("email or password")
         }
         
         do {
-            let loginResponse: LoginResponse = try await NetworkManager.shared.request(
-                EndPoints.login,
-                method: "POST",
-                params: userData
-            )
+            // Delegate to authentication manager
+            let loginResponse = try await authManager.login(email: email, password: password)
+            
+            // Save user data and create session
             saveUser(from: loginResponse)
-            loadingState = .success
+            
+            loadingState = .success(nil)
         } catch {
             loadingState = .failure(error.localizedDescription)
             throw error
         }
     }
     
-    private func isValidEmail(_ email: String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: email)
-    }
+    // MARK: - Session Operations
     
-    private func isValidPassword(_ password: String) -> Bool {
-        let passwordRegEx = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"
-        let passwordPred = NSPredicate(format:"SELF MATCHES %@", passwordRegEx)
-        return passwordPred.evaluate(with: password)
-    }
-    
-    // Agregar un método para limpiar los datos de sesión
     func logout() {
-        // Limpiar datos de memoria
-        self.userId = nil
-        self.userName = nil
-        self.userEmail = nil
-        self.authToken = nil
-        self.employeeId = nil
-        self.sysconfId = nil
-        self.userType = nil
-        self.user = nil
+        // End session
+        sessionManager.endSession()
         
-        // Limpiar UserDefaults
-        let defaults = UserDefaults.standard
-        defaults.removeObject(forKey: "userId")
-        defaults.removeObject(forKey: "userName")
-        defaults.removeObject(forKey: "userEmail")
-        defaults.removeObject(forKey: "authToken")
-        defaults.removeObject(forKey: "employeeId")
-        defaults.removeObject(forKey: "sysconfId")
-        defaults.removeObject(forKey: "userType")
-        defaults.synchronize()
+        // Clear authentication
+        authManager.logout()
         
-        // Limpiar Keychain si está disponible
+        // Delete user data
         do {
-            if let keychainManager = try? getKeychainManager() {
-                try keychainManager.delete(key: "authToken")
-                print("Token eliminado de Keychain")
-            }
+            try userDataManager.deleteCurrentUser()
         } catch {
-            logger.error("Error al eliminar token de Keychain: \(error.localizedDescription)")
+            logError("Error deleting user data during logout", category: .authentication, metadata: [
+                "error": error.localizedDescription
+            ])
         }
         
-        // Limpiar SwiftData si está disponible
-        if let context = self.context {
-            do {
-                let existingUsers = try context.fetch(FetchDescriptor<UserModel>())
-                for existingUser in existingUsers {
-                    context.delete(existingUser)
-                }
-                try context.save()
-                logger.info("Datos de usuario eliminados de SwiftData")
-            } catch {
-                logger.error("Error al eliminar datos de usuario de SwiftData: \(error.localizedDescription)")
-            }
-        }
+        logInfo("User logged out successfully", category: .authentication)
     }
     
-    // Agregar función pública para ejecutar migraciones
+    // MARK: - Migration Support
+    
     func runMigrations() {
-        let defaults = UserDefaults.standard
-        
-        // Verificar si la migración a Keychain ya se ejecutó
-        if !defaults.bool(forKey: "keychain_migration_attempted") {
-            print("🔄 Ejecutando migración de tokens...")
-            
-            // Obtener token actual de UserDefaults
-            if let token = defaults.string(forKey: "authToken"), !token.isEmpty {
-                // Intentar respaldar en Keychain si es posible
-                do {
-                    if let keychainManager = try? getKeychainManager() {
-                        try keychainManager.save(key: "authToken", string: token)
-                        print("✅ Token migrado exitosamente a Keychain")
-                    }
-                } catch {
-                    print("⚠️ No se pudo migrar el token a Keychain: \(error.localizedDescription)")
-                }
-            }
-            
-            // Marcar la migración como intentada
-            defaults.set(true, forKey: "keychain_migration_attempted")
-            defaults.synchronize()
-        }
+        // Token migration is now handled automatically by TokenManager
+        logInfo("Migrations delegated to specialized managers", category: .security)
+    }
+    
+    // MARK: - Private Methods
+    
+    private func setupBindings() {
+        // Bind authentication manager state to local state
+        authManager.$loadingState
+            .assign(to: &$loadingState)
     }
 }
 

@@ -17,6 +17,8 @@ class RecordViewModel: ObservableObject {
     @Published var hasEntradaDeHoy: Bool = false
     @Published var showSuccessAlert: Bool = false
     
+    private let errorManager = ErrorManager.shared
+    
     // Agregamos un almacenamiento para la fecha verificada por última vez
     private var lastCheckDate: String {
         get { UserDefaults.standard.string(forKey: "LastCheckDate") ?? "" }
@@ -68,31 +70,37 @@ class RecordViewModel: ObservableObject {
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: params)
         } catch {
-            print("Error al serializar parámetros: \(error)")
+            logError("Failed to serialize record parameters", category: .network, metadata: ["error": error.localizedDescription])
+            errorManager.handle(NetworkError.parseError, context: "Record serialization")
             completion(false)
             return
         }
         
         URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             if let error = error {
-                print("Error de red: \(error)")
+                logError("Record network error", category: .network, metadata: ["error": error.localizedDescription])
                 DispatchQueue.main.async {
+                    self?.errorManager.handle(error, context: "Record submission")
                     completion(false)
                 }
                 return
             }
             
             guard let data = data else {
-                print("No se recibieron datos")
+                logWarning("No data received from record API", category: .network)
                 DispatchQueue.main.async {
+                    self?.errorManager.handle(NetworkError.noData, context: "Record API response")
                     completion(false)
                 }
                 return
             }
             
-            // Depuración: Imprimir respuesta JSON
+            // Log response
             if let jsonString = String(data: data, encoding: .utf8) {
-                print("JSON recibido: \(jsonString)")
+                logDebug("Record API response received", category: .network, metadata: [
+                    "responseSize": data.count,
+                    "response": jsonString
+                ])
             }
             
             do {

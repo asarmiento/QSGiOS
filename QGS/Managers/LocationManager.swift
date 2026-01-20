@@ -90,7 +90,10 @@ extension LocationManager: CLLocationManagerDelegate {
     }
     
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error de ubicación: \(error.localizedDescription)")
+        logError("Location manager error", category: .location, metadata: [
+            "error": error.localizedDescription,
+            "errorCode": (error as NSError).code
+        ])
     }
 }
 

@@ -136,13 +136,8 @@ class EmployeeMessagingViewModel: ObservableObject {
         
         // Vamos a intentar la integración directa con la API para evitar problemas de permisos con Firebase
         if !token.isEmpty {
-            do {
-                let result = await sendMessageViaAPI(message: message, recipients: recipients, token: token)
-                return result
-            } catch {
-                print("Error al enviar mensaje vía API: \(error.localizedDescription)")
-                // Continuamos con el método Firebase como fallback
-            }
+            let result = await sendMessageViaAPI(message: message, recipients: recipients, token: token)
+            return result
         }
 
         // Usar una referencia diferente con mayor probabilidad de tener permisos
@@ -166,7 +161,6 @@ class EmployeeMessagingViewModel: ObservableObject {
             // Intentar primero el path de user_messages
             userMessagesRef.observeSingleEvent(of: .value) { snapshot in
                 let messageRef = userMessagesRef.childByAutoId()
-                let messageId = messageRef.key ?? UUID().uuidString
                 let timestamp = Int(Date().timeIntervalSince1970 * 1000) // Timestamp manual
                 
                 // Validar datos para prevenir valores NaN

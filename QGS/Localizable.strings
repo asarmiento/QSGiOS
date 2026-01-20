@@ -7,10 +7,11 @@
 /*
  HomeRecord
  */
-"message_info_home" = "Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo";
-"msg_welcome" = "Bienvenido(a):";
-"msg_latitude" = "Latitude";
-"msg_longitude" = "Longitude";
+"title_message" = "Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo";
+"Bienvenido(a): %@" = "Bienvenido(a): %@";
+"Bienvenido" = "Bienvenido";
+"Latitude" = "Latitude";
+"Longitude" = "Longitude";
 
 
 
@@ -45,7 +46,7 @@
 "Hora: %@" = "Hora: %@";
 "Tipo: %@" = "Tipo: %@";
 "Hora de Registro: %@" = "Hora de Registro: %@";
-"Bienvenido" = "Bienvenido";
+
 
 "No hay registros de horas" = "No hay registros de horas";
 "No hay más registros" = "No hay más registros";
@@ -342,4 +343,9 @@
 // Etiquetas de proyectos
 "Horas Quincenales" = "Horas Quincenales";
 "Horas Mensuales" = "Horas Mensuales";
+
+"Fuera de horario" = "Fuera de horario";
+"Ingrese el motivo de marcación fuera de horario" = "Ingrese el motivo de marcación fuera de horario";
+"Por favor, escriba el motivo por el que está marcando fuera del horario normal" = "Por favor, escriba el motivo por el que está marcando fuera del horario normal";
+"Debe indicar un motivo para registrar fuera del horario normal" = "Debe indicar un motivo para registrar fuera del horario normal";
 

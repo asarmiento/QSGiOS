@@ -39,17 +39,16 @@ struct HomeRecord: View {
                 
                 if let user = getUser {
                     
-                    HeadSecondary(title: "Bienvenido(a): \(user.name)")
+                    HeadSecondary(title: String(format:NSLocalizedString("Bienvenido(a): \(user.name)",comment:"Bienvenido(a)")))
                     
                 } else {
-                    HeadSecondary(title: "Entrada o Salida")
+                    HeadSecondary(title: NSLocalizedString("Entrada o Salida",comment: "cambio "))
                     
                 }
                 
                 VStack {
                     // Mensaje informativo
-                    Text(NSLocalizedString("Debe presionar el boton de entrada o salida, para poder registrar su ingreso o su salida del trabajo",
-                                           comment: "Mensaje para indicar al usuario qué hacer"))
+                    Text(NSLocalizedString("title_message", comment: "Mensaje para indicar al usuario qué hacer"))
                     .font(.system(size: 18))
                     .font(.title3)
                     .foregroundColor(Color("myPrimaries"))

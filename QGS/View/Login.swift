@@ -179,7 +179,7 @@ struct Login: View {
                 switch result {
                 case .success(let response):
                     if response.status {
-                        if let user = response.user {
+                        if response.user != nil {
                             print("Login exitoso, configurando UserManager")
                             UserManager.shared.configure(with: self.modelContext)
                             UserManager.shared.saveUser(from: response)

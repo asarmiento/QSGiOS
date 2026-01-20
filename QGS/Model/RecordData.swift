@@ -10,6 +10,7 @@ final class RecordData {
     var longitude: String
     var address: String
     var type: String
+    var observation: String?
     var updated_at: String
     var created_at: String
     
@@ -20,6 +21,7 @@ final class RecordData {
          longitude: String,
          address: String,
          type: String,
+         observation: String? = nil,
          updated_at: String,
          created_at: String) {
         self.id = id
@@ -29,6 +31,7 @@ final class RecordData {
         self.longitude = longitude
         self.address = address
         self.type = type
+        self.observation = observation
         self.updated_at = updated_at
         self.created_at = created_at
     }

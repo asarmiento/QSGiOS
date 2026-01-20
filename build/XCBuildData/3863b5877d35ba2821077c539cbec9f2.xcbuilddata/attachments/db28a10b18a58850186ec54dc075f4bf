@@ -1,4 +1,0 @@
-module FirebaseAnalyticsWithoutAdIdSupportWrapper {
-umbrella "/Users/edinmartinez/Library/Developer/Xcode/DerivedData/QGS-dgstplyfxtuuumbcwaaiynydcesg/SourcePackages/checkouts/firebase-ios-sdk/FirebaseAnalyticsWithoutAdIdSupportWrapper/include"
-export *
-}

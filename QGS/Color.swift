@@ -16,6 +16,6 @@ public extension Color {
     }
     
     static var Secodary: Color {
-        return Color("secondary")
+        return Color("secondaryColor")
     }
 }

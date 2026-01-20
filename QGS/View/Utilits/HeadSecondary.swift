@@ -18,7 +18,7 @@ struct HeadSecondary: View {
             Color("myPrimaries").frame(width: 1000, height: 250).contentMargins(.zero).overlay(content: {
               
         
-                Text(NSLocalizedString(title,comment: "el titulo de bienvenidad")).foregroundColor(.white).opacity(0.8)
+                Text((title)).foregroundColor(.white).opacity(0.8)
                     .font(.system(size: 36, design: .default)).bold()
                     .frame(width: 300, height: 250, alignment: .center).offset(x: -40, y: 10)
                     .fixedSize(horizontal: false, vertical: true)

@@ -1,84 +1,27 @@
 import SwiftUI
-import UIKit
 import CoreLocation
 import MapKit
 
-// La clase AddressSearchHandler ya está definida en AddProjectView.swift
-
-// Para solucionar problemas de constraints con el teclado
-extension UIApplication {
-    func endEditing() {
-        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-
-#if FRIENDLY_TARGET
-struct KeyboardAdaptive: ViewModifier {
-    @State private var keyboardHeight: CGFloat = 0
-    
-    func body(content: Content) -> some View {
-        content
-            .padding(.bottom, keyboardHeight)
-            .onAppear(perform: {
-                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
-                    let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect ?? .zero
-                    withAnimation(.easeOut(duration: 0.16)) {
-                        self.keyboardHeight = keyboardFrame.height
-                    }
-                }
-                
-                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-                    withAnimation(.easeOut(duration: 0.16)) {
-                        self.keyboardHeight = 0
-                    }
-                }
-                
-                // Esto ayuda a prevenir los errores de "Can't find or decode reasons"
-                _ = UITextInputMode.activeInputModes
-            })
-            .onDisappear(perform: {
-                NotificationCenter.default.removeObserver(self)
-            })
-    }
-}
-
-extension View {
-    func keyboardAdaptive() -> some View {
-        modifier(KeyboardAdaptive())
-    }
-}
+// MARK: - Modern SwiftUI Keyboard Handling
+// Replaces UIKit-based keyboard management with SwiftUI native approaches
 
 struct SignupView: View {
-    // Variables para el formulario
-    @State private var companyName: String = ""
-    @State private var email: String = ""
-    @State private var phone: String = ""
-    @State private var card: String = ""
-    @State private var workType: String = "Cleaning"
-    @State private var password: String = ""
-    @State private var passwordConfirm: String = ""
-    @State private var projectName: String = ""
-    @State private var budget: String = ""
-    @State private var address: String = ""
+    // MARK: - Form State Management
+    @State private var formData = RegistrationFormData()
+    @State private var formState = FormState()
     
-    // Variables para el estado de la vista
-    @State private var isLoading = false
-    @State private var showAlert = false
-    @State private var alertTitle = ""
-    @State private var alertMessage = ""
-    @State private var isSuccess = false
-    @State private var keyboardHeight: CGFloat = 0
+    // MARK: - Focus Management (Modern SwiftUI approach)
+    @FocusState private var focusedField: FormField?
     
-    // Para la geolocalización
+    // MARK: - Dependencies
     @StateObject private var locationManager = LocationManager.shared
-    
-    // Para la búsqueda de direcciones
     @StateObject private var addressSearchHandler = AddressSearchHandler()
-    @State private var showingAddressResults = false
-    @FocusState private var isAddressSearchFocused: Bool
-    
-    // Para la navegación
     @Environment(\.dismiss) private var dismiss
+    
+    // MARK: - Form Validation
+    private var isFormValid: Bool {
+        formData.isValid && !formState.isLoading
+    }
     
     var body: some View {
         ScrollViewReader { scrollProxy in
@@ -599,4 +542,80 @@ struct SignupView: View {
         return phonePred.evaluate(with: phone)
     }
 }
+
+// MARK: - Supporting Data Structures for Performance Optimization
+
+/// Optimized form data structure to reduce state variables and improve performance
+struct RegistrationFormData {
+    var companyName: String = ""
+    var email: String = ""
+    var phone: String = ""
+    var card: String = ""
+    var workType: String = "Cleaning"
+    var password: String = ""
+    var passwordConfirm: String = ""
+    var projectName: String = ""
+    var budget: String = ""
+    var address: String = ""
+    
+    /// Computed property for form validation
+    var isValid: Bool {
+        !companyName.isEmpty &&
+        isValidEmail(email) &&
+        isValidPhone(phone) &&
+        !card.isEmpty &&
+        password.count >= 6 &&
+        password == passwordConfirm &&
+        !projectName.isEmpty &&
+        Double(budget) != nil &&
+        !address.isEmpty
+    }
+    
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
+    
+    private func isValidPhone(_ phone: String) -> Bool {
+        let phoneRegex = "^[0-9+]{10,15}$"
+        let phonePred = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
+        return phonePred.evaluate(with: phone)
+    }
+}
+
+/// Optimized form UI state management
+struct FormState {
+    var isLoading = false
+    var showAlert = false
+    var alertTitle = ""
+    var alertMessage = ""
+    var isSuccess = false
+    var showingAddressResults = false
+}
+
+/// Modern focus field enumeration for @FocusState
+enum FormField: CaseIterable {
+    case companyName
+    case email
+    case phone
+    case card
+    case workType
+    case password
+    case passwordConfirm
+    case projectName
+    case budget
+    case address
+    
+    /// Navigate to next field in logical order
+    var next: FormField? {
+        let allCases = FormField.allCases
+        guard let currentIndex = allCases.firstIndex(of: self),
+              currentIndex + 1 < allCases.count else {
+            return nil
+        }
+        return allCases[currentIndex + 1]
+    }
+}
+
 #endif 

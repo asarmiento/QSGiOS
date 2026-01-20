@@ -41,7 +41,31 @@
 - Resumen de horas diarias y semanales
 - Mejora en la interfaz y experiencia de usuario</string>
 	</dict>
-	<key>aps-environment</key>
-	<string>development</string>
+    <key>aps-environment</key>
+    <string>development</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-9818954671091924~7058815055</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.friendly.checkinout</string>
+	<key>API_BASE_URL</key>
+	<string>https://api.friendlypayroll.net/api</string>
+	<key>FIREBASE_PROJECT_ID</key>
+	<string>friendly-project</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Necesitamos acceso a tu cámara para que puedas tomar fotos para tu perfil o documentos.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Necesitamos acceso a tu ubicación para registrar correctamente tus entradas y salidas.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Necesitamos acceso a tu ubicación para registrar correctamente tus entradas y salidas incluso cuando la aplicación está en segundo plano.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Esta aplicación necesita acceso al micrófono para grabar notas de voz.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Necesitamos acceso a tu biblioteca de fotos para que puedas seleccionar imágenes para tu perfil o documentos.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Esta aplicación necesita acceso a tus contactos para facilitar la comunicación con los empleados.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Esta aplicación necesita acceso a tu calendario para programar eventos relacionados con los empleados.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Esta aplicación utiliza Face ID para una autenticación segura.</string>
 </dict>
 </plist>

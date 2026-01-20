@@ -18,15 +18,37 @@ struct QGSApp: App {
     
     @StateObject private var notificationManager = NotificationManager.shared
     @StateObject private var recordViewModel = RecordViewModel()
+    @StateObject private var errorManager = ErrorManager.shared
+    
+    private let appConfig = AppConfigurationManager.shared
     
     init() {
+        // Initialize logging system
+        logInfo("Initializing \(appConfig.current.appName)", category: .general, metadata: [
+            "version": appConfig.versionNumber,
+            "build": appConfig.buildNumber,
+            "target": appConfig.current.appName
+        ])
+        
         // Configuración de SwiftData, UserManager, etc...
         do {
             let schema = Schema([
                 UserModel.self,
                 RecordModel.self
             ])
-            let modelConfiguration = ModelConfiguration(schema: schema)
+            
+            // Delete existing store if migration fails
+            let storeURL = URL.applicationSupportDirectory.appending(path: "default.store")
+            if FileManager.default.fileExists(atPath: storeURL.path) {
+                do {
+                    try FileManager.default.removeItem(at: storeURL)
+                    logInfo("Removed existing data store for fresh migration", category: .database)
+                } catch {
+                    logWarning("Could not remove existing store: \(error)", category: .database)
+                }
+            }
+            
+            let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
             modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
             
             UserManager.shared.configure(with: modelContainer.mainContext)
@@ -34,7 +56,10 @@ struct QGSApp: App {
             UserManager.shared.runMigrations()
             
             RecordManager.shared.configure(with: modelContainer.mainContext)
+            
+            logInfo("SwiftData configuration completed successfully", category: .database)
         } catch {
+            logCritical("Failed to configure SwiftData: \(error)", category: .database)
             fatalError("No se pudo configurar SwiftData: \(error)")
         }
 
@@ -54,12 +79,17 @@ struct QGSApp: App {
     var body: some Scene {
         WindowGroup {
             SplashScreen()
+                .preferredColorScheme(.light)
                 .environmentObject(notificationManager)
                 .environmentObject(recordViewModel)
+                .environmentObject(errorManager)
+                .environmentObject(ThemeManager.shared)
+                .errorAlert()
+                .accentColor(ThemeManager.shared.currentTheme.primaryColor)
         }
         .modelContainer(modelContainer)
-        .onChange(of: scenePhase) {
-            if $0 == .active {
+        .onChange(of: scenePhase) { oldPhase, newPhase in
+            if newPhase == .active {
                 recordViewModel.checkIfNewDay()
             }
         }

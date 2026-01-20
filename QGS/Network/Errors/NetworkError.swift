@@ -11,6 +11,7 @@ enum NetworkError: Error {
     case networkError(Error)
     case serverError(Int, String)
     case apiError(String)
+    case parseError
     
     var errorDescription: String? {
       
@@ -33,6 +34,8 @@ enum NetworkError: Error {
                 return String(format: NSLocalizedString("DECODING_ERROR", comment: ""), error.localizedDescription)
             case .apiError(let message):
                 return message
+            case .parseError:
+                return NSLocalizedString("PARSE_ERROR", comment: "Data parsing error")
             @unknown default:
                 return ("Unknown error")
             }

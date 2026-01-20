@@ -1,4 +1,0 @@
-module FirebaseAppCheck {
-umbrella header "/Users/edinmartinez/Library/Developer/Xcode/DerivedData/QGS-dgstplyfxtuuumbcwaaiynydcesg/SourcePackages/checkouts/firebase-ios-sdk/FirebaseAppCheck/Sources/Public/FirebaseAppCheck/FirebaseAppCheck.h"
-export *
-}

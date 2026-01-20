@@ -20,7 +20,11 @@
 	<key>FirebaseMessagingAutoInitEnabled</key>
 	<true/>
 	<key>CFBundleIdentifier</key>
-	<string></string>
+	<string>com.qgs.app</string>
+	<key>API_BASE_URL</key>
+	<string>https://api.friendlypayroll.net/api</string>
+	<key>FIREBASE_PROJECT_ID</key>
+	<string>qgs-project</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

@@ -3,7 +3,7 @@ import Foundation
 enum LoadingState: Equatable {
     case idle
     case loading
-    case success
+    case success(String? = nil)
     case failure(String)
     
     var isLoading: Bool {
@@ -17,7 +17,7 @@ enum LoadingState: Equatable {
     }
     
     var isSuccess: Bool {
-        if case .success = self { return true }
+        if case .success(_) = self { return true }
         return false
     }
 } 

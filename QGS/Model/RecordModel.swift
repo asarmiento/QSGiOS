@@ -20,8 +20,10 @@ class RecordModel {
     var address: String
     var distance: Double?
     var message: String?
+    var observation: String?
+    var syncStatus: Bool?
     
-    init(id: UUID = UUID(), latitude: Double, longitude: Double, type: String, date: Date, times: String, employeeId: String, address: String, distance: Double? = nil, message: String? = nil) {
+    init(id: UUID = UUID(), latitude: Double, longitude: Double, type: String, date: Date, times: String, employeeId: String, address: String, distance: Double? = nil, message: String? = nil, observation: String? = nil, syncStatus: Bool? = false) {
         self.id = id
         self.latitude = latitude
         self.longitude = longitude
@@ -32,6 +34,8 @@ class RecordModel {
         self.address = address
         self.distance = distance
         self.message = message
+        self.observation = observation
+        self.syncStatus = syncStatus
     }
 }
 

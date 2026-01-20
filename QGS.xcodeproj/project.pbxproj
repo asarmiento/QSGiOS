@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1271DC6C0B33736E42B2E858 /* Pods_QGS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC049309D0E057DAE9E9224C /* Pods_QGS.framework */; };
+		7E4B1300F4F262141D26B29F /* UpdateRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B30FA9497511C9AD7FAE54 /* UpdateRequiredView.swift */; };
 		8D381EC8B5E9CE922822B30F /* Pods_QGS_QGSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B807C0E0AFF4ADF2ECC1AC6 /* Pods_QGS_QGSUITests.framework */; };
 		A45845DDC1B40145D1B360C0 /* Pods_QGSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3C3D9EDCBA7A14BC5612220 /* Pods_QGSTests.framework */; };
 		EB0001A82E400866007D021E /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0001A72E400866007D021E /* UserDataManager.swift */; };
@@ -394,6 +395,7 @@
 		C33CB0C86EF06578ACD028F2 /* Pods-QGS-QGSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QGS-QGSUITests.release.xcconfig"; path = "Target Support Files/Pods-QGS-QGSUITests/Pods-QGS-QGSUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CE5E29E4F1AC16ECBD41BBDE /* Pods-FriendlyCheckInOut.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendlyCheckInOut.debug.xcconfig"; path = "Target Support Files/Pods-FriendlyCheckInOut/Pods-FriendlyCheckInOut.debug.xcconfig"; sourceTree = "<group>"; };
 		D8597FD0F3FB8C43FDBE9058 /* Pods-QGS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QGS.release.xcconfig"; path = "Target Support Files/Pods-QGS/Pods-QGS.release.xcconfig"; sourceTree = "<group>"; };
+		D9B30FA9497511C9AD7FAE54 /* UpdateRequiredView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QGS/View/Utilits/UpdateRequiredView.swift; sourceTree = SOURCE_ROOT; };
 		EB0001A32E400866007D021E /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		EB0001A42E400866007D021E /* OptimizedLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizedLocationManager.swift; sourceTree = "<group>"; };
 		EB0001A52E400866007D021E /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
@@ -612,16 +614,22 @@
 		};
 		EB72DDA22D96CD1D00ADE37B /* MCSTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = MCSTests;
 			sourceTree = "<group>";
 		};
 		EB72DDAC2D96CD1D00ADE37B /* MCSUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = MCSUITests;
 			sourceTree = "<group>";
 		};
 		EB72DE152D96EAA000ADE37B /* Preview Content */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
@@ -903,6 +911,7 @@
 				EB345D242CF79E07001A62C8 /* Buttons */,
 				EBDAF1182D700B4C0099D03C /* MainTabView.swift */,
 				EBDAF1192D700B4C0099D03C /* SplashScreen.swift */,
+				D9B30FA9497511C9AD7FAE54 /* UpdateRequiredView.swift */,
 			);
 			path = Utilits;
 			sourceTree = "<group>";
@@ -1737,6 +1746,7 @@
 				EB36667C2D55A33300810713 /* RecordResponse.swift in Sources */,
 				EB36667D2D55A33300810713 /* LoginResponse.swift in Sources */,
 				EB36667E2D55A33300810713 /* WorkTimeResponse.swift in Sources */,
+				7E4B1300F4F262141D26B29F /* UpdateRequiredView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2190,7 +2200,7 @@
 				CODE_SIGN_ENTITLEMENTS = QGS/QGS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
 				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;
@@ -2237,7 +2247,7 @@
 				CODE_SIGN_ENTITLEMENTS = QGS/QGS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"QGS/Preview Content\"";
 				DEVELOPMENT_TEAM = V4NNXT68SN;
 				ENABLE_PREVIEWS = YES;

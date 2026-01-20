@@ -53,7 +53,7 @@ class QGSConfiguration: BaseAppConfiguration {
     override var bundleIdentifier: String { "com.qgs.app" }
     override var primaryColor: Color { Color.blue }
     override var supportEmail: String { "support@qgs.com" }
-    override var appStoreURL: String { "https://apps.apple.com/app/qgs" }
+    override var appStoreURL: String { "https://apps.apple.com/app/id6504676498" }
 }
 
 // MARK: - Friendly Check-In/Out Configuration
@@ -64,7 +64,7 @@ class FriendlyConfiguration: BaseAppConfiguration {
     override var supportsRegistration: Bool { true }
     override var supportsAds: Bool { true }
     override var supportEmail: String { "support@friendlypayroll.net" }
-    override var appStoreURL: String { "https://apps.apple.com/app/friendly-checkinout" }
+    override var appStoreURL: String { "https://apps.apple.com/app/id6504676498" }
     override var privacyPolicyURL: String { "https://friendlypayroll.net/privacy" }
     override var termsOfServiceURL: String { "https://friendlypayroll.net/terms" }
 }

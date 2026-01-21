@@ -9,15 +9,16 @@ struct SignupView: View {
     // MARK: - Form State Management
     @State private var formData = RegistrationFormData()
     @State private var formState = FormState()
-    
-    // MARK: - Focus Management (Modern SwiftUI approach)
-    @FocusState private var focusedField: FormField?
-    
+
+    // MARK: - Focus Management
+    @FocusState private var isBudgetFocused: Bool
+    @FocusState private var isAddressFocused: Bool
+
     // MARK: - Dependencies
     @StateObject private var locationManager = LocationManager.shared
     @StateObject private var addressSearchHandler = AddressSearchHandler()
     @Environment(\.dismiss) private var dismiss
-    
+
     // MARK: - Form Validation
     private var isFormValid: Bool {
         formData.isValid && !formState.isLoading
@@ -25,299 +26,303 @@ struct SignupView: View {
     
     var body: some View {
         ScrollViewReader { scrollProxy in
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    HStack {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Image(systemName: "arrow.left")
-                                .foregroundColor(.white)
-                                .font(.system(size: 22))
-                                .padding()
-                        }
-                        
-                        Spacer()
-                        
-                        Text("Registro de Nuevo Cliente")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                        
-                        Spacer()
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom)
-                    
-                    // Formulario
-                    VStack(spacing: 15) {
-                        Group {
-                            TextField("Nombre de la Empresa", text: $companyName)
-                                .padding()
-                                .background(Color.white.opacity(0.9))
-                                .cornerRadius(10)
-                                .shadow(radius: 2)
-                                .submitLabel(.next)
-                                .autocapitalization(.words)
-                                .id("company")
-                            
-                            TextField("Correo Electrónico", text: $email)
-                                .keyboardType(.emailAddress)
-                                .autocapitalization(.none)
-                                .padding()
-                                .background(Color.white.opacity(0.9))
-                                .cornerRadius(10)
-                                .shadow(radius: 2)
-                                .submitLabel(.next)
-                                .textContentType(.emailAddress)
-                                .id("email")
-                            
-                            TextField("Teléfono", text: $phone)
-                                .keyboardType(.phonePad)
-                                .padding()
-                                .background(Color.white.opacity(0.9))
-                                .cornerRadius(10)
-                                .shadow(radius: 2)
-                                .submitLabel(.next)
-                                .textContentType(.telephoneNumber)
-                                .id("phone")
-                            
-                            TextField("Tarjeta de Identificación", text: $card)
-                                .padding()
-                                .background(Color.white.opacity(0.9))
-                                .cornerRadius(10)
-                                .shadow(radius: 2)
-                                .submitLabel(.next)
-                                .id("card")
-                            
-                            TextField("Tipo de Trabajo", text: $workType)
-                                .padding()
-                                .background(Color.white.opacity(0.9))
-                                .cornerRadius(10)
-                                .shadow(radius: 2)
-                                .submitLabel(.next)
-                                .autocapitalization(.words)
-                                .id("workType")
-                        }
-                        
-                        Group {
-                            SecureField("Contraseña", text: $password)
-                                .padding()
-                                .background(Color.white.opacity(0.9))
-                                .cornerRadius(10)
-                                .shadow(radius: 2)
-                                .submitLabel(.next)
-                                .textContentType(.newPassword)
-                                .id("password")
-                            
-                            SecureField("Confirmar Contraseña", text: $passwordConfirm)
-                                .padding()
-                                .background(Color.white.opacity(0.9))
-                                .cornerRadius(10)
-                                .shadow(radius: 2)
-                                .submitLabel(.next)
-                                .textContentType(.newPassword)
-                                .id("passwordConfirm")
-                            
-                            TextField("Nombre del Proyecto", text: $projectName)
-                                .padding()
-                                .background(Color.white.opacity(0.9))
-                                .cornerRadius(10)
-                                .shadow(radius: 2)
-                                .submitLabel(.next)
-                                .autocapitalization(.words)
-                                .id("projectName")
-                            
-                            TextField("Presupuesto", text: $budget)
-                                .keyboardType(.decimalPad)
-                                .padding()
-                                .background(Color.white.opacity(0.9))
-                                .cornerRadius(10)
-                                .shadow(radius: 2)
-                                .submitLabel(.next)
-                                .id("budget")
-                                .focused($isBudgetFocused)
-                                .onChange(of: isBudgetFocused) { focused in
-                                    if focused {
-                                        withAnimation {
-                                            scrollProxy.scrollTo("budget", anchor: .top)
-                                        }
-                                    }
-                                }
-                            
-                            // Campo de búsqueda de dirección mejorado
-                            VStack(alignment: .leading, spacing: 5) {
-                                HStack {
-                                    TextField("Dirección", text: $address)
-                                        .padding()
-                                        .background(Color.white.opacity(0.9))
-                                        .cornerRadius(10)
-                                        .shadow(radius: 2)
-                                        .submitLabel(.search)
-                                        .textContentType(.fullStreetAddress)
-                                        .autocapitalization(.words)
-                                        .id("address")
-                                        .focused($isAddressSearchFocused)
-                                        .onChange(of: address) { newValue in
-                                            addressSearchHandler.search(query: newValue)
-                                            showingAddressResults = !newValue.isEmpty
-                                        }
-                                        .onChange(of: isAddressSearchFocused) { focused in
-                                            if focused {
-                                                withAnimation {
-                                                    scrollProxy.scrollTo("address", anchor: .top)
-                                                }
-                                                showingAddressResults = !address.isEmpty
-                                            }
-                                        }
-                                    
-                                    if addressSearchHandler.isSearching {
-                                        ProgressView()
-                                            .progressViewStyle(CircularProgressViewStyle())
-                                            .padding(.trailing, 8)
-                                    } else if !address.isEmpty {
-                                        Button(action: {
-                                            address = ""
-                                            showingAddressResults = false
-                                        }) {
-                                            Image(systemName: "xmark.circle.fill")
-                                                .foregroundColor(.gray)
-                                        }
-                                        .padding(.trailing, 8)
-                                    }
-                                }
-                                
-                                // Resultados de la búsqueda de direcciones
-                                if showingAddressResults && !addressSearchHandler.searchResults.isEmpty {
-                                    ScrollView(.vertical, showsIndicators: true) {
-                                        VStack(alignment: .leading, spacing: 10) {
-                                            ForEach(addressSearchHandler.searchResults, id: \.self) { result in
-                                                Button(action: {
-                                                    selectAddressResult(result)
-                                                }) {
-                                                    VStack(alignment: .leading, spacing: 3) {
-                                                        Text(result.title)
-                                                            .font(.subheadline)
-                                                            .foregroundColor(.primary)
-                                                        if !result.subtitle.isEmpty {
-                                                            Text(result.subtitle)
-                                                                .font(.caption)
-                                                                .foregroundColor(.secondary)
-                                                        }
-                                                    }
-                                                    .padding(.vertical, 5)
-                                                }
-                                                .buttonStyle(PlainButtonStyle())
-                                                Divider()
-                                            }
-                                        }
-                                        .padding(8)
-                                    }
-                                    .frame(height: min(CGFloat(addressSearchHandler.searchResults.count * 50), 200))
-                                    .background(Color.white.opacity(0.95))
-                                    .cornerRadius(10)
-                                    .shadow(radius: 5)
-                                    .padding(.top, 5)
-                                }
-                            }
-                        }
-                        
-                        Button(action: {
-                            validateAndSubmit()
-                        }) {
-                            if isLoading {
-                                ProgressView()
-                                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(Color.myPrimary)
-                                    .cornerRadius(10)
-                                    .shadow(radius: 3)
-                            } else {
-                                Text("Registrarse")
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(Color.myPrimary)
-                                    .cornerRadius(10)
-                                    .shadow(radius: 3)
-                            }
-                        }
-                        .disabled(isLoading)
-                        .padding(.top)
-                        .id("button")
-                    }
-                    .padding()
-                    .background(Color.white.opacity(0.7))
-                    .cornerRadius(15)
-                    .shadow(radius: 5)
-                    .padding()
-                }
-            }
-            .background(
-                LinearGradient(
-                    gradient: Gradient(colors: [Color.myPrimary, Color.myPrimary.opacity(0.7)]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .edgesIgnoringSafeArea(.all)
-            )
-            .keyboardAdaptive()
-            .gesture(
-                TapGesture().onEnded { _ in
-                    UIApplication.shared.endEditing()
-                }
-            )
+            mainContent(scrollProxy: scrollProxy)
         }
-        .alert(isPresented: $showAlert) {
-            Alert(
-                title: Text(alertTitle),
-                message: Text(alertMessage),
-                dismissButton: .default(Text("OK")) {
-                    if isSuccess {
-                        // En caso de éxito, cerramos la vista y el usuario estará automáticamente autenticado
-                        dismiss()
-                        
-                        // Notificar a la vista de login que se ha iniciado sesión
-                        if let userData = UserManager.shared.getAuthToken {
-                            // Cerrar la vista actual y navegar a la pantalla principal
-                            NotificationCenter.default.post(name: NSNotification.Name("LoginSuccessful"), object: nil)
-                        }
-                    }
-                }
-            )
+        .alert(isPresented: $formState.showAlert) {
+            alertContent
         }
         .navigationBarHidden(true)
-        .onAppear {
-            // Solicitar permisos de ubicación al cargar la vista
-            locationManager.checkAuthorizationStatus()
-            
-            // Ayuda a prevenir errores de teclado
-            DispatchQueue.main.async {
-                UITextField.appearance().adjustsFontSizeToFitWidth = true
-                
-                // Inicializar todos los sistemas de entrada para prevenir warnings
-                _ = UITextInputMode.activeInputModes
-                
-                // Prevenir warnings específicos de "Can't find or decode reasons"
-                let selector = NSSelectorFromString("_installRemoteTextInputResponderWithAssertionIdentifier:")
-                if UIApplication.shared.responds(to: selector) {
-                    // Necesario para prevenir warnings de decodificación
-                    let _ = UIApplication.shared.perform(selector, with: "com.apple.UIKit.textinput.identifier")
-                }
-                
-                // Prevenir warnings de teclado en emojis y autocompletado
-                NotificationCenter.default.post(name: NSNotification.Name("UIKeyboardDidChangeFrameNotification"), object: nil)
-            }
-        }
+        .onAppear(perform: setupView)
         .edgesIgnoringSafeArea(.bottom)
     }
-    
-    // Estados para saber qué campo está enfocado
-    @FocusState private var isBudgetFocused: Bool
-    @FocusState private var isAddressFocused: Bool
-    
+
+    // MARK: - Main Content
+    @ViewBuilder
+    private func mainContent(scrollProxy: ScrollViewProxy) -> some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                headerView
+                formContainer(scrollProxy: scrollProxy)
+            }
+        }
+        .background(backgroundGradient)
+        .onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
+    }
+
+    // MARK: - Header View
+    private var headerView: some View {
+        HStack {
+            Button(action: { dismiss() }) {
+                Image(systemName: "arrow.left")
+                    .foregroundColor(.white)
+                    .font(.system(size: 22))
+                    .padding()
+            }
+            Spacer()
+            Text("Registro de Nuevo Cliente")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+            Spacer()
+        }
+        .padding(.horizontal)
+        .padding(.bottom)
+    }
+
+    // MARK: - Form Container
+    @ViewBuilder
+    private func formContainer(scrollProxy: ScrollViewProxy) -> some View {
+        VStack(spacing: 15) {
+            basicInfoFields
+            passwordAndProjectFields(scrollProxy: scrollProxy)
+            submitButton
+        }
+        .padding()
+        .background(Color.white.opacity(0.7))
+        .cornerRadius(15)
+        .shadow(radius: 5)
+        .padding()
+    }
+
+    // MARK: - Basic Info Fields
+    private var basicInfoFields: some View {
+        Group {
+            formTextField("Nombre de la Empresa", text: $formData.companyName, id: "company")
+                .autocapitalization(.words)
+
+            formTextField("Correo Electrónico", text: $formData.email, id: "email")
+                .keyboardType(.emailAddress)
+                .autocapitalization(.none)
+                .textContentType(.emailAddress)
+
+            formTextField("Teléfono", text: $formData.phone, id: "phone")
+                .keyboardType(.phonePad)
+                .textContentType(.telephoneNumber)
+
+            formTextField("Tarjeta de Identificación", text: $formData.card, id: "card")
+
+            formTextField("Tipo de Trabajo", text: $formData.workType, id: "workType")
+                .autocapitalization(.words)
+        }
+    }
+
+    // MARK: - Password and Project Fields
+    @ViewBuilder
+    private func passwordAndProjectFields(scrollProxy: ScrollViewProxy) -> some View {
+        Group {
+            formSecureField("Contraseña", text: $formData.password, id: "password")
+            formSecureField("Confirmar Contraseña", text: $formData.passwordConfirm, id: "passwordConfirm")
+            formTextField("Nombre del Proyecto", text: $formData.projectName, id: "projectName")
+                .autocapitalization(.words)
+            budgetField(scrollProxy: scrollProxy)
+            addressField(scrollProxy: scrollProxy)
+        }
+    }
+
+    // MARK: - Budget Field
+    @ViewBuilder
+    private func budgetField(scrollProxy: ScrollViewProxy) -> some View {
+        TextField("Presupuesto", text: $formData.budget)
+            .keyboardType(.decimalPad)
+            .padding()
+            .background(Color.white.opacity(0.9))
+            .cornerRadius(10)
+            .shadow(radius: 2)
+            .submitLabel(.next)
+            .id("budget")
+            .focused($isBudgetFocused)
+            .onChange(of: isBudgetFocused) { focused in
+                if focused {
+                    withAnimation { scrollProxy.scrollTo("budget", anchor: .top) }
+                }
+            }
+    }
+
+    // MARK: - Address Field
+    @ViewBuilder
+    private func addressField(scrollProxy: ScrollViewProxy) -> some View {
+        VStack(alignment: .leading, spacing: 5) {
+            addressInputRow(scrollProxy: scrollProxy)
+            addressSearchResults
+        }
+    }
+
+    @ViewBuilder
+    private func addressInputRow(scrollProxy: ScrollViewProxy) -> some View {
+        HStack {
+            TextField("Dirección", text: $formData.address)
+                .padding()
+                .background(Color.white.opacity(0.9))
+                .cornerRadius(10)
+                .shadow(radius: 2)
+                .submitLabel(.search)
+                .textContentType(.fullStreetAddress)
+                .autocapitalization(.words)
+                .id("address")
+                .focused($isAddressFocused)
+                .onChange(of: formData.address) { newValue in
+                    addressSearchHandler.search(query: newValue)
+                    formState.showingAddressResults = !newValue.isEmpty
+                }
+                .onChange(of: isAddressFocused) { focused in
+                    if focused {
+                        withAnimation { scrollProxy.scrollTo("address", anchor: .top) }
+                        formState.showingAddressResults = !formData.address.isEmpty
+                    }
+                }
+
+            addressFieldTrailingView
+        }
+    }
+
+    @ViewBuilder
+    private var addressFieldTrailingView: some View {
+        if addressSearchHandler.isSearching {
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle())
+                .padding(.trailing, 8)
+        } else if !formData.address.isEmpty {
+            Button(action: {
+                formData.address = ""
+                formState.showingAddressResults = false
+            }) {
+                Image(systemName: "xmark.circle.fill")
+                    .foregroundColor(.gray)
+            }
+            .padding(.trailing, 8)
+        }
+    }
+
+    @ViewBuilder
+    private var addressSearchResults: some View {
+        if formState.showingAddressResults && !addressSearchHandler.searchResults.isEmpty {
+            ScrollView(.vertical, showsIndicators: true) {
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(addressSearchHandler.searchResults, id: \.self) { result in
+                        addressResultRow(result)
+                        Divider()
+                    }
+                }
+                .padding(8)
+            }
+            .frame(height: min(CGFloat(addressSearchHandler.searchResults.count * 50), 200))
+            .background(Color.white.opacity(0.95))
+            .cornerRadius(10)
+            .shadow(radius: 5)
+            .padding(.top, 5)
+        }
+    }
+
+    private func addressResultRow(_ result: MKLocalSearchCompletion) -> some View {
+        Button(action: { selectAddressResult(result) }) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(result.title)
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+                if !result.subtitle.isEmpty {
+                    Text(result.subtitle)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+            .padding(.vertical, 5)
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+
+    // MARK: - Submit Button
+    private var submitButton: some View {
+        Button(action: { validateAndSubmit() }) {
+            submitButtonContent
+        }
+        .disabled(formState.isLoading)
+        .padding(.top)
+        .id("button")
+    }
+
+    @ViewBuilder
+    private var submitButtonContent: some View {
+        if formState.isLoading {
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.myPrimary)
+                .cornerRadius(10)
+                .shadow(radius: 3)
+        } else {
+            Text("Registrarse")
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.myPrimary)
+                .cornerRadius(10)
+                .shadow(radius: 3)
+        }
+    }
+
+    // MARK: - Helper Views
+    private func formTextField(_ placeholder: String, text: Binding<String>, id: String) -> some View {
+        TextField(placeholder, text: text)
+            .padding()
+            .background(Color.white.opacity(0.9))
+            .cornerRadius(10)
+            .shadow(radius: 2)
+            .submitLabel(.next)
+            .id(id)
+    }
+
+    private func formSecureField(_ placeholder: String, text: Binding<String>, id: String) -> some View {
+        SecureField(placeholder, text: text)
+            .padding()
+            .background(Color.white.opacity(0.9))
+            .cornerRadius(10)
+            .shadow(radius: 2)
+            .submitLabel(.next)
+            .textContentType(.newPassword)
+            .id(id)
+    }
+
+    private var backgroundGradient: some View {
+        LinearGradient(
+            gradient: Gradient(colors: [Color.myPrimary, Color.myPrimary.opacity(0.7)]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        .edgesIgnoringSafeArea(.all)
+    }
+
+    private var alertContent: Alert {
+        Alert(
+            title: Text(formState.alertTitle),
+            message: Text(formState.alertMessage),
+            dismissButton: .default(Text("OK")) {
+                if formState.isSuccess {
+                    dismiss()
+                    if UserManager.shared.getAuthToken != nil {
+                        NotificationCenter.default.post(name: NSNotification.Name("LoginSuccessful"), object: nil)
+                    }
+                }
+            }
+        )
+    }
+
+    private func setupView() {
+        locationManager.checkAuthorizationStatus()
+        DispatchQueue.main.async {
+            UITextField.appearance().adjustsFontSizeToFitWidth = true
+            _ = UITextInputMode.activeInputModes
+            let selector = NSSelectorFromString("_installRemoteTextInputResponderWithAssertionIdentifier:")
+            if UIApplication.shared.responds(to: selector) {
+                _ = UIApplication.shared.perform(selector, with: "com.apple.UIKit.textinput.identifier")
+            }
+            NotificationCenter.default.post(name: NSNotification.Name("UIKeyboardDidChangeFrameNotification"), object: nil)
+        }
+    }
+
     // Función para manejar la selección de una dirección
     private func selectAddressResult(_ result: MKLocalSearchCompletion) {
         let searchRequest = MKLocalSearch.Request(completion: result)
@@ -343,13 +348,13 @@ struct SignupView: View {
             // Actualizar la dirección en el hilo principal
             DispatchQueue.main.async {
                 if !addressComponents.isEmpty {
-                    self.address = addressComponents.joined(separator: ", ")
+                    self.formData.address = addressComponents.joined(separator: ", ")
                 } else {
                     // Si no hay componentes de dirección, usar el título del resultado
-                    self.address = result.title
+                    self.formData.address = result.title
                 }
-                self.showingAddressResults = false
-                self.isAddressSearchFocused = false
+                self.formState.showingAddressResults = false
+                self.isAddressFocused = false
             }
         }
     }
@@ -357,70 +362,70 @@ struct SignupView: View {
     // Validación y envío del formulario
     private func validateAndSubmit() {
         // Resetear mensajes de error
-        alertTitle = ""
-        alertMessage = ""
+        formState.alertTitle = ""
+        formState.alertMessage = ""
         
         // Validaciones
-        guard !companyName.isEmpty else {
-            alertTitle = "Error"
-            alertMessage = "Por favor ingresa el nombre de la empresa"
-            showAlert = true
+        guard !formData.companyName.isEmpty else {
+            formState.alertTitle = "Error"
+            formState.alertMessage = "Por favor ingresa el nombre de la empresa"
+            formState.showAlert = true
             return
         }
         
-        guard !email.isEmpty, isValidEmail(email) else {
-            alertTitle = "Error"
-            alertMessage = "Por favor ingresa un correo electrónico válido"
-            showAlert = true
+        guard !formData.email.isEmpty, isValidEmail(formData.email) else {
+            formState.alertTitle = "Error"
+            formState.alertMessage = "Por favor ingresa un correo electrónico válido"
+            formState.showAlert = true
             return
         }
         
-        guard !phone.isEmpty, isValidPhone(phone) else {
-            alertTitle = "Error"
-            alertMessage = "Por favor ingresa un número de teléfono válido"
-            showAlert = true
+        guard !formData.phone.isEmpty, isValidPhone(formData.phone) else {
+            formState.alertTitle = "Error"
+            formState.alertMessage = "Por favor ingresa un número de teléfono válido"
+            formState.showAlert = true
             return
         }
         
-        guard !card.isEmpty else {
-            alertTitle = "Error"
-            alertMessage = "Por favor ingresa el número de tarjeta de identificación"
-            showAlert = true
+        guard !formData.card.isEmpty else {
+            formState.alertTitle = "Error"
+            formState.alertMessage = "Por favor ingresa el número de tarjeta de identificación"
+            formState.showAlert = true
             return
         }
         
-        guard !password.isEmpty, password.count >= 6 else {
-            alertTitle = "Error"
-            alertMessage = "La contraseña debe tener al menos 6 caracteres"
-            showAlert = true
+        guard !formData.password.isEmpty, formData.password.count >= 6 else {
+            formState.alertTitle = "Error"
+            formState.alertMessage = "La contraseña debe tener al menos 6 caracteres"
+            formState.showAlert = true
             return
         }
         
-        guard password == passwordConfirm else {
-            alertTitle = "Error"
-            alertMessage = "Las contraseñas no coinciden"
-            showAlert = true
+        guard formData.password == formData.passwordConfirm else {
+            formState.alertTitle = "Error"
+            formState.alertMessage = "Las contraseñas no coinciden"
+            formState.showAlert = true
             return
         }
         
-        guard !projectName.isEmpty else {
-            alertTitle = "Error"
-            alertMessage = "Por favor ingresa el nombre del proyecto"
-            showAlert = true
+        guard !formData.projectName.isEmpty else {
+            formState.alertTitle = "Error"
+            formState.alertMessage = "Por favor ingresa el nombre del proyecto"
+            formState.showAlert = true
             return
         }
         
-        guard !budget.isEmpty, let _ = Double(budget) else {
-            alertTitle = "Error"
-            alertMessage = "Por favor ingresa un presupuesto válido"
-            showAlert = true
+        guard !formData.budget.isEmpty, let _ = Double(formData.budget) else {
+            formState.alertTitle = "Error"
+            formState.alertMessage = "Por favor ingresa un presupuesto válido"
+            formState.showAlert = true
             return
         }
         
-        guard !address.isEmpty else {
-            alertTitle = "Error"
-            alertMessage = "Por favor ingresa la dirección"
-            showAlert = true
+        guard !formData.address.isEmpty else {
+            formState.alertTitle = "Error"
+            formState.alertMessage = "Por favor ingresa la dirección"
+            formState.showAlert = true
             return
         }
         
@@ -429,12 +434,12 @@ struct SignupView: View {
     }
     
     private func submitForm() {
-        isLoading = true
+        formState.isLoading = true
         
         // Usar la ubicación del dispositivo o valores por defecto, asegurando que no sean NaN o infinitos
         var latitude = locationManager.lastLocation?.coordinate.latitude ?? 0.0
         var longitude = locationManager.lastLocation?.coordinate.longitude ?? 0.0
-        let budgetValue = Double(budget) ?? 0.0
+        let budgetValue = Double(formData.budget) ?? 0.0
         
         // Validar que las coordenadas no sean NaN o infinitas
         if latitude.isNaN || latitude.isInfinite {
@@ -446,25 +451,25 @@ struct SignupView: View {
         }
         
         APIService.shared.register(
-            name: companyName,
-            email: email,
-            phone: phone,
-            card: card,
+            name: formData.companyName,
+            email: formData.email,
+            phone: formData.phone,
+            card: formData.card,
             altitude: latitude,
             longitude: longitude,
-            nameWorkType: workType,
-            password: password,
-            nameProject: projectName,
+            nameWorkType: formData.workType,
+            password: formData.password,
+            nameProject: formData.projectName,
             budget: budgetValue,
-            address: address
+            address: formData.address
         ) { result in
-            isLoading = false
+            formState.isLoading = false
             
             switch result {
             case .success(let response):
-                alertTitle = response.success ? "Éxito" : "Error"
-                alertMessage = response.message
-                isSuccess = response.success
+                formState.alertTitle = response.success ? "Éxito" : "Error"
+                formState.alertMessage = response.message
+                formState.isSuccess = response.success
                 
                 // Si el registro fue exitoso, guardar sesión automáticamente
                 if response.success {
@@ -515,16 +520,16 @@ struct SignupView: View {
                     }
                 }
                 
-                showAlert = true
+                formState.showAlert = true
                 
             case .failure(let error):
-                alertTitle = "Error"
+                formState.alertTitle = "Error"
                 if case NetworkError.apiError(let message) = error {
-                    alertMessage = message
+                    formState.alertMessage = message
                 } else {
-                    alertMessage = error.localizedDescription
+                    formState.alertMessage = error.localizedDescription
                 }
-                showAlert = true
+                formState.showAlert = true
             }
         }
     }
@@ -617,5 +622,3 @@ enum FormField: CaseIterable {
         return allCases[currentIndex + 1]
     }
 }
-
-#endif 

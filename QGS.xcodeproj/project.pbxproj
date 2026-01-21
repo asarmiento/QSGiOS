@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1271DC6C0B33736E42B2E858 /* Pods_QGS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC049309D0E057DAE9E9224C /* Pods_QGS.framework */; };
+		21C975BFB285E1499D6C13C7 /* UpdateRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B30FA9497511C9AD7FAE54 /* UpdateRequiredView.swift */; };
+		6F1C5968957A4F383DC7EA8B /* UpdateRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B30FA9497511C9AD7FAE54 /* UpdateRequiredView.swift */; };
 		7E4B1300F4F262141D26B29F /* UpdateRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B30FA9497511C9AD7FAE54 /* UpdateRequiredView.swift */; };
 		8D381EC8B5E9CE922822B30F /* Pods_QGS_QGSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B807C0E0AFF4ADF2ECC1AC6 /* Pods_QGS_QGSUITests.framework */; };
 		A45845DDC1B40145D1B360C0 /* Pods_QGSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3C3D9EDCBA7A14BC5612220 /* Pods_QGSTests.framework */; };
@@ -1633,6 +1635,7 @@
 				EB72DDD52D96CE0300ADE37B /* NotificationManager.swift in Sources */,
 				EB72DDD62D96CE0300ADE37B /* APITimeRecords.swift in Sources */,
 				EB72DDBE2D96CD3F00ADE37B /* LocationViewController.swift in Sources */,
+				6F1C5968957A4F383DC7EA8B /* UpdateRequiredView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1865,6 +1868,7 @@
 				EBD5319F2D71F941007BF316 /* RecordResponse.swift in Sources */,
 				EBD531A02D71F941007BF316 /* LoginResponse.swift in Sources */,
 				EBD531A12D71F941007BF316 /* WorkTimeResponse.swift in Sources */,
+				21C975BFB285E1499D6C13C7 /* UpdateRequiredView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

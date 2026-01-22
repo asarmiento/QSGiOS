@@ -35,17 +35,19 @@
 	<key>WhatsNewInThisVersion</key>
 	<dict>
 		<key>en</key>
-		<string>Initial release of QGS:
-- Employee check-in/check-out functionality
-- GPS location tracking
-- Daily and weekly hours summary
-- Improved user interface and experience</string>
+		<string>Improvements in this update:
+
+- New update check: we automatically notify you when a new version is available
+- Better session stability: keep your session active without interruptions
+- Fixes for total hours summary
+- General performance and stability improvements</string>
 		<key>es</key>
-		<string>Lanzamiento inicial de QGS:
-- Funcionalidad de entrada/salida para empleados
-- Seguimiento de ubicación GPS
-- Resumen de horas diarias y semanales
-- Mejora en la interfaz y experiencia de usuario</string>
+		<string>Mejoras en esta actualización:
+
+- Nueva verificación de actualizaciones: te notificamos automáticamente cuando hay una nueva versión disponible
+- Mejor estabilidad de sesión: mantén tu sesión activa sin interrupciones
+- Correcciones en el resumen de horas totales
+- Mejoras de rendimiento y estabilidad general</string>
 	</dict>
 	<key>aps-environment</key>
 	<string>development</string>

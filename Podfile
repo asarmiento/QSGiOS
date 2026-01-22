@@ -46,3 +46,7 @@ target 'FriendlyCheckInOut' do
 
   pod 'Google-Mobile-Ads-SDK'
 end
+
+target 'MCS' do
+  common_pods
+end

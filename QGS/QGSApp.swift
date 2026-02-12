@@ -36,18 +36,7 @@ struct QGSApp: App {
                 UserModel.self,
                 RecordModel.self
             ])
-            
-            // Delete existing store if migration fails
-            let storeURL = URL.applicationSupportDirectory.appending(path: "default.store")
-            if FileManager.default.fileExists(atPath: storeURL.path) {
-                do {
-                    try FileManager.default.removeItem(at: storeURL)
-                    logInfo("Removed existing data store for fresh migration", category: .database)
-                } catch {
-                    logWarning("Could not remove existing store: \(error)", category: .database)
-                }
-            }
-            
+
             let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
             modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
             

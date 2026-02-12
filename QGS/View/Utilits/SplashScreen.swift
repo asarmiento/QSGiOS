@@ -75,10 +75,15 @@ struct SplashScreen: View {
 
             // Only proceed if no update is required
             if !requiresUpdate {
-                // Validate user
-                UserManager.shared.userExists { exists in
+                // Validate user session - check token in Keychain first, then SwiftData
+                let hasValidToken = UserManager.shared.getAuthToken != nil && !(UserManager.shared.getAuthToken?.isEmpty ?? true)
+                let hasEmployeeId = UserManager.shared.getEmployeeId != nil && !(UserManager.shared.getEmployeeId?.isEmpty ?? true)
+
+                // User is valid if we have a token AND employee ID (from Keychain/UserDefaults)
+                // OR if user exists in SwiftData (backward compatibility)
+                UserManager.shared.userExists { existsInDB in
                     DispatchQueue.main.async {
-                        self.isUserValid = exists
+                        self.isUserValid = (hasValidToken && hasEmployeeId) || existsInDB
                         self.isLoading = false
 
                         // Transition after animation completes

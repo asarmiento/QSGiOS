@@ -17,6 +17,7 @@ struct ButtonIn: View {
     @State private var successMessage: String = ""
     @State private var showOutOfTimeAlert: Bool = false
     @State private var showObservationSheet: Bool = false
+    @State private var showSessionExpiredAlert: Bool = false
     @State private var observation: String = ""
     @State private var pendingRecordType: String? = nil
 
@@ -66,6 +67,11 @@ struct ButtonIn: View {
             }
         } message: {
             Text(NSLocalizedString("Por favor, escriba el motivo por el que está marcando fuera del horario normal", comment: ""))
+        }
+        .alert("Sesión Expirada", isPresented: $showSessionExpiredAlert) {
+            Button("Aceptar", role: .cancel) { }
+        } message: {
+            Text("Su sesión ha expirado. Por favor, cierre sesión e inicie sesión nuevamente para continuar.")
         }
         .sheet(isPresented: $showObservationSheet) {
             ObservationInputView(
@@ -128,6 +134,12 @@ struct ButtonIn: View {
     }
     
     private func record(type: String) {
+        guard let employeeId = UserManager.shared.getEmployeeId, !employeeId.isEmpty else {
+            isLoading = false
+            showSessionExpiredAlert = true
+            return
+        }
+
         params = [
             "type": type,
             "time": currentTimeString,
@@ -135,14 +147,14 @@ struct ButtonIn: View {
             "latitude": locationManager.latitude,
             "longitude": locationManager.longitude,
             "address": locationManager.address,
-            "employee_id": UserManager.shared.getEmployeeId ?? ""
+            "employee_id": employeeId
         ]
-        
+
         // Agregar observación solo si no está vacía
         if !observation.isEmpty {
             params["observation"] = observation
         }
-        
+
         viewModel.record(type: type, params: params) { success in
             DispatchQueue.main.async {
                 isLoading = false

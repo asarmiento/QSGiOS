@@ -23,9 +23,8 @@ struct SessionData {
     let sessionStartTime: Date
     
     var isExpired: Bool {
-        // Session expires after 24 hours (configurable)
-        let expirationInterval: TimeInterval = 24 * 60 * 60
-        return Date().timeIntervalSince(sessionStartTime) > expirationInterval
+        // La sesión no expira; solo se cierra con logout manual
+        return false
     }
 }
 

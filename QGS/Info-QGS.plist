@@ -37,16 +37,14 @@
 		<key>en</key>
 		<string>Improvements in this update:
 
-- New update check: we automatically notify you when a new version is available
-- Better session stability: keep your session active without interruptions
-- Fixes for total hours summary
+- Fixed check-in/check-out issue: resolved a bug where employee ID was not sent correctly, preventing time entries from being recorded
+- Session no longer expires: your session stays active until you manually log out
 - General performance and stability improvements</string>
 		<key>es</key>
 		<string>Mejoras en esta actualización:
 
-- Nueva verificación de actualizaciones: te notificamos automáticamente cuando hay una nueva versión disponible
-- Mejor estabilidad de sesión: mantén tu sesión activa sin interrupciones
-- Correcciones en el resumen de horas totales
+- Corrección en registro de marcación: se resolvió un error donde el ID del empleado no se enviaba correctamente, impidiendo registrar entradas y salidas
+- La sesión ya no expira: tu sesión permanece activa hasta que cierres sesión manualmente
 - Mejoras de rendimiento y estabilidad general</string>
 	</dict>
 	<key>aps-environment</key>
